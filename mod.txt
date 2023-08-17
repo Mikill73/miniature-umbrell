@@ -143,8 +143,6 @@ if (imagemFundo) {
 
 })();
 
-
-// ==UserScript==
 //Verificação
 
 (function() {
@@ -712,7 +710,7 @@ function enviarSolicitacaoAmizade(id) {
 }
 
 })();
-// ==UserScript==
+
 // bloqueador de perfis / comentários e reply de comentários
 (function() {
     'use strict';
