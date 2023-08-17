@@ -62,11 +62,6 @@ setInterval(function() {
 })();
 //==UserScript==
 //sistema de acesso
-
-(function() {
-  'use strict';
-alert('Teste')
-})();
 (function() {
   'use strict';
 
