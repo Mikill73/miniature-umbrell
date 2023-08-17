@@ -1243,3 +1243,4 @@ createButtonWithArrowAfter('Carregar próximo episódio no player', 'https://ani
     loadEpisode(1);
 });
 })();
+.
