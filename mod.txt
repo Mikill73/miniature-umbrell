@@ -491,7 +491,7 @@ function handleClickMudarFundoChat() {
             const leitor = new FileReader();
             leitor.onload = function(e) {
                 div_msgs_pc.style.backgroundImage = `url('${e.target.result}')`;
-                div_msgs_pc.style.backgroundSize = 'auto';
+                div_msgs_pc.style.backgroundSize = 'cover';
 
                 localStorage.setItem("imagemchat", e.target.result);
             };
