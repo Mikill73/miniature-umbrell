@@ -13,6 +13,8 @@
 (function() {
   'use strict';
 
+const isDesktop = /Mac|Windows|Linux/.test(navigator.userAgent);
+
 function applyDistortion() {
     if (!document.querySelector('.distortion-layer')) {
         const distortionLayer = document.createElement('div');
