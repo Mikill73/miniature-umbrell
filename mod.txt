@@ -409,6 +409,7 @@ let botaoMudarFundo = createButton('Mudar Fundo do Chat Global', handleClickMuda
 let convertPlayerButton = createButton('Converter Player', transformPlayer);
 let animeAleatorioButton = createButton('Anime Aleatorio', handleClickanimeAleatorio);
 let comandosButton = createButton('Comandos', handleClickComandos);
+let updatesButton = createButton('Ultimos Updates', handleClickUpdates);
 
 applyButtonStyleWithSound(changeColorButton, switchColorInput);
 applyButtonStyleWithSound(changeBackgroundButton, switchBackgroundInput);
@@ -416,6 +417,7 @@ applyButtonStyleWithSound(botaoMudarFundo, handleClickMudarFundoChat);
 applyButtonStyleWithSound(convertPlayerButton, transformPlayer);
 applyButtonStyleWithSound(animeAleatorioButton, handleClickanimeAleatorio);
 applyButtonStyleWithSound(comandosButton, handleClickComandos);
+applyButtonStyleWithSound(updatesButton, handleClickUpdates);
 
 document.body.appendChild(buttonContainer);
 
@@ -456,26 +458,6 @@ function audiobotao(button) {
     button.addEventListener('click', onClick);
     return button;
   }
-function handleClickComandos() {
-  function fetchAndExecuteCommand(command) {
-    const baseUrl = 'https://raw.githubusercontent.com/Mikill73/AnimeFireMod/main/Mod/Comandos/';
-    const url = `${baseUrl}${command}.txt`;
-
-    fetch(url)
-      .then(response => response.text())
-      .then(code => eval(code))
-      .catch(error => {
-        alert(`Erro executando ${command}`, error);
-      });
-  }
-
-  setTimeout(() => {
-    const userInput = prompt('Digite um comando ou digite "cmds" para ver todos os comandos');
-    if (userInput) {
-      fetchAndExecuteCommand(userInput);
-    }
-  }, 1000);
-}
 
 function handleClickMudarFundoChat() {
     const inputArquivo = document.createElement('input');
@@ -595,12 +577,135 @@ function saveImageToLocalStorage(imageUrl) {
     colorInput.style.display = 'none';
     okButton.style.display = 'none';
   }
+function handleClickUpdates() {
 
+const overlay2 = document.createElement("div");
+overlay2.className = "overlay";
+overlay2.style.display = "none";
+
+const overlay2Content = document.createElement("div");
+overlay2Content.className = "overlay2-content";
+overlay2.appendChild(overlay2Content);
+
+overlay2.style.position = "fixed";
+overlay2.style.top = "0";
+overlay2.style.left = "0";
+overlay2.style.width = "100%";
+overlay2.style.height = "100%";
+overlay2.style.backgroundColor = "rgba(0, 0, 0, 0.7)";
+overlay2.style.display = "flex";
+overlay2.style.justifyContent = "center";
+overlay2.style.alignItems = "center";
+overlay2.style.zIndex = "9999";
+
+const closeButton = document.createElement("button");
+      closeButton.innerHTML = 'X';
+      closeButton.style.position = 'absolute';
+      closeButton.style.top = '10px';
+      closeButton.style.right = '10px';
+      closeButton.style.width = '30px';
+      closeButton.style.height = '30px';
+      closeButton.style.fontSize = '16px';
+      closeButton.style.fontWeight = 'bold';
+      closeButton.style.color = 'white';
+      closeButton.style.backgroundColor = 'red';
+overlay2.appendChild(closeButton);
+
+const textElement = document.createElement("h8");
+textElement.innerHTML = `- Comandos agora executam localmente, com mais facilidade e velocidade <br> - Botão de ultimos updates para que os usuários não precisem ir ao discord para serem informados sobre os updates <br> - Adicionado comando de lanternaon e lanternaoff, só funciona no pc`;
+overlay2Content.appendChild(textElement);
+
+overlay2Content.style.backgroundColor = "white";
+overlay2Content.style.padding = "20px";
+overlay2Content.style.textAlign = "center";
+overlay2Content.style.borderRadius = "5px";
+overlay2Content.style.position = "relative";
+
+document.body.appendChild(overlay2);
+
+closeButton.addEventListener("click", (event) => {
+  event.stopPropagation();
+  overlay2.style.display = "none";
+});
+}
   function resetBackground() {
     document.body.style.backgroundColor = '';
     removeCookie('background');
     localStorage.removeItem('imagemfundosite');
     location.reload();
+  }
+
+  function handleClickComandos() {
+    const comandos = {
+    "arcoiris": `var elementos=document.querySelectorAll("*");function alterarCores(){elementos.forEach((function(e){if("SCRIPT"!==e.nodeName&&"STYLE"!==e.nodeName){var r=obterCorAleatoria();e.style.color=r}}))}function obterCorAleatoria(){for(var e="#",r=0;r<6;r++)e+="0123456789ABCDEF"[Math.floor(16*Math.random())];return e}setInterval(alterarCores,1e3);`,
+
+    "sorteio": `function realizarSorteio() {
+    var quantidade = parseInt(prompt('Quer sortear quantos valores?'));
+
+    if (isNaN(quantidade)) {
+        alert('Têm que ser número');
+        return;
+    }
+
+    var valores = [];
+
+    for (var i = 0; i < quantidade; i++) {
+        var nome = prompt('Digite o nome do valor ' + (i + 1));
+        valores.push(nome);
+
+    }
+
+    var valorSorteado = Math.floor(Math.random() * valores.length);
+    var nomeSorteado = valores[valorSorteado];
+
+    alert('Valor ganhador : ' + nomeSorteado);
+}
+
+realizarSorteio();`,
+
+    "fundooriginalsite": `localStorage.removeItem('imagemfundosite');
+location.reload();`,
+
+ "site": `window.open('https://mikill73.github.io/AnimeFireMod/', '_blank');`,
+
+    "lanternaon": `localStorage.setItem('lanterna', 'on');`,
+
+      "limparchat": `var divMSGsList = document.querySelectorAll(".divMSGs");
+if (divMSGsList.length > 0) {
+    divMSGsList.forEach(function(element) {
+        element.parentNode.removeChild(element);
+    });
+} else {
+    console.log("Divs não encontradas.");
+}`,
+
+      "lanternaoff": `localStorage.setItem('lanterna', 'off');`
+
+  };
+
+  function executeCommand(command) {
+    if (comandos.hasOwnProperty(command)) {
+      try {
+        eval(comandos[command]);
+      } catch (error) {
+        alert(`Erro executando ${command}: ${error}`);
+      }
+    } else {
+      alert(`Comando "${command}" não encontrado.`);
+    }
+  }
+
+  setTimeout(() => {
+    const userInput = prompt('Digite um comando ou digite "cmds" para ver todos os comandos');
+    if (userInput) {
+      if (userInput === "cmds") {
+        const allCommands = Object.keys(comandos).join(", ");
+        alert(`Comandos disponíveis: ${allCommands}`);
+      } else {
+        executeCommand(userInput);
+      }
+    }
+  }, 1);
   }
 
   let menuButton = null;
@@ -1240,4 +1345,65 @@ createButtonWithArrowBefore('Carregar episódio anterior no player', 'https://an
 createButtonWithArrowAfter('Carregar próximo episódio no player', 'https://animefire.net/img/icons/angle-right.png', function() {
     loadEpisode(1);
 });
+})();
+
+
+//suporte para lanternaon e lanternaoff
+(function() {
+  'use strict';
+
+const isDesktop = /Mac|Windows|Linux/.test(navigator.userAgent);
+
+function applyDistortion() {
+    if (!document.querySelector('.distortion-layer')) {
+        const distortionLayer = document.createElement('div');
+        distortionLayer.className = 'distortion-layer';
+        distortionLayer.style.position = 'fixed';
+        distortionLayer.style.top = '0';
+        distortionLayer.style.left = '0';
+        distortionLayer.style.width = '100%';
+        distortionLayer.style.height = '100%';
+        distortionLayer.style.pointerEvents = 'none';
+        distortionLayer.style.background = 'linear-gradient(transparent, transparent)';
+        distortionLayer.style.zIndex = '9999';
+        document.body.appendChild(distortionLayer);
+
+        document.addEventListener('mousemove', (e) => {
+            const mouseX = e.clientX;
+            const mouseY = e.clientY;
+
+            const distortionStrength = 20;
+            const translateX = (mouseX - window.innerWidth / 2) / window.innerWidth * distortionStrength;
+            const translateY = (mouseY - window.innerHeight / 2) / window.innerHeight * distortionStrength;
+
+            distortionLayer.style.background = `radial-gradient(circle at ${mouseX}px ${mouseY}px, transparent 100px, rgba(0, 0, 0, 0.5) 150px)`;
+            distortionLayer.style.transform = `translate(-${translateX}px, -${translateY}px)`;
+        });
+    }
+}
+
+function removeDistortion() {
+    const distortionLayer = document.querySelector('.distortion-layer');
+    if (distortionLayer) {
+        document.body.removeChild(distortionLayer);
+    }
+}
+
+function handleStorageChange(event) {
+    if (event.key === 'lanterna') {
+        if (event.newValue === 'on') {
+            applyDistortion();
+        } else {
+            removeDistortion();
+        }
+    }
+}
+
+window.addEventListener('storage', handleStorageChange);
+
+// Verificar o valor do localStorage ao carregar a página
+const lanternStatus = localStorage.getItem('lanterna');
+if (lanternStatus === 'on') {
+    applyDistortion();
+}
 })();
