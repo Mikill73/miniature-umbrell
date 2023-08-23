@@ -9,6 +9,69 @@
 // @grant        none
 // ==/UserScript==
 
+//carregar video na imagem dos ultimos eps quando o mouse passar por cima
+(function() {
+  'use strict';
+
+let videoElement;
+let timerId;
+
+function loadVideoOnHover(event) {
+  const cardElement = event.currentTarget;
+  timerId = setTimeout(() => {
+    fetchVideo(cardElement);
+  }, 3000);
+}
+
+function cancelLoadVideo() {
+  clearTimeout(timerId);
+}
+
+async function fetchVideo(cardElement) {
+  const linkElement = cardElement.querySelector('a');
+  const link = linkElement.getAttribute('href');
+
+  try {
+    const response = await fetch(link);
+    const htmlText = await response.text();
+
+    const videoSrcMatch = htmlText.match(/<video.*src="(.*?)"/);
+    if (videoSrcMatch) {
+      const videoPageLink = videoSrcMatch[1];
+
+      const videoResponse = await fetch(videoPageLink);
+      const videoData = await videoResponse.json();
+      const firstSrc = videoData.data[0].src;
+
+      videoElement = document.createElement('video');
+      videoElement.className = 'card-img-top imgAnimesUltimosEps transitioning_src';
+      videoElement.src = firstSrc;
+      videoElement.controls = true;
+      videoElement.autoplay = true;
+
+      const imgElement = cardElement.querySelector('img');
+      imgElement.parentNode.replaceChild(videoElement, imgElement);
+    }
+  } catch (error) {
+    // Handle the error if necessary
+  }
+}
+
+function pauseVideo() {
+  clearTimeout(timerId);
+  if (videoElement) {
+    videoElement.pause();
+  }
+}
+
+const cardElements = document.querySelectorAll('.divCardUltimosEpsHome');
+cardElements.forEach((cardElement) => {
+  cardElement.addEventListener('mouseover', loadVideoOnHover);
+  cardElement.addEventListener('mouseout', pauseVideo);
+  cardElement.addEventListener('mouseout', cancelLoadVideo);
+});
+})();
+
 //suporte para lanternaon e lanternaoff + codigo de lanterna
 (function() {
   'use strict';
