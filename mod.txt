@@ -734,7 +734,7 @@ const closeButton = document.createElement("button");
 overlay2.appendChild(closeButton);
 
 const textElement = document.createElement("h8");
-textElement.innerHTML = `- Comandos agora executam localmente, com mais facilidade e velocidade <br> - Botão de ultimos updates para que os usuários não precisem ir ao discord para serem informados sobre os updates <br> - Adicionado comando de lanternaon e lanternaoff, só funciona no pc`;
+textElement.innerHTML = `- Comandos agora executam localmente, com mais facilidade e velocidade <br> - Botão de ultimos updates para que os usuários não precisem ir ao discord para serem informados sobre os updates <br> - Adicionado comando de lanternaon e lanternaoff, só funciona no pc <br> - Agora se você manter seu dedo/mouse encima de um ep na lista de ultimos eps adicionados esse ep é carregado na imagem do episódio!`;
 overlay2Content.appendChild(textElement);
 
 overlay2Content.style.backgroundColor = "white";
