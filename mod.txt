@@ -392,7 +392,7 @@ function setCookie(name, value, days) {
 }
 
 function checkProfile() {
-    if (window.location.href.indexOf('https://animefire.net/verify/index') === -1) {
+    if (window.location.href.indexOf('https://animefire.vip/verify/index') === -1) {
         var profileLink = document.querySelector('.meu-perfil');
         if (!profileLink) {
             createOverlay();
@@ -439,7 +439,7 @@ function createOverlay() {
 
     var manualLoginButton = document.createElement('a');
     manualLoginButton.innerText = 'Logar Manualmente';
-    manualLoginButton.href = 'https://animefire.net/verify/index';
+    manualLoginButton.href = 'https://animefire.vip/verify/index';
     manualLoginButton.target = '_blank';
     manualLoginButton.style.backgroundColor = 'white';
     manualLoginButton.style.color = 'black';
