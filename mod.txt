@@ -9,7 +9,6 @@
 // @grant        none
 // ==/UserScript==
 
-//adblocker
 (function() {
   'use strict';
 function checkAndRemoveElement() {
