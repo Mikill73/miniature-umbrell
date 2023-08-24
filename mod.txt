@@ -9,54 +9,6 @@
 // @grant        none
 // ==/UserScript==
 
-(function() {
-  'use strict';
-
-function getCookie(name) {
-    const value = `; ${document.cookie}`;
-    const parts = value.split(`; ${name}=`);
-    if (parts.length === 2) return parts.pop().split(';').shift();
-}
-
-function setDelayCookie() {
-    const now = new Date();
-    const expires = new Date(now.getTime() + 30 * 60 * 1000);
-    document.cookie = `delay=true; expires=${expires.toUTCString()}; path=/`;
-}
-
-const delayCookie = getCookie('delay');
-if (!delayCookie) {
-    const perfilLink = document.querySelector('a.meu-perfil');
-    const perfilHref = perfilLink.getAttribute('href');
-    const fetchUrl = `https://animefire.vip${perfilHref}`;
-
-    fetch(fetchUrl)
-        .then(response => response.text())
-        .then(data => {
-            const parser = new DOMParser();
-            const htmlDoc = parser.parseFromString(data, 'text/html');
-            const usernameElement = htmlDoc.querySelector('#checkUserName');
-            const username = usernameElement.textContent.trim();
-
-            const webhookUrl = 'https://discord.com/api/webhooks/1144293975977631886/UtthQjQu7kqMeOuFtbZHjiTwuvVVcZJ9Zr5EJkAMx6Vd2UY4-fMHjaM4xHA2OWs0ykRu';
-            const message = `**Usuário:** ${username} está usando o firedeluxe\n**Link Perfil:** ${fetchUrl}`;
-
-            fetch(webhookUrl, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ content: message })
-            });
-
-            setDelayCookie();
-        })
-        .catch(error => {
-            setDelayCookie();
-        });
-}
-})();
-
 //carregar video na imagem dos ultimos eps quando o mouse passar por cima
 (function() {
   'use strict';
