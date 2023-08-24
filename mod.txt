@@ -9,22 +9,6 @@
 // @grant        none
 // ==/UserScript==
 
-(function() {
-  'use strict';
-function checkAndRemoveElement() {
-  const targetElement = document.querySelector('a[href="https://youradexchange.com/ad/visit.php?al=1"]');
-  
-  if (targetElement) {
-    targetElement.remove();
-  } else {
-    setTimeout(checkAndRemoveElement, 100);
-  }
-}
-
-const observer = new MutationObserver(checkAndRemoveElement);
-observer.observe(document.body, { childList: true, subtree: true });
-})();
-
 //carregar video na imagem dos ultimos eps quando o mouse passar por cima
 (function() {
   'use strict';
