@@ -4,7 +4,7 @@
 // @version      0.4
 // @description  FIREMOD, criado por Mikill para modificar o site animefire.net
 // @author       Mikill
-// @match        https://animefire.net/*
+// @match        https://animefire.vip/*
 // @icon         https://animefire.net/uploads/cmt/8578871_1689091569.webp
 // @grant        none
 // ==/UserScript==
