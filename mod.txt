@@ -2,10 +2,10 @@
 // @name         Fire Deluxe
 // @namespace    http://tampermonkey.net/
 // @version      0.5.1
-// @description  FIREMOD, criado por Mikill para modificar o site animefire.net
+// @description  FIREMOD, criado por Mikill para modificar o site animefire.vip
 // @author       Mikill
 // @match        https://animefire.vip/*
-// @icon         https://animefire.net/uploads/cmt/8578871_1689091569.webp
+// @icon         https://animefire.vip/uploads/cmt/8578871_1689091569.webp
 // @grant        none
 // ==/UserScript==
 
@@ -734,7 +734,7 @@ const closeButton = document.createElement("button");
 overlay2.appendChild(closeButton);
 
 const textElement = document.createElement("h8");
-textElement.innerHTML = `- Comandos agora executam localmente, com mais facilidade e velocidade <br> - Botão de ultimos updates para que os usuários não precisem ir ao discord para serem informados sobre os updates <br> - Adicionado comando de lanternaon e lanternaoff, só funciona no pc <br> - Agora se você manter seu dedo/mouse encima de um ep na lista de ultimos eps adicionados esse ep é carregado na imagem do episódio!`;
+textElement.innerHTML = `- Comandos agora executam localmente, com mais facilidade e velocidade <br> - Botão de ultimos updates para que os usuários não precisem ir ao discord para serem informados sobre os updates <br> - Adicionado comando de lanternaon e lanternaoff, só funciona no pc <br> - Agora se você manter seu dedo/mouse encima de um ep na lista de ultimos eps adicionados esse ep é carregado na imagem do episódio! <br> - Tudo que era de animefire.net no codigo alterado para animefire.vip`;
 overlay2Content.appendChild(textElement);
 
 overlay2Content.style.backgroundColor = "white";
@@ -1358,8 +1358,8 @@ fetch('https://raw.githubusercontent.com/Mikill73/AnimeFireMod/main/Mod/Lista%20
 (function() {
   'use strict';
 
-document.querySelector('link[rel="shortcut icon"]').href = "https://animefire.net/uploads/cmt/7727335_1691415585.webp";
-document.querySelector('link[rel="apple-touch-icon"]').href = "https://animefire.net/uploads/cmt/7727335_1691415585.webp";
+document.querySelector('link[rel="shortcut icon"]').href = "https://animefire.vip/uploads/cmt/7727335_1691415585.webp";
+document.querySelector('link[rel="apple-touch-icon"]').href = "https://animefire.vip/uploads/cmt/7727335_1691415585.webp";
 
 document.title = "FireDeluxe";
 
@@ -1382,9 +1382,9 @@ document.title = "FireDeluxe";
       divElement.appendChild(paragraphElement);
     });
 
-  var imagem = document.querySelector('img[src="https://animefire.net/img/lt/logo.webp"]');
+  var imagem = document.querySelector('img[src="https://animefire.vip/img/lt/logo.webp"]');
   if (imagem) {
-    imagem.src = "https://animefire.net/uploads/cmt/2315941_1688854447.webp";
+    imagem.src = "https://animefire.vip/uploads/cmt/2315941_1688854447.webp";
   }
 
   var botaoReportar = document.createElement('button');
@@ -1462,11 +1462,11 @@ function createButtonWithArrowAfter(text, imgSrc, clickHandler) {
     button.addEventListener('click', clickHandler);
 }
 
-createButtonWithArrowBefore('Carregar episódio anterior no player', 'https://animefire.net/img/icons/angle-left.png', function() {
+createButtonWithArrowBefore('Carregar episódio anterior no player', 'https://animefire.vip/img/icons/angle-left.png', function() {
     loadEpisode(-1);
 });
 
-createButtonWithArrowAfter('Carregar próximo episódio no player', 'https://animefire.net/img/icons/angle-right.png', function() {
+createButtonWithArrowAfter('Carregar próximo episódio no player', 'https://animefire.vip/img/icons/angle-right.png', function() {
     loadEpisode(1);
 });
 })();
