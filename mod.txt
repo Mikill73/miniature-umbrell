@@ -1109,7 +1109,7 @@ fetch('https://raw.githubusercontent.com/Mikill73/AnimeFireMod/main/Mod/Lista%20
     var nomesCookie = obterCookie("nomesvermelhos");
     var nomes = nomesCookie.split(" ");
 
-    var elementos = document.querySelectorAll(".usr_name_cmt, .linkPerfilPC, .usernameIMG, .us_reply");
+    var elementos = document.querySelectorAll(".usr_name_cmt, .userNamePC, .usernameIMG, .us_reply");
 
     for (var i = 0; i < elementos.length; i++) {
       var elemento = elementos[i];
