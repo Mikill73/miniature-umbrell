@@ -26,8 +26,8 @@ textArea.addEventListener('input', () => {
   'use strict';
 
 const memeLinks = [
-  "[img]https://animefire.vip/uploads/avatar/213855670/small_2959060_1051861_1692671818.webp[/img]",
-  "[img]https://animefire.vip/uploads/cmt/5920567_1693016725.webp[/img]",
+  "[img]https://animefire.vip/uploads/avatar/213855670/small_2959060_1051861_1692671818.webp[img]",
+  "[img]https://animefire.vip/uploads/cmt/5920567_1693016725.webp[img]",
 ];
 
 function openMemeOverlay() {
@@ -92,6 +92,20 @@ for (const link of memeLinks) {
   memeImg.classList.add('meme');
   memeImg.style.maxWidth = '400px';
   memeImg.style.maxHeight = '300px';
+
+  memeImg.addEventListener('click', () => {
+    const textArea = document.getElementById('textAreaPC');
+    textArea.value += link + ' ';
+    closeMemeOverlay();
+    
+    // Simule o clique no botão de envio após um breve atraso
+    setTimeout(() => {
+      const enviarButton = document.getElementById('btnEnviarPchat');
+      if (enviarButton) {
+        enviarButton.click();
+      }
+    }, 100);
+  });
 
   memeContainer.appendChild(memeImg);
 }
