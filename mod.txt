@@ -119,20 +119,17 @@ document.addEventListener('click', function(event) {
 (function() {
   'use strict';
 
-botao.style.backgroundImage = 'url("' + primeiraImagemURL + '")';
-
-botao.addEventListener('click', trocarImagem);
-
 var botao = document.getElementById('PCytShare');
-var primeiraImagemURL = 'https://animefire.vip/uploads/cmt/3417721_1693020737.webp';
-var segundaImagemURL = 'https://animefire.vip/uploads/cmt/4575856_1693020810.webp';
+
+var primeiraImagemURL = 'https://animefire.vip/uploads/cmt/3484296_1693020261.webp';
+var segundaImagemURL = 'https://animefire.vip/uploads/cmt/4531741_1693020317.webp';
 
 var trocarImagem = function() {
-    if (botao.style.backgroundImage === 'url("' + primeiraImagemURL + '")') {
-        botao.style.backgroundImage = 'url("' + segundaImagemURL + '")';
-    } else {
+    botao.style.backgroundImage = 'url("' + segundaImagemURL + '")';
+
+    setTimeout(function() {
         botao.style.backgroundImage = 'url("' + primeiraImagemURL + '")';
-    }
+    }, 250);
 };
 
 botao.style.backgroundImage = 'url("' + primeiraImagemURL + '")';
