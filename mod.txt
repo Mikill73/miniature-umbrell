@@ -734,7 +734,7 @@ const closeButton = document.createElement("button");
 overlay2.appendChild(closeButton);
 
 const textElement = document.createElement("h8");
-textElement.innerHTML = `- Comandos agora executam localmente, com mais facilidade e velocidade <br> - Botão de ultimos updates para que os usuários não precisem ir ao discord para serem informados sobre os updates <br> - Adicionado comando de lanternaon e lanternaoff, só funciona no pc <br> - Agora se você manter seu dedo/mouse encima de um ep na lista de ultimos eps adicionados esse ep é carregado na imagem do episódio! <br> - Tudo que era de animefire.net no codigo alterado para animefire.vip`;
+textElement.innerHTML = `- Comandos agora executam localmente, com mais facilidade e velocidade <br> - Botão de ultimos updates para que os usuários não precisem ir ao discord para serem informados sobre os updates <br> - Adicionado comando de lanternaon e lanternaoff, só funciona no pc <br> - Agora se você manter seu dedo/mouse encima de um ep na lista de ultimos eps adicionados esse ep é carregado na imagem do episódio! <br> - Tudo que era de animefire.net no codigo alterado para animefire.vip <br> - Agora existem 20 cores neon para você usar, o sistema de cores mudou, agora é mais facil mudar e alterar, mais rapido e facil.`;
 overlay2Content.appendChild(textElement);
 
 overlay2Content.style.backgroundColor = "white";
@@ -1066,293 +1066,6 @@ fetch('https://raw.githubusercontent.com/Mikill73/AnimeFireMod/main/Mod/Lista%20
   });
 })();
 
-
-//nome especial vermelho
-
-(function() {
-  'use strict';
-
-  function fazerRequisicao(url, callback) {
-    var request = new XMLHttpRequest();
-    request.open('GET', url, true);
-
-    request.onload = function() {
-      if (request.status >= 200 && request.status < 400) {
-        callback(request.responseText);
-      }
-    };
-
-    request.send();
-  }
-
-  function obterCookie(nome) {
-    var nomeCookie = nome + "=";
-    var cookies = document.cookie.split(';');
-
-    for (var i = 0; i < cookies.length; i++) {
-      var cookie = cookies[i].trim();
-
-      if (cookie.indexOf(nomeCookie) === 0) {
-        return cookie.substring(nomeCookie.length, cookie.length);
-      }
-    }
-
-    return "";
-  }
-
-  function definirCookie(nome, valor) {
-    var cookie = nome + "=" + valor + "; path=/";
-    document.cookie = cookie;
-  }
-
-  function verificarEAplicarCor() {
-    var nomesCookie = obterCookie("nomesvermelhos");
-    var nomes = nomesCookie.split(" ");
-
-    var elementos = document.querySelectorAll(".usr_name_cmt, .userNamePC, .usernameIMG, .us_reply");
-
-    for (var i = 0; i < elementos.length; i++) {
-      var elemento = elementos[i];
-      var nome = elemento.innerText.trim();
-
-      if (nomes.includes(nome) && elemento.style.color !== "rgb(255, 0, 255)") {
-        elemento.style.color = "rgb(255, 0, 0)";
-        elemento.style.textShadow = "0 0 10px rgba(255, 0, 0, 0.7), 0 0 20px rgba(255, 0, 0, 0.5), 0 0 30px rgba(255, 0, 0, 0.3), 0 0 40px rgba(255, 0, 0, 0.3), 0 0 50px rgba(255, 0, 0, 0.3), 0 0 60px rgba(255, 0, 0, 0.3), 0 0 10px rgba(255, 0, 0, 0.7), 0 0 20px rgba(255, 0, 0, 0.5), 0 0 30px rgba(255, 0, 0, 0.3), 0 0 40px rgba(255, 0, 0, 0.3), 0 0 50px rgba(255, 0, 0, 0.3), 0 0 60px rgba(255, 0, 0, 0.3)";
-      }
-    }
-  }
-
-  function obterNomesEAtualizar() {
-    verificarEAplicarCor();
-  }
-
-  window.addEventListener('load', function() {
-    fazerRequisicao("https://raw.githubusercontent.com/Mikill73/AnimeFireMod/main/Mod/Cores/NomesVermelhos.txt", function(response) {
-      var nomes = response.trim();
-      definirCookie("nomesvermelhos", nomes);
-      obterNomesEAtualizar();
-    });
-  });
-
-  setInterval(obterNomesEAtualizar, 1000);
-
-})();
-
-//nome especial ciano
-
-(function() {
-  'use strict';
-
-  function fazerRequisicao(url, callback) {
-    var request = new XMLHttpRequest();
-    request.open('GET', url, true);
-
-    request.onload = function() {
-      if (request.status >= 200 && request.status < 400) {
-        callback(request.responseText);
-      }
-    };
-
-    request.send();
-  }
-
-  function obterCookie(nome) {
-    var nomeCookie = nome + "=";
-    var cookies = document.cookie.split(';');
-
-    for (var i = 0; i < cookies.length; i++) {
-      var cookie = cookies[i].trim();
-
-      if (cookie.indexOf(nomeCookie) === 0) {
-        return cookie.substring(nomeCookie.length, cookie.length);
-      }
-    }
-
-    return "";
-  }
-
-  function definirCookie(nome, valor) {
-    var cookie = nome + "=" + valor + "; path=/";
-    document.cookie = cookie;
-  }
-
-  function verificarEAplicarCor() {
-    var nomesCookie = obterCookie("nomescianos");
-    var nomes = nomesCookie.split(" ");
-
-    var elementos = document.querySelectorAll(".usr_name_cmt, .linkPerfilPC, .usernameIMG, .us_reply");
-
-    for (var i = 0; i < elementos.length; i++) {
-      var elemento = elementos[i];
-      var nome = elemento.innerText.trim();
-
-     if (nomes.includes(nome) && elemento.style.color !== "rgb(0, 255, 255)") {
-    elemento.style.color = "rgb(0, 255, 255)";
-    elemento.style.textShadow = "0 0 10px rgba(0, 255, 255, 0.7), 0 0 20px rgba(0, 255, 255, 0.5), 0 0 30px rgba(0, 255, 255, 0.3), 0 0 40px rgba(0, 255, 255, 0.3), 0 0 50px rgba(0, 255, 255, 0.3), 0 0 60px rgba(0, 255, 255, 0.3), 0 0 10px rgba(0, 255, 255, 0.7), 0 0 20px rgba(0, 255, 255, 0.5), 0 0 30px rgba(0, 255, 255, 0.3), 0 0 40px rgba(0, 255, 255, 0.3), 0 0 50px rgba(0, 255, 255, 0.3), 0 0 60px rgba(0, 255, 255, 0.3)";
-     }
-    }
-  }
-
-  function obterNomesEAtualizar() {
-    verificarEAplicarCor();
-  }
-
-  window.addEventListener('load', function() {
-    fazerRequisicao("https://raw.githubusercontent.com/Mikill73/AnimeFireMod/main/Mod/Cores/NomesCianos.txt", function(response) {
-      var nomes = response.trim();
-      definirCookie("nomescianos", nomes);
-      obterNomesEAtualizar();
-    });
-  });
-
-  setInterval(obterNomesEAtualizar, 1000);
-
-})();
-
-
-//nome especial verde
-
-(function() {
-  'use strict';
-
-  function fazerRequisicao(url, callback) {
-    var request = new XMLHttpRequest();
-    request.open('GET', url, true);
-
-    request.onload = function() {
-      if (request.status >= 200 && request.status < 400) {
-        callback(request.responseText);
-      }
-    };
-
-    request.send();
-  }
-
-  function obterCookie(nome) {
-    var nomeCookie = nome + "=";
-    var cookies = document.cookie.split(';');
-
-    for (var i = 0; i < cookies.length; i++) {
-      var cookie = cookies[i].trim();
-
-      if (cookie.indexOf(nomeCookie) === 0) {
-        return cookie.substring(nomeCookie.length, cookie.length);
-      }
-    }
-
-    return "";
-  }
-
-  function definirCookie(nome, valor) {
-    var cookie = nome + "=" + valor + "; path=/";
-    document.cookie = cookie;
-  }
-
-  function verificarEAplicarCor() {
-    var nomesCookie = obterCookie("nomesverdes");
-    var nomes = nomesCookie.split(" ");
-
-    var elementos = document.querySelectorAll(".usr_name_cmt, .linkPerfilPC, .usernameIMG, .us_reply");
-
-    for (var i = 0; i < elementos.length; i++) {
-      var elemento = elementos[i];
-      var nome = elemento.innerText.trim();
-
-      if (nomes.includes(nome) && elemento.style.color !== "rgb(255, 0, 255)") {
-        elemento.style.color = "rgb(0, 255, 0)";
-        elemento.style.textShadow = "0 0 10px rgba(0, 255, 0, 0.7), 0 0 20px rgba(0, 255, 0, 0.5), 0 0 30px rgba(0, 255, 0, 0.3), 0 0 40px rgba(0, 255, 0, 0.3), 0 0 50px rgba(0, 255, 0, 0.3), 0 0 60px rgba(0, 255, 0, 0.3), 0 0 10px rgba(0, 255, 0, 0.7), 0 0 20px rgba(0, 255, 0, 0.5), 0 0 30px rgba(0, 255, 0, 0.3), 0 0 40px rgba(0, 255, 0, 0.3), 0 0 50px rgba(0, 255, 0, 0.3), 0 0 60px rgba(0, 255, 0, 0.3)";
-      }
-    }
-  }
-
-  function obterNomesEAtualizar() {
-    verificarEAplicarCor();
-  }
-
-  window.addEventListener('load', function() {
-    fazerRequisicao("https://raw.githubusercontent.com/Mikill73/AnimeFireMod/main/Mod/Cores/NomesVerdes.txt", function(response) {
-      var nomes = response.trim();
-      definirCookie("nomesverdes", nomes);
-      obterNomesEAtualizar();
-    });
-  });
-
-  setInterval(obterNomesEAtualizar, 1000);
-
-})();
-
-//nome especial roxo
-(function() {
-  'use strict';
-
-  function fazerRequisicao(url, callback) {
-    var request = new XMLHttpRequest();
-    request.open('GET', url, true);
-
-    request.onload = function() {
-      if (request.status >= 200 && request.status < 400) {
-        callback(request.responseText);
-      }
-    };
-
-    request.send();
-  }
-
-  function obterCookie(nome) {
-    var nomeCookie = nome + "=";
-    var cookies = document.cookie.split(';');
-
-    for (var i = 0; i < cookies.length; i++) {
-      var cookie = cookies[i].trim();
-
-      if (cookie.indexOf(nomeCookie) === 0) {
-        return cookie.substring(nomeCookie.length, cookie.length);
-      }
-    }
-
-    return "";
-  }
-
-  function definirCookie(nome, valor) {
-    var cookie = nome + "=" + valor + "; path=/";
-    document.cookie = cookie;
-  }
-
-  function verificarEAplicarCor() {
-    var nomesCookie = obterCookie("nomesroxos");
-    var nomes = nomesCookie.split(" ");
-
-    var elementos = document.querySelectorAll(".usr_name_cmt, .linkPerfilPC, .usernameIMG, .us_reply");
-
-    for (var i = 0; i < elementos.length; i++) {
-      var elemento = elementos[i];
-      var nome = elemento.innerText.trim();
-
-      if (nomes.includes(nome) && elemento.style.color !== "rgb(255, 0, 255)") {
-        elemento.style.color = "rgb(255, 0, 255)";
-        elemento.style.textShadow = "0 0 10px rgba(255, 0, 255, 0.7), 0 0 20px rgba(255, 0, 255, 0.5), 0 0 30px rgba(255, 0, 255, 0.3), 0 0 40px rgba(255, 0, 255, 0.3), 0 0 50px rgba(255, 0, 255, 0.3), 0 0 60px rgba(255, 0, 255, 0.3), 0 0 10px rgba(255, 0, 255, 0.7), 0 0 20px rgba(255, 0, 255, 0.5), 0 0 30px rgba(255, 0, 255, 0.3), 0 0 40px rgba(255, 0, 255, 0.3), 0 0 50px rgba(255, 0, 255, 0.3), 0 0 60px rgba(255, 0, 255, 0.3)";
-      }
-    }
-  }
-
-  function obterNomesEAtualizar() {
-    verificarEAplicarCor();
-  }
-
-  window.addEventListener('load', function() {
-    fazerRequisicao("https://raw.githubusercontent.com/Mikill73/AnimeFireMod/main/Mod/Cores/NomesRoxos.txt", function(response) {
-      var nomes = response.trim();
-      definirCookie("nomesroxos", nomes);
-      obterNomesEAtualizar();
-    });
-  });
-
-  setInterval(obterNomesEAtualizar, 1000);
-
-})();
-
-
-//==Userscript==
 // Hud firedeuxe
 
 (function() {
@@ -1363,6 +1076,63 @@ document.querySelector('link[rel="apple-touch-icon"]').href = "https://animefire
 
 document.title = "FireDeluxe";
 
+})();
+
+//cores nome
+(function() {
+  'use strict';
+
+const nomesCores = {
+  "Mikill": "dourado",
+  "Ayumi": "roxo"
+};
+
+const coresRGB = {
+  "vermelho": "rgb(255, 0, 0)",
+  "verde": "rgb(0, 255, 0)",
+  "azul": "rgb(0, 0, 255)",
+  "amarelo": "rgb(255, 255, 0)",
+  "laranja": "rgb(255, 165, 0)",
+  "rosa": "rgb(255, 105, 180)",
+  "roxo": "rgb(128, 0, 128)",
+  "ciano": "rgb(0, 255, 255)",
+  "magenta": "rgb(255, 0, 255)",
+  "dourado": "rgb(255, 215, 0)",
+  "prata": "rgb(192, 192, 192)",
+  "preto": "rgb(0, 0, 0)",
+  "branco": "rgb(255, 255, 255)",
+  "marrom": "rgb(139, 69, 19)",
+  "cinza": "rgb(128, 128, 128)",
+  "verde-oliva": "rgb(85, 107, 47)",
+  "turquesa": "rgb(64, 224, 208)",
+  "azul-marinho": "rgb(0, 0, 128)",
+  "vermelho-escuro": "rgb(139, 0, 0)",
+  "azul-escuro": "rgb(0, 0, 139)"
+};
+
+function aplicarEfeitoNeon(elemento, cor) {
+  elemento.style.color = cor;
+  elemento.style.fontWeight = "bold";
+  elemento.style.textShadow = `0 0 10px ${cor}, 0 0 20px ${cor}, 0 0 30px ${cor}`;
+}
+
+function aplicarEfeitoNeonEmNomes() {
+  const elementosLinks = document.querySelectorAll("a.linkPerfilPC");
+
+  elementosLinks.forEach(link => {
+    const texto = link.textContent.trim();
+    for (const nome in nomesCores) {
+      if (texto.includes(nome)) {
+        const corNome = nomesCores[nome];
+        const corRGB = coresRGB[corNome];
+        aplicarEfeitoNeon(link, corRGB);
+        break;
+      }
+    }
+  });
+}
+
+aplicarEfeitoNeonEmNomes();
 })();
 
 (function() {
