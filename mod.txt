@@ -12,21 +12,23 @@
 //sa porra inteira pra baixo tem a ver com o botão de emoji, site n ajudou mt
 (function() {
   'use strict';
-const textArea = document.getElementById('textAreaPC');
-
-textArea.addEventListener('input', () => {
+function checkAndRemoveYouTubeLinks() {
+  const textArea = document.getElementById('textAreaPC');
+  if (textArea) {
     const content = textArea.value;
-    const pattern = /\[yt\].+?\[yt\]/g;
-    const cleanedContent = content.replace(pattern, '');
-    textArea.value = cleanedContent;
-});
+    const updatedContent = content.replace(/\[yt\].*?\[yt\]/g, '');
+    textArea.value = updatedContent;
+  }
+}
+
+setInterval(checkAndRemoveYouTubeLinks, 500);
 })();
 
 (function() {
   'use strict';
 
 const memeLinks = [
-  "https://animefire.vip/uploads/avatar/213855670/small_2959060_1051861_1692671818.webp",
+  "https://animefire.vip/uploads/cmt/6276990_1692998733.webp",
   "https://animefire.vip/uploads/cmt/5920567_1693016725.webp",
 ];
 
