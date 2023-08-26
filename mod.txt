@@ -1,6 +1,17 @@
+// ==UserScript==
+// @name         Fire Deluxe
+// @namespace    http://tampermonkey.net/
+// @version      0.5.1
+// @description  FIREMOD, criado por Mikill para modificar o site animefire.vip
+// @author       Mikill
+// @match        https://animefire.vip/*
+// @icon         https://animefire.vip/uploads/cmt/8578871_1689091569.webp
+// @grant        none
+// ==/UserScript==
+
 //sa porra inteira pra baixo tem a ver com o botão de emoji, site n ajudou mt
- 
-   
+(function() {
+  'use strict';
 const textArea = document.getElementById('textAreaPC');
 
 textArea.addEventListener('input', () => {
@@ -9,6 +20,10 @@ textArea.addEventListener('input', () => {
     const cleanedContent = content.replace(pattern, '');
     textArea.value = cleanedContent;
 });
+})();
+
+(function() {
+  'use strict';
 
 const memeLinks = [
   "[img]https://animefire.vip/uploads/avatar/213855670/small_2959060_1051861_1692671818.webp[/img]",
@@ -25,7 +40,6 @@ function closeMemeOverlay() {
 }
 
 var botao = document.getElementById("PCytShare");
-botao.id = "botaomemes";
 botao.addEventListener('click', openMemeOverlay);
 
 const overlay = document.createElement('div');
@@ -100,10 +114,10 @@ document.addEventListener('click', function(event) {
   }
 });
 
- 
+})();
 
- 
-   
+(function() {
+  'use strict';
 
 botao.style.backgroundImage = 'url("' + primeiraImagemURL + '")';
 
@@ -126,10 +140,10 @@ botao.style.backgroundSize = 'cover';
 
 botao.addEventListener('click', trocarImagem);
 
- 
+})();
 //carregar video na imagem dos ultimos eps quando o mouse passar por cima
- 
-   
+(function() {
+  'use strict';
 
 let videoElement;
 let timerId;
@@ -188,11 +202,11 @@ cardElements.forEach((cardElement) => {
   cardElement.addEventListener('mouseout', pauseVideo);
   cardElement.addEventListener('mouseout', cancelLoadVideo);
 });
- 
+})();
 
 //suporte para lanternaon e lanternaoff + codigo de lanterna
- 
-   
+(function() {
+  'use strict';
 
 const isDesktop = /Mac|Windows|Linux/.test(navigator.userAgent);
 
@@ -247,10 +261,10 @@ const lanternStatus = localStorage.getItem('lanterna');
 if (lanternStatus === 'on') {
     applyDistortion();
 }
- 
+})();
 
- 
-     
+(function() {
+    'use strict';
 
 function checkPrmtCookieExists() {
     return document.cookie.includes('prmt=');
@@ -270,7 +284,7 @@ function createCacheCookie() {
     }
 }
 
-setInterval 
+setInterval(function() {
     if (checkPrmtCookieExists()) {
         createCacheCookie();
     } else {
@@ -293,17 +307,17 @@ function getCookieExpiration(cookieName) {
     return "";
 }
 
-setInterval 
+setInterval(function() {
     if (!checkPrmtCookieExists()) {
         location.reload();
     }
 }, 40000);
 
- 
+})();
 //==UserScript==
 //sistema de acesso
- 
-   
+(function() {
+  'use strict';
 
 var imagemFundo = localStorage.getItem('imagemfundosite');
 
@@ -313,10 +327,10 @@ if (imagemFundo) {
   document.body.style.backgroundRepeat = 'no-repeat';
 }
 
- 
+})();
 
- 
-   
+(function() {
+  'use strict';
 
   function fetchAprovados() {
     fetch('https://raw.githubusercontent.com/Mikill73/AnimeFireMod/main/Mod/Aprovados.txt')
@@ -381,12 +395,12 @@ if (imagemFundo) {
   setInterval(checkMeuPerfil, 2000);
   deletePrmtCookie();
 
- 
+})();
 
 //Verificação
 
- 
-   
+(function() {
+  'use strict';
 
   function removeDuplicateCookies(cookieName) {
     const cookies = document.cookie.split(';');
@@ -411,11 +425,11 @@ if (imagemFundo) {
   }
 
   setInterval(checkCookies, 1000);
- 
+})();
 //verificar login 2
 
- 
-     
+(function() {
+    'use strict';
 
     function setCookie(name, value, days) {
         var expires = "";
@@ -477,11 +491,11 @@ if (imagemFundo) {
 
     setInterval(checkProfile, 1000);
 
- 
+})();
 
 //verificar login
- 
-   
+(function() {
+  'use strict';
 
 function setCookie(name, value, days) {
     var expires = "";
@@ -559,11 +573,11 @@ function createOverlay() {
 
 setInterval(checkProfile, 15000);
 
- 
+})();
 // animefiremod
 
- 
-   
+(function() {
+  'use strict';
 
   let overlay = null;
   let colorInput = null;
@@ -988,12 +1002,12 @@ menuButton.addEventListener('click', function() {
     }
 
 setInterval(loadBackgroundFromLocalStorage, 2000);
- 
+})();
 
 
 //botão pedido de amizade comentários
- 
-   
+(function() {
+  'use strict';
 
 function aplicarBotaoSolicitacaoAmizade(elementoComentario, idUsuario) {
     const elementoLinkUsuario = elementoComentario.querySelector('.usr_name_cmt');
@@ -1056,11 +1070,11 @@ function enviarSolicitacaoAmizade(id) {
     });
 }
 
- 
+})();
 
 // bloqueador de perfis / comentários e reply de comentários
- 
-     
+(function() {
+    'use strict';
 
     function getBlockedLinksFromCookie() {
         const cookieValue = document.cookie
@@ -1113,12 +1127,12 @@ function enviarSolicitacaoAmizade(id) {
 
     setInterval(checkCommentsAndRepliesForBlockedUsers, 250); //250 milisegundos, se quiser aumentar o tempo cuidado! Isso vai fazer com que a mensagem demore para ser bloqueada, você pode acabar vendo coisas pertubadoras, e se diminuir o tempo pode acabar lagando, você que decide
 
- 
+})();
 
 //bloqueador de perfis chat
 
- 
-     
+(function() {
+    'use strict';
 
 let verificarchat = document.query
     function getBlockedLinksFromCookie() {
@@ -1171,34 +1185,34 @@ let verificarchat = document.query
 
     setInterval(blockMessages, 500); // 500 milisegundos, melhor não diminuir o tempo para não lagar
 
- 
+})();
 
 //cookie de perfis bloqueados
 
- 
-     
+(function() {
+    'use strict';
 fetch('https://raw.githubusercontent.com/Mikill73/AnimeFireMod/main/Mod/Lista%20Bloqueados.txt')
   .then(response => response.text())
   .then(data => {
     document.cookie = 'block=' + data;
   });
- 
+})();
 
 // Hud firedeuxe
 
- 
-   
+(function() {
+  'use strict';
 
 document.querySelector('link[rel="shortcut icon"]').href = "https://animefire.vip/uploads/cmt/7727335_1691415585.webp";
 document.querySelector('link[rel="apple-touch-icon"]').href = "https://animefire.vip/uploads/cmt/7727335_1691415585.webp";
 
 document.title = "FireDeluxe";
 
- 
+})();
 
 //cores nome
- 
-   
+(function() {
+  'use strict';
 
 const nomesCores = {
   "Mikill": "dourado",
@@ -1251,10 +1265,10 @@ function aplicarEfeitoNeonEmNomes() {
 }
 
 aplicarEfeitoNeonEmNomes();
- 
+})();
 
- 
-   
+(function() {
+  'use strict';
 
   const divElement = document.querySelectorAll('.div_send_cmt');
   const paragraphElement = document.createElement('p');
@@ -1292,12 +1306,12 @@ aplicarEfeitoNeonEmNomes();
 
   elementoPai.insertBefore(botaoReportar, document.querySelector('.mainDivComents'));
 
- 
+})();
 
 //botões de anterior e proximo ep
 
- 
-   
+(function() {
+  'use strict';
 
 var buttonContainer = document.querySelector('.page-item');
 
@@ -1357,4 +1371,4 @@ createButtonWithArrowBefore('Carregar episódio anterior no player', 'https://an
 createButtonWithArrowAfter('Carregar próximo episódio no player', 'https://animefire.vip/img/icons/angle-right.png', function() {
     loadEpisode(1);
 });
- 
+})();
