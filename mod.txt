@@ -26,8 +26,8 @@ textArea.addEventListener('input', () => {
   'use strict';
 
 const memeLinks = [
-  "[img]https://animefire.vip/uploads/avatar/213855670/small_2959060_1051861_1692671818.webp[img]",
-  "[img]https://animefire.vip/uploads/cmt/5920567_1693016725.webp[img]",
+  "https://animefire.vip/uploads/avatar/213855670/small_2959060_1051861_1692671818.webp",
+  "https://animefire.vip/uploads/cmt/5920567_1693016725.webp",
 ];
 
 function openMemeOverlay() {
