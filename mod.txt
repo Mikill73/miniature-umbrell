@@ -60,7 +60,6 @@ overlay.style.justifyContent = 'center';
 overlay.style.alignItems = 'center';
 overlay.style.zIndex = '9999';
 overlay.style.overflow = 'auto';
-overlay.style.maxWidth = '1000px';
 
 const closeButton = document.createElement('button');
 closeButton.innerHTML = 'X';
@@ -80,6 +79,7 @@ overlayContent.style.backgroundColor = "white";
 overlayContent.style.padding = "20px";
 overlayContent.style.textAlign = "center";
 overlayContent.style.borderRadius = "5px";
+overlayContent.style.maxWidth = '1000px';
 overlayContent.style.position = "relative";
 
 const memeContainer = document.createElement('div');
@@ -863,7 +863,7 @@ const closeButton = document.createElement("button");
 overlay2.appendChild(closeButton);
 
 const textElement = document.createElement("h8");
-textElement.innerHTML = `- Comandos agora executam localmente, com mais facilidade e velocidade <br> - Botão de ultimos updates para que os usuários não precisem ir ao discord para serem informados sobre os updates <br> - Adicionado comando de lanternaon e lanternaoff, só funciona no pc <br> - Agora se você manter seu dedo/mouse encima de um ep na lista de ultimos eps adicionados esse ep é carregado na imagem do episódio! <br> - Tudo que era de animefire.net no codigo alterado para animefire.vip <br> - Agora existem 20 cores neon para você usar, o sistema de cores mudou, agora é mais facil mudar e alterar, mais rapido e facil.`;
+textElement.innerHTML = `- Comandos agora executam localmente, com mais facilidade e velocidade <br> - Botão de ultimos updates para que os usuários não precisem ir ao discord para serem informados sobre os updates <br> - Adicionado comando de lanternaon e lanternaoff, só funciona no pc <br> - Agora se você manter seu dedo/mouse encima de um ep na lista de ultimos eps adicionados esse ep é carregado na imagem do episódio! <br> - Tudo que era de animefire.net no codigo alterado para animefire.vip <br> - Agora existem 20 cores neon para você usar, o sistema de cores mudou, agora é mais facil mudar e alterar, mais rapido e facil. <br> - Substituido o botão de yt por um botão de emoji, você pode sugerir novos emojis ou figurinhas em #sugestões no discord`;
 overlay2Content.appendChild(textElement);
 
 overlay2Content.style.backgroundColor = "white";
