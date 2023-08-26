@@ -9,6 +9,139 @@
 // @grant        none
 // ==/UserScript==
 
+//sa porra inteira pra baixo tem a ver com o botão de emoji, site n ajudou mt
+(function() {
+  'use strict';
+const textArea = document.getElementById('textAreaPC');
+
+textArea.addEventListener('input', () => {
+    const content = textArea.value;
+    const pattern = /\[yt\].+?\[yt\]/g;
+    const cleanedContent = content.replace(pattern, '');
+    textArea.value = cleanedContent;
+});
+})();
+
+(function() {
+  'use strict';
+
+const memeLinks = [
+  "[img]https://animefire.vip/uploads/avatar/213855670/small_2959060_1051861_1692671818.webp[/img]",
+];
+
+function openMemeOverlay() {
+  const overlay = document.querySelector('.overlay3');
+  overlay.style.display = 'flex';
+}
+
+function closeMemeOverlay() {
+  const overlay = document.querySelector('.overlay3');
+  overlay.style.display = 'none';
+}
+
+var botao = document.getElementById("PCytShare");
+botao.id = "botaomemes";
+botao.addEventListener('click', openMemeOverlay);
+
+const overlay = document.createElement('div');
+overlay.className = 'overlay3';
+overlay.style.display = 'none';
+
+const overlayContent = document.createElement('div');
+overlayContent.className = 'overlay-content3';
+
+overlay.style.position = 'fixed';
+overlay.style.top = '0';
+overlay.style.left = '0';
+overlay.style.width = '100%';
+overlay.style.height = '100%';
+overlay.style.backgroundColor = 'rgba(0, 0, 0, 0.7)';
+overlay.style.display = 'none';
+overlay.style.justifyContent = 'center';
+overlay.style.alignItems = 'center';
+overlay.style.zIndex = '9999';
+overlay.style.overflow = 'auto';
+overlay.style.maxWidth = '1000px';
+
+const closeButton = document.createElement('button');
+closeButton.innerHTML = 'X';
+closeButton.style.position = 'absolute';
+closeButton.style.top = '10px';
+closeButton.style.right = '10px';
+closeButton.style.width = '30px';
+closeButton.style.height = '30px';
+closeButton.style.fontSize = '16px';
+closeButton.style.fontWeight = 'bold';
+closeButton.style.color = 'white';
+closeButton.style.backgroundColor = 'red';
+closeButton.addEventListener('click', closeMemeOverlay);
+overlay.appendChild(closeButton);
+
+overlayContent.style.backgroundColor = "white";
+overlayContent.style.padding = "20px";
+overlayContent.style.textAlign = "center";
+overlayContent.style.borderRadius = "5px";
+overlayContent.style.position = "relative";
+
+const memeContainer = document.createElement('div');
+memeContainer.className = 'meme-container3';
+
+for (const link of memeLinks) {
+  const memeImg = document.createElement('img');
+  memeImg.src = link.substring(5, link.length - 6);
+  memeImg.classList.add('meme');
+  memeImg.addEventListener('click', () => {
+    const textArea = document.getElementById('textAreaPC');
+    textArea.value += link + ' ';
+    closeMemeOverlay();
+    setTimeout(() => {
+      const enviarButton = document.getElementById('btnEnviarPchat');
+      if (enviarButton) {
+        enviarButton.click();
+      }
+    }, 100);
+  });
+
+  memeContainer.appendChild(memeImg);
+}
+
+overlayContent.appendChild(memeContainer);
+overlay.appendChild(overlayContent);
+document.body.appendChild(overlay);
+
+document.addEventListener('click', function(event) {
+  if (!overlay.contains(event.target) && event.target !== botao) {
+    closeMemeOverlay();
+  }
+});
+
+})();
+
+(function() {
+  'use strict';
+
+botao.style.backgroundImage = 'url("' + primeiraImagemURL + '")';
+
+botao.addEventListener('click', trocarImagem);
+
+var botao = document.getElementById('PCytShare');
+var primeiraImagemURL = 'https://animefire.vip/uploads/cmt/3417721_1693020737.webp';
+var segundaImagemURL = 'https://animefire.vip/uploads/cmt/4575856_1693020810.webp';
+
+var trocarImagem = function() {
+    if (botao.style.backgroundImage === 'url("' + primeiraImagemURL + '")') {
+        botao.style.backgroundImage = 'url("' + segundaImagemURL + '")';
+    } else {
+        botao.style.backgroundImage = 'url("' + primeiraImagemURL + '")';
+    }
+};
+
+botao.style.backgroundImage = 'url("' + primeiraImagemURL + '")';
+botao.style.backgroundSize = 'cover';
+
+botao.addEventListener('click', trocarImagem);
+
+})();
 //carregar video na imagem dos ultimos eps quando o mouse passar por cima
 (function() {
   'use strict';
