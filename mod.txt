@@ -88,17 +88,16 @@ memeContainer.className = 'meme-container3';
 
 for (const link of memeLinks) {
   const memeImg = document.createElement('img');
-  memeImg.src = link.substring(5, link.length - 6);
+  memeImg.src = link;
   memeImg.classList.add('meme');
   memeImg.style.maxWidth = '400px';
   memeImg.style.maxHeight = '300px';
 
   memeImg.addEventListener('click', () => {
     const textArea = document.getElementById('textAreaPC');
-    textArea.value += link + ' ';
+    textArea.value += `[img]${link}[/img] `;
     closeMemeOverlay();
-    
-    // Simule o clique no botão de envio após um breve atraso
+
     setTimeout(() => {
       const enviarButton = document.getElementById('btnEnviarPchat');
       if (enviarButton) {
