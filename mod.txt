@@ -95,7 +95,7 @@ for (const link of memeLinks) {
 
   memeImg.addEventListener('click', () => {
     const textArea = document.getElementById('textAreaPC');
-    textArea.value += `[img]${link}[/img] `;
+    textArea.value += `[img]${link}[img] `;
     closeMemeOverlay();
 
     setTimeout(() => {
