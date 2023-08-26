@@ -1260,7 +1260,7 @@ function aplicarEfeitoNeon(elemento, cor) {
 }
 
 function aplicarEfeitoNeonEmNomes() {
-  const elementosLinks = document.querySelectorAll(".usr_name_cmt, .us_reply, .usernameIMG");
+  const elementosLinks = document.querySelectorAll(".usr_name_cmt, .us_reply, .usernameIMG, .linkPerfilPC");
 
   elementosLinks.forEach(link => {
     const texto = link.textContent.trim();
