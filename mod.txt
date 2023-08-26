@@ -1250,6 +1250,9 @@ const coresRGB = {
   "azul-escuro": "rgb(0, 0, 139)"
 };
 
+const nomes = Object.keys(nomesCores);
+let currentIndex = 0;
+
 function aplicarEfeitoNeon(elemento, cor) {
   elemento.style.color = cor;
   elemento.style.fontWeight = "bold";
@@ -1257,7 +1260,7 @@ function aplicarEfeitoNeon(elemento, cor) {
 }
 
 function aplicarEfeitoNeonEmNomes() {
-  const elementosLinks = document.querySelectorAll("a.linkPerfilPC");
+  const elementosLinks = document.querySelectorAll(".usr_name_cmt, .us_reply, .usernameIMG");
 
   elementosLinks.forEach(link => {
     const texto = link.textContent.trim();
@@ -1272,7 +1275,17 @@ function aplicarEfeitoNeonEmNomes() {
   });
 }
 
-aplicarEfeitoNeonEmNomes();
+function changeNameColor() {
+  const currentNome = nomes[currentIndex];
+  const corNome = nomesCores[currentNome];
+  const corRGB = coresRGB[corNome];
+  
+  aplicarEfeitoNeonEmNomes();
+  
+  currentIndex = (currentIndex + 1) % nomes.length;
+}
+
+setInterval(changeNameColor, 200);
 })();
 
 (function() {
