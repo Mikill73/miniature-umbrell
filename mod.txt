@@ -26,8 +26,8 @@ textArea.addEventListener('input', () => {
   'use strict';
 
 const memeLinks = [
-  "[img]https://animefire.vip/uploads/avatar/213855670/small_2959060_1051861_1692671818.webp [/img]",
-  "[img]https://animefire.vip/uploads/cmt/5920567_1693016725.webp [/img]",
+  "[img]https://animefire.vip/uploads/avatar/213855670/small_2959060_1051861_1692671818.webp[/img]",
+  "[img]https://animefire.vip/uploads/cmt/5920567_1693016725.webp[/img]",
 ];
 
 function openMemeOverlay() {
@@ -80,7 +80,6 @@ overlayContent.style.backgroundColor = "white";
 overlayContent.style.padding = "20px";
 overlayContent.style.textAlign = "center";
 overlayContent.style.borderRadius = "5px";
-overlayContent.style.maxWidth = '1000px';
 overlayContent.style.position = "relative";
 overlayContent.textContent = "Clique em uma imagem para enviá-la no chat";
 
@@ -91,20 +90,14 @@ for (const link of memeLinks) {
   const memeImg = document.createElement('img');
   memeImg.src = link.substring(5, link.length - 6);
   memeImg.classList.add('meme');
-  memeImg.addEventListener('click', () => {
-    const textArea = document.getElementById('textAreaPC');
-    textArea.value += link + ' ';
-    closeMemeOverlay();
-    setTimeout(() => {
-      const enviarButton = document.getElementById('btnEnviarPchat');
-      if (enviarButton) {
-        enviarButton.click();
-      }
-    }, 100);
-  });
+  memeImg.style.maxWidth = '400px';
+  memeImg.style.maxHeight = '300px';
 
   memeContainer.appendChild(memeImg);
 }
+
+memeContainer.style.maxHeight = '300px';
+memeContainer.style.overflowY = 'auto';
 
 overlayContent.appendChild(memeContainer);
 overlay.appendChild(overlayContent);
