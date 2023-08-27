@@ -9,6 +9,100 @@
 // @grant        none
 // ==/UserScript==
 
+(function() {
+  'use strict';
+
+const profileMessages = [
+  { profileURL: "https://animefire.vip/users/988233449", message: "Salve Mikill" },
+  { profileURL: "https://animefire.vip/users/330515792", message: "Larga de ser nojento man, posta pornografia infantil e gore ainda KKKKKKKKKKKK" },
+  { profileURL: "https://animefire.vip/users/202121640", message: "Errar é humano, mas você não é humano" },
+  { profileURL: "https://animefire.vip/users/17453763", message: "ESQUISITO KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK FICA POSTANDO PORNOGRAFIA NO SITEKKKKKKKKK" },
+  { profileURL: "https://animefire.vip/users/816651674", message: "Mlk posta gore, sem familia mesmo" },
+  { profileURL: "https://animefire.vip/users/586396554", message: "Que foto de perfil merda em" },
+  { profileURL: "https://animefire.vip/users/399700421", message: "Olha sua foto mlk, nunca encostou em uma mulher KKKKKKKKKKKKKKKKKKKKKKK" },
+  { profileURL: "https://animefire.vip/users/570421656", message: "Nojento" },
+  { profileURL: "https://animefire.vip/users/601178026", message: "Nojento" },
+  { profileURL: "https://animefire.vip/users/360939010", message: "Nojento" },
+  { profileURL: "https://animefire.vip/users/403236720", message: "Larga de ser nojento hanza quantas alt tu tem em sa porra, parou de postar pornografia infantil e gore? mlk nojento" },
+  { profileURL: "https://animefire.vip/users/586619426", message: "Oii linda, fiquei sabendo que vc usa firedeluxe rs" },
+  { profileURL: "https://animefire.vip/users/213855670", message: "Oii kalango, usuários de firedeluxe aqui nenene" },
+  
+];
+
+const currentURL = window.location.href;
+
+function processComments(ordem) {
+  const commentsURL = `https://animefire.vip/proc/cmt?origin=${encodeURIComponent(currentURL)}&ordem=${encodeURIComponent(ordem)}`;
+
+  fetch(commentsURL)
+    .then(response => response.json())
+    .then(responseData => {
+      const commentsData = responseData.cmt;
+
+      if (commentsData && commentsData.length > 0) {
+        for (const comment of commentsData) {
+          const matchedProfileMessage = profileMessages.find(profileMessage => profileMessage.profileURL === comment.url);
+
+          if (matchedProfileMessage) {
+            const commentId = comment.id;
+            const message = matchedProfileMessage.message;
+
+            const postData = new URLSearchParams();
+            postData.append("input_cmt_count", commentId);
+            postData.append("reply_cmt", `[spoiler]${Math.random().toString().substr(2, 5)}[/spoiler] ${message}`);
+            postData.append("cmt_type", "reply");
+            postData.append("action", "send_reply");
+
+            const postURL = "https://animefire.vip/proc/cmt";
+            fetch(postURL, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+              },
+              body: postData
+            })
+            .then(response => response.text())
+            .then(result => {
+
+              const likeData = new URLSearchParams();
+              likeData.append("cmt_ct_lk", commentId);
+              likeData.append("type", "cmt");
+              likeData.append("action", "like");
+
+              const likeURL = "https://animefire.vip/proc/cmt";
+              fetch(likeURL, {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/x-www-form-urlencoded"
+                },
+                body: likeData
+              })
+              .then(likeResponse => likeResponse.text())
+              .then(likeResult => {
+              })
+              .catch(likeError => {
+              });
+            })
+            .catch(error => {
+            });
+          }
+        }
+      } else {
+        if (ordem === "Principais%20coment%C3%A1rios") {
+          setTimeout(() => processComments("Mais%20recentes"), 2000);
+        } else if (ordem === "Mais%20recentes") {
+          setTimeout(() => processComments("Mais%20antigos"), 2000);
+        }
+      }
+    })
+    .catch(error => {
+    });
+}
+
+processComments("Principais%20coment%C3%A1rios");
+
+})();
+
 //qualquer perfil abaixo que tentar postar uma imagem vai ser bloqueado, apenas mensagens serão permitidas
 (function() {
   'use strict';
