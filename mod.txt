@@ -9,6 +9,67 @@
 // @grant        none
 // ==/UserScript==
 
+//qualquer perfil abaixo que tentar postar uma imagem vai ser bloqueado, apenas mensagens serão permitidas
+(function() {
+  'use strict';
+
+function checkMessages() {
+  const blockedProfiles = [
+    {
+      profileUrl: 'https://animefire.vip/users/949326500',
+      blockedImageText: 'Imagem Bloqueada : Devoluido postou hentai de estupro no chat'
+    },
+    {
+      profileUrl: 'https://animefire.net/users/359161384',
+      blockedImageText: 'Imagem Bloqueada : Esse sem cérebro aspirante a nazista postando 30 terabytes de gore no chat'
+    }
+  ];
+
+  const imageSelector = '.divUserMSG img';
+  const textWithImageSelector = '.text-white.p_tag_cmt img';
+  const replyWithImageSelector = '.cmt_div_reply_apd img';
+  const messages = document.getElementsByClassName('divMSGs');
+
+  for (let i = 0; i < messages.length; i++) {
+    const profileUrlInput = messages[i].querySelector('input[name="profile_url"]');
+    const messageImage = messages[i].querySelector(imageSelector);
+    const textWithImage = messages[i].querySelector(textWithImageSelector);
+    const replyWithImage = messages[i].querySelectorAll(replyWithImageSelector);
+
+    if (profileUrlInput) {
+      const profileUrl = profileUrlInput.value;
+
+      const blockedProfile = blockedProfiles.find(profile => profile.profileUrl === profileUrl);
+
+      if (blockedProfile) {
+        if (messageImage) {
+          const replacementText = document.createElement('span');
+          replacementText.style.color = 'red';
+          replacementText.textContent = blockedProfile.blockedImageText;
+          messageImage.parentNode.replaceChild(replacementText, messageImage);
+        }
+
+        if (textWithImage) {
+          const replacementText = document.createElement('span');
+          replacementText.style.color = 'red';
+          replacementText.textContent = blockedProfile.blockedImageText;
+          textWithImage.parentNode.replaceChild(replacementText, textWithImage);
+        }
+
+        for (let j = 0; j < replyWithImage.length; j++) {
+          const replacementText = document.createElement('span');
+          replacementText.style.color = 'red';
+          replacementText.textContent = blockedProfile.blockedImageText;
+          replyWithImage[j].parentNode.replaceChild(replacementText, replyWithImage[j]);
+        }
+      }
+    }
+  }
+}
+
+setInterval(checkMessages, 100);
+})();
+
 //sa porra inteira pra baixo tem a ver com o botão de emoji, site n ajudou mt
 (function() {
   'use strict';
@@ -1088,56 +1149,105 @@ function enviarSolicitacaoAmizade(id) {
 (function() {
     'use strict';
 
-    function getBlockedLinksFromCookie() {
-        const cookieValue = document.cookie
-            .split('; ')
-            .find(row => row.startsWith('block='))
-            .split('=')[1];
+const perfisBloqueados = [
+    {
+        nomeAmudar: 'Esquisito',
+        link: 'https://animefire.vip/users/330515792',
+        textoAmudar: 'Postou pornografia infantil e gore no site, agora fica que nem um esquisito falando que vai estuprar alguêm, nojento'
+    },
+    {
+        nomeAmudar: 'Esquisitoide 2',
+        link: 'https://animefire.vip/users/202121640',
+        textoAmudar: 'Outra alt do cara que posta pornografia infantil e gore no site, fala que vai estuprar alguêm bla bla bla morra'
+    },
+    {
+        nomeAmudar: 'SOCORRO OLHA ESSE PERVERTIDO',
+        link: 'https://animefire.vip/users/17453763',
+        textoAmudar: 'Esse doente postou 500 fotos........ 500 FOTOS DE PORNOGRAFIA KKKKKKKKKKKKKKKKKKKKK, ELE FICOU DE 12AM ATÉ 4PM POSTANDO FOTO DE PORNO EM COMENTÁRIO KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK'
+    },
+    {
+        nomeAmudar: 'Esquisito Original',
+        link: 'https://animefire.vip/users/141612483',
+        textoAmudar: 'Mesma pessoa que posta pornografia infantil, mas essa foi a primeira conta que ele começou KKKK'
+    },
+    {
+        nomeAmudar: 'Esquisito? O inimigo agora é outro',
+        link: 'https://animefire.vip/users/816651674',
+        textoAmudar: 'Mesma pessoa que posta pornografia infantil e gore, começou a postar gore nessa aqui'
+    },
+    {
+        nomeAmudar: 'Olha esse merda kkkkkkkkkkkkk',
+        link: 'https://animefire.vip/users/586396554',
+        textoAmudar: 'Imagens de estupro hentai'
+    },
+    {
+        nomeAmudar: 'Só encostou na mãe esse aqui',
+        link: 'https://animefire.vip/users/399700421',
+        textoAmudar: 'Foto de perfil de hentai, banner de hentai, comentário de hentai, nunca encostou em nenhuma mulher, aposto que nem na propia mãe, mas vou dar a chance e dizer que encostou na mãe pelomenos'
+    },
+    {
+        nomeAmudar: 'Estuprado',
+        link: 'https://animefire.vip/users/570421656',
+        textoAmudar: 'Foto de perfil de hentai banner de hentai, pra piorar a foto é um gif de uma criancinha sendo comida, plmns é hentai e não real.....'
+    },
+    {
+        nomeAmudar: 'Mais um que usa essa porra',
+        link: 'https://animefire.vip/users/601178026',
+        textoAmudar: 'Esse usa foto de perfil e banner hentai, só faz merda msm viu'
+    },
+    {
+        nomeAmudar: 'Blablabla foto de perfil de retardado macaco',
+        link: 'https://animefire.vip/users/88927552',
+        textoAmudar: 'Esse usa foto de perfil e banner hentai, só faz merda msm viu'
+    },
+    {
+        nomeAmudar: 'Blablabla foto de perfil de retardado macaco',
+        link: 'https://animefire.vip/users/360939010',
+        textoAmudar: 'Esse usa foto de perfil e banner hentai, só faz merda msm viu'
+    },
+    {
+        nomeAmudar: 'Nordestino',
+        link: 'https://animefire.vip/users/333769650',
+        textoAmudar: 'Foto nazista, banner nazista, postagens nazistas, replys nazistas, conversas nazistas, corpo nazista, voz nazista e diz ser descendente de alemão KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK........................'
+    },
+    {
+        nomeAmudar: 'alt do mlk que posta pornografia infantil',
+        link: 'https://animefire.vip/users/403236720',
+        textoAmudar: 'louco? Eu já fui louco uma vez, me trancaram em um quarto, um quarto cheio de ratos, lá estava um rato doente que via pornografia infantil'
+    },
 
-        if (cookieValue) {
-            return cookieValue.split(' ');
-        } else {
-            return [];
-        }
-    }
+];
 
-    function checkCommentsAndRepliesForBlockedUsers() {
-        const prmtCookie = document.cookie
-            .split('; ')
-            .find(row => row.startsWith('prmt='));
+function checkCommentsAndRepliesForBlockedUsers() {
+    const elementsToCheck = document.querySelectorAll('.cmt, .cmt_reply_div');
 
-        if (!prmtCookie) {
-            return;
-        }
+    elementsToCheck.forEach(element => {
+        const userLink = element.querySelector('.us_reply, .usr_name_cmt').getAttribute('href');
 
-        const blockedLinks = getBlockedLinksFromCookie();
+        const blockedProfile = perfisBloqueados.find(profile => profile.link === userLink);
 
-        const elementsToCheck = document.querySelectorAll('.cmt, .cmt_reply_div');
-
-        elementsToCheck.forEach(element => {
-            const userLink = element.querySelector('.us_reply, .usr_name_cmt').getAttribute('href');
+        if (blockedProfile) {
             const userImage = element.querySelector('.avatar_reply, .pic_cmt');
             const userName = element.querySelector('.us_reply, .usr_name_cmt');
             const commentTextElement = element.querySelector('.p_reply, .p_tag_cmt');
 
-            if (blockedLinks.includes(userLink)) {
-                if (userImage) {
-                    userImage.parentNode.removeChild(userImage);
-                }
-
-                userName.textContent = 'Perfil Bloqueado';
-                userName.style.color = 'red';
-
-                const commentText = commentTextElement.textContent;
-                commentTextElement.textContent = 'Mensagem Bloqueada! Esse perfil postou alguma coisa errada no site e por isso está na lista de bloqueados, reporte usuários no discord do fire deluxe';
-                commentTextElement.style.color = 'red';
+            if (userImage) {
+                userImage.parentNode.removeChild(userImage);
             }
-        });
-    }
 
-    checkCommentsAndRepliesForBlockedUsers();
+            userName.textContent = blockedProfile.nomeAmudar;
+            userName.style.color = 'red';
 
-    setInterval(checkCommentsAndRepliesForBlockedUsers, 250); //250 milisegundos, se quiser aumentar o tempo cuidado! Isso vai fazer com que a mensagem demore para ser bloqueada, você pode acabar vendo coisas pertubadoras, e se diminuir o tempo pode acabar lagando, você que decide
+            const commentText = commentTextElement.textContent;
+            commentTextElement.textContent = blockedProfile.textoAmudar;
+            commentTextElement.style.color = 'red';
+        }
+    });
+}
+
+checkCommentsAndRepliesForBlockedUsers();
+
+setInterval(checkCommentsAndRepliesForBlockedUsers, 250);
 
 })();
 
