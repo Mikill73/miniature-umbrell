@@ -1316,7 +1316,7 @@ const perfisBloqueados = [
         nomeAmudar: 'Esquisito nojento sem cérebro',
         link: 'https://animefire.vip/users/450952355',
         textoAmudar: 'Retardado posta porn e usa foto de perfil de porn, banner de porn, amigos de porn, nunca tocou em uma mulher e nunca vai tocar, os neuronios estão sendo destruidos pelo consumo de pornografia'
-    },
+    }
 
 ];
 
