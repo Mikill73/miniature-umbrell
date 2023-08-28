@@ -115,7 +115,7 @@ function checkMessages() {
     {
       profileUrl: 'https://animefire.net/users/359161384',
       blockedImageText: 'Imagem Bloqueada : Esse sem cérebro aspirante a nazista postando 30 terabytes de gore no chat'
-    }
+    },
     {
       profileUrl: 'https://animefire.vip/users/450952355',
       blockedImageText: 'Retardado posta porn e usa foto de perfil de porn, banner de porn, amigos de porn, nunca tocou em uma mulher e nunca vai tocar, os neuronios estão sendo destruidos pelo consumo de pornografia'
