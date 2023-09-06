@@ -1,7 +1,2 @@
-
-
-Questão: As raízes da equação 3x2=243 são:
-Resposta: (C) S= {-9, 9}
-
-Quest�o: As ra�zes da equa��o 3x2=243 s�o:
+QuestÃ£o: As raÃ­zes da equaÃ§Ã£o 3x2=243 sÃ£o:
 Resposta: (C) S= {-9, 9}
