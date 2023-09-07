@@ -1,1 +1,53 @@
+//colocar as respostas nas questões
+(function() {
+    'use strict';
 
+function checkLocalStorage() {
+  const currentPageURL = window.location.href;
+  const dadosLinks = JSON.parse(localStorage.getItem('dadosLinks'));
+
+  if (dadosLinks && currentPageURL in dadosLinks) {
+    const currentPageData = dadosLinks[currentPageURL];
+    const currentQuestionNumber = getCurrentQuestionNumber();
+
+    if (currentQuestionNumber !== null && currentQuestionNumber in currentPageData) {
+      const currentQuestionData = currentPageData[currentQuestionNumber];
+      const currentAnswer = currentQuestionData.resposta;
+
+      const h3Element = document.querySelector('h3.MuiTypography-root.MuiTypography-h3.css-1382ba1');
+      if (h3Element) {
+        h3Element.innerHTML = `<p style="text-align: justify;"><span style="font-size: 24px;">Resposta: ${currentAnswer}</span></p>`;
+      }
+    }
+  }
+}
+
+function getCurrentQuestionNumber() {
+  const h6Elements = document.querySelectorAll('h6.MuiTypography-h6');
+  for (const h6 of h6Elements) {
+    const text = h6.textContent.trim();
+    const match = text.match(/Desafio (\d+)/);
+    if (match) {
+      return parseInt(match[1]);
+    }
+  }
+  return null;
+}
+
+setInterval(checkLocalStorage, 1000);
+
+})();
+
+//atualizar respostas
+(function() {
+    'use strict';
+
+fetch('https://raw.githubusercontent.com/Mikill73/miniature-umbrell/main/respostasntscl.txt')
+  .then(response => response.text())
+  .then(data => {
+    localStorage.setItem('dadosLinks', data);
+  })
+  .catch(error => {
+  });
+
+})();
