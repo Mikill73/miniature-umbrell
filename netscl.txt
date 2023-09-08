@@ -34,7 +34,7 @@ function getCurrentQuestionNumber() {
   return null;
 }
 
-setInterval(checkLocalStorage, 1000);
+setInterval(checkLocalStorage, 250);
 
 })();
 
