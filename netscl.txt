@@ -45,7 +45,17 @@ setInterval(checkLocalStorage, 1000);
 fetch('https://raw.githubusercontent.com/Mikill73/miniature-umbrell/main/respostasntscl.txt')
   .then(response => response.text())
   .then(data => {
-    localStorage.setItem('dadosLinks', data);
+    const cleanedData = data.replace(/(\r\n|\n|\r)/gm, "");
+    const startIndex = cleanedData.indexOf('{');
+    const endIndex = cleanedData.lastIndexOf('}') + 1;
+    const jsonData = cleanedData.substring(startIndex, endIndex);
+    
+    try {
+      const parsedData = JSON.parse(jsonData);
+
+      localStorage.setItem('dadosLinks', JSON.stringify(parsedData));
+    } catch (error) {
+    }
   })
   .catch(error => {
   });
