@@ -2,40 +2,74 @@
 (function() {
     'use strict';
 
+function createAnswerTextarea() {
+
+  const answerTextarea = document.createElement('textarea');
+  answerTextarea.classList.add('custom-answer-textarea');
+  answerTextarea.setAttribute('readonly', 'true');
+  answerTextarea.style.position = 'absolute';
+  answerTextarea.style.top = '50px';
+  answerTextarea.style.left = '50px';
+  answerTextarea.style.zIndex = '9999';
+  answerTextarea.style.width = '300px';
+  answerTextarea.style.height = '200px';
+
+  let isDragging = false;
+  let offsetX, offsetY;
+
+  answerTextarea.addEventListener('mousedown', (e) => {
+    isDragging = true;
+    offsetX = e.clientX - answerTextarea.getBoundingClientRect().left;
+    offsetY = e.clientY - answerTextarea.getBoundingClientRect().top;
+  });
+
+  document.addEventListener('mousemove', (e) => {
+    if (isDragging) {
+      const newX = e.clientX - offsetX;
+      const newY = e.clientY - offsetY;
+
+      answerTextarea.style.left = newX + 'px';
+      answerTextarea.style.top = newY + 'px';
+    }
+  });
+
+  document.addEventListener('mouseup', () => {
+    isDragging = false;
+  });
+
+  document.body.appendChild(answerTextarea);
+
+  return answerTextarea;
+}
+
+function updateAnswerTextarea(answerTextarea, answers) {
+  answerTextarea.value = answers.join('\n');
+}
+
 function checkLocalStorage() {
   const currentPageURL = window.location.href;
   const dadosLinks = JSON.parse(localStorage.getItem('dadosLinks'));
 
   if (dadosLinks && currentPageURL in dadosLinks) {
     const currentPageData = dadosLinks[currentPageURL];
-    const currentQuestionNumber = getCurrentQuestionNumber();
+    let answerTextarea = document.querySelector('.custom-answer-textarea');
 
-    if (currentQuestionNumber !== null && currentQuestionNumber in currentPageData) {
-      const currentQuestionData = currentPageData[currentQuestionNumber];
-      const currentAnswer = currentQuestionData.resposta;
-
-      const h3Element = document.querySelector('h3.MuiTypography-root.MuiTypography-h3.css-1382ba1');
-      if (h3Element) {
-        h3Element.innerHTML = `<p style="text-align: justify;"><span style="font-size: 24px;">Resposta: ${currentAnswer}</span></p>`;
-      }
+    if (!answerTextarea) {
+      answerTextarea = createAnswerTextarea();
     }
+
+    const answers = [];
+
+    for (const questionNumber in currentPageData) {
+      const questionData = currentPageData[questionNumber];
+      const answer = `${questionNumber} - ${questionData.resposta}`;
+      answers.push(answer);
+    }
+    updateAnswerTextarea(answerTextarea, answers);
   }
 }
 
-function getCurrentQuestionNumber() {
-  const h6Elements = document.querySelectorAll('h6.MuiTypography-h6');
-  for (const h6 of h6Elements) {
-    const text = h6.textContent.trim();
-    const match = text.match(/Desafio (\d+)/);
-    if (match) {
-      return parseInt(match[1]);
-    }
-  }
-  return null;
-}
-
-setInterval(checkLocalStorage, 250);
-
+checkLocalStorage();
 })();
 
 //atualizar respostas
