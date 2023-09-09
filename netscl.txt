@@ -68,6 +68,7 @@ function checkLocalStorage() {
     updateAnswerTextarea(answerTextarea, answers);
   }
 }
+setInterval(checkLocalStorage, 1000);
 
 checkLocalStorage();
 })();
