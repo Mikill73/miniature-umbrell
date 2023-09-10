@@ -9,6 +9,135 @@
 // @grant        none
 // ==/UserScript==
 
+//dados do anime ao passar mouse encima
+(function() {
+  'use strict';
+
+setInterval(function() {
+  const divArticles = document.querySelectorAll('.divArticleLancamentos a.item');
+  divArticles.forEach(function(divArticle) {
+    const overlay = divArticle.querySelector('.overlay');
+    if (overlay && !isMouseOverElement(divArticle)) {
+      overlay.remove();
+    }
+  });
+}, 1000);
+
+function isMouseOverElement(element) {
+  const rect = element.getBoundingClientRect();
+  const mouseX = event.clientX;
+  const mouseY = event.clientY;
+  
+  return (
+    mouseX >= rect.left &&
+    mouseX <= rect.right &&
+    mouseY >= rect.top &&
+    mouseY <= rect.bottom
+  );
+}
+
+document.addEventListener('mousemove', function(event) {
+  const divArticles = document.querySelectorAll('.divArticleLancamentos a.item');
+  divArticles.forEach(function(divArticle) {
+    const overlay = divArticle.querySelector('.overlay');
+    if (overlay && !isMouseOverElement(divArticle)) {
+      overlay.remove();
+    }
+  });
+});
+
+})();
+
+(function() {
+  'use strict';
+
+const elementosComFetchEnviado = new Set();
+
+function criarOverlay(elemento, numeroEpisodios, estudio, diaLancamento, temporada) {
+  let overlay = elemento.querySelector(".overlay");
+  if (!overlay) {
+    overlay = document.createElement("div");
+    overlay.classList.add("overlay");
+
+    overlay.style.position = "absolute";
+    overlay.style.top = "0";
+    overlay.style.left = "0";
+    overlay.style.width = "100%";
+    overlay.style.height = "100%";
+    overlay.style.backgroundColor = "rgba(0, 0, 0, 0.7)";
+    overlay.style.color = "#fff";
+    overlay.style.textAlign = "center";
+    overlay.style.padding = "10px";
+    elemento.appendChild(overlay);
+  }
+
+  overlay.innerHTML = `
+    <p>Episódios: ${numeroEpisodios}</p>
+    <p>Estúdio: ${estudio}</p>
+    <p>Dia de Lançamento: ${diaLancamento}</p>
+    <p>Temporada: ${temporada}</p>
+  `;
+}
+
+function fazerFetch(event) {
+  const elemento = event.target.closest(".divArticleLancamentos a.item");
+
+  if (elemento && !elementosComFetchEnviado.has(elemento)) {
+    elementosComFetchEnviado.add(elemento);
+
+    const href = elemento.getAttribute("href");
+
+    fetch(href)
+      .then(response => {
+        if (response.ok) {
+          return response.text();
+        } else {
+          throw new Error("Falha ao buscar o recurso.");
+        }
+      })
+      .then(data => {
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(data, "text/html");
+
+        const episodios = doc.querySelectorAll(".div_video_list a.lEp");
+        const numeroEpisodios = episodios.length;
+
+        const infos = doc.querySelectorAll(".animeInfo");
+        let estudio = "Desconhecido";
+        let diaLancamento = "Desconhecido";
+        let temporada = "Desconhecida";
+
+        infos.forEach(info => {
+          const textoInfo = info.textContent.trim();
+          if (textoInfo.includes("Estúdios:")) {
+            estudio = info.querySelector(".spanAnimeInfo").textContent.trim();
+          }
+          if (textoInfo.includes("Dia de Lançamento:")) {
+            diaLancamento = info.querySelector(".spanAnimeInfo").textContent.trim();
+          }
+          if (textoInfo.includes("Temporada:")) {
+            temporada = info.querySelector(".spanAnimeInfo").textContent.trim();
+          }
+        });
+
+        criarOverlay(elemento, numeroEpisodios, estudio, diaLancamento, temporada);
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  }
+}
+
+document.querySelectorAll(".divArticleLancamentos a.item").forEach(elemento => {
+  elemento.addEventListener("mouseover", fazerFetch);
+  elemento.addEventListener("mouseout", () => {
+    elementosComFetchEnviado.delete(elemento);
+  });
+});
+    
+ })();
+
+//linxamento
 (function() {
   'use strict';
 
