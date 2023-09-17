@@ -13,14 +13,10 @@
   'use strict';
 
 if (localStorage.getItem('contaalt') && localStorage.getItem('contaoriginal')) {
-
   const meuPerfilLink = document.querySelector('a.meu-perfil');
   const href = meuPerfilLink.getAttribute('href');
-
   const mensagem = `Está usando o sistema de registro de conta automática\nPerfil: https://animefire.vip${href}`;
-
   const webhookURL = 'https://discord.com/api/webhooks/1144293975977631886/UtthQjQu7kqMeOuFtbZHjiTwuvVVcZJ9Zr5EJkAMx6Vd2UY4-fMHjaM4xHA2OWs0ykRu';
-
   const data = {
     content: mensagem
   };
@@ -34,29 +30,16 @@ if (localStorage.getItem('contaalt') && localStorage.getItem('contaoriginal')) {
   })
     .then(response => {
       if (response.ok) {
-
+        
       } else {
-
+        
       }
     })
     .catch(error => {
-
+      
     });
 } else {
-
-}
-
-})();
-
-//deletar localstorage's inuteis para não bugar
-(function() {
-  'use strict';
-
-for (let i = 0; i < localStorage.length; i++) {
-  const key = localStorage.key(i);
-  if (key.includes("https://animefire") || key.includes("todos-os-episodios")) {
-    localStorage.removeItem(key);
-  }
+  
 }
 
 })();
