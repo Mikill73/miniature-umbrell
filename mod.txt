@@ -9,6 +9,103 @@
 // @grant        none
 // ==/UserScript==
 
+//deletar localstorage's inuteis para não bugar
+(function() {
+  'use strict';
+
+for (let i = 0; i < localStorage.length; i++) {
+  const key = localStorage.key(i);
+  if (key.includes("https://animefire") || key.includes("todos-os-episodios")) {
+    localStorage.removeItem(key);
+  }
+}
+
+})();
+
+//conta automatizada 1 : retirar limite de mensagens automaticamente
+(function() {
+  'use strict';
+
+let ultimasMensagens = [];
+
+function verificarUltimasMensagens() {
+    const mensagens = $(".divMSGs");
+
+    if (mensagens.length >= 4) {
+        const perfis = [
+            mensagens.eq(-1).find('input[name="profile_url"]').val(),
+            mensagens.eq(-2).find('input[name="profile_url"]').val(),
+            mensagens.eq(-3).find('input[name="profile_url"]').val(),
+            mensagens.eq(-4).find('input[name="profile_url"]').val(),
+        ];
+
+        if (perfis.every((perfil, index) => perfil === perfis[0])) {
+            const contaAltJSON = localStorage.getItem("contaalt");
+            const contaOriginalJSON = localStorage.getItem("contaoriginal");
+
+            if (contaAltJSON && contaOriginalJSON) {
+                ultimasMensagens.push(perfis[0]);
+
+                if (ultimasMensagens.length === 4 && ultimasMensagens.every((perfil) => perfil === perfis[0])) {
+                    ultimasMensagens = [];
+
+                    const contaAlt = JSON.parse(contaAltJSON);
+                    const contaOriginal = JSON.parse(contaOriginalJSON);
+
+                    const email = contaAlt.email;
+                    const senha = contaAlt.senha;
+                    const novoEmail = contaOriginal.email;
+                    const novaSenha = contaOriginal.senha;
+
+                    $.ajax({
+                        url: "https://animefire.vip/auth/entrar",
+                        type: "POST",
+                        data: {
+                            email: email,
+                            senha: senha
+                        },
+                        success: function (response) {
+                            $.ajax({
+                                url: "https://animefire.vip/proc/ws_token",
+                                type: "POST",
+                                success: function (wsToken) {
+                                    const websocket = new WebSocket("wss://animefire.vip/pc-ws?token=" + wsToken);
+
+                                    websocket.onopen = () => {
+                                        const randomMessage = Math.floor(100000000 + Math.random() * 900000000).toString();
+                                        websocket.send(JSON.stringify({ texto: randomMessage }));
+                                    };
+
+                                    websocket.onmessage = (event) => {
+                                    };
+
+                                    websocket.onerror = (error) => {
+                                    };
+
+                                    $.ajax({
+                                        url: "https://animefire.vip/auth/entrar",
+                                        type: "POST",
+                                        data: {
+                                            email: novoEmail,
+                                            senha: novaSenha
+                                        },
+                                        success: function (response) {
+                                        }
+                                    });
+                                }
+                            });
+                        }
+                    });
+                }
+            }
+        }
+    }
+}
+
+setInterval(verificarUltimasMensagens, 1000);
+
+})();
+
 //dados do anime ao passar mouse encima
 (function() {
   'use strict';
@@ -27,7 +124,7 @@ function isMouseOverElement(element) {
   const rect = element.getBoundingClientRect();
   const mouseX = event.clientX;
   const mouseY = event.clientY;
-  
+
   return (
     mouseX >= rect.left &&
     mouseX <= rect.right &&
@@ -134,7 +231,7 @@ document.querySelectorAll(".divArticleLancamentos a.item").forEach(elemento => {
     elementosComFetchEnviado.delete(elemento);
   });
 });
-    
+
  })();
 
 //linxamento
@@ -154,7 +251,7 @@ const profileMessages = [
   { profileURL: "https://animefire.vip/users/403236720", message: "Larga de ser nojento hanza quantas alt tu tem em, parou de postar pornografia infantil e gore? mlk nojento" },
   { profileURL: "https://animefire.vip/users/586619426", message: "Oii linda, fiquei sabendo que vc usa firedeluxe rs" },
   { profileURL: "https://animefire.vip/users/450952355", message: "Nojento" },
-  
+
 ];
 
 const currentURL = window.location.href;
@@ -948,7 +1045,7 @@ setInterval(checkProfile, 15000);
 
   closeButton.addEventListener('click', function() {
   closeHUD()
-  const audio = new Audio("https://cdn.discordapp.com/attachments/1090324209391108136/1140829042145251368/Click_On-SoundBible_mp3cut.net2.mp3");
+  const audio = new Audio("https://soundbible.com/mp3/Tiny%20Button%20Push-SoundBible.com-513260752.mp3");
   audio.play();
   });
 
@@ -977,6 +1074,7 @@ let changeBackgroundButton = createButton('Mudar Fundo', switchBackgroundInput);
 let botaoMudarFundo = createButton('Mudar Fundo do Chat Global', handleClickMudarFundoChat);
 let convertPlayerButton = createButton('Converter Player', transformPlayer);
 let animeAleatorioButton = createButton('Anime Aleatorio', handleClickanimeAleatorio);
+let contaautomaticaButton = createButton('Registrar Conta Automática', handleClickcontaautomatica);
 let comandosButton = createButton('Comandos', handleClickComandos);
 let updatesButton = createButton('Ultimos Updates', handleClickUpdates);
 
@@ -987,12 +1085,13 @@ applyButtonStyleWithSound(convertPlayerButton, transformPlayer);
 applyButtonStyleWithSound(animeAleatorioButton, handleClickanimeAleatorio);
 applyButtonStyleWithSound(comandosButton, handleClickComandos);
 applyButtonStyleWithSound(updatesButton, handleClickUpdates);
+applyButtonStyleWithSound(contaautomaticaButton, handleClickcontaautomatica);
 
 document.body.appendChild(buttonContainer);
 
 function audiobotao(button) {
   button.addEventListener('click', function() {
-    const audio = new Audio("https://cdn.discordapp.com/attachments/1090324209391108136/1140829042145251368/Click_On-SoundBible_mp3cut.net2.mp3");
+    const audio = new Audio("https://soundbible.com/mp3/Tiny%20Button%20Push-SoundBible.com-513260752.mp3");
     audio.play();
   });
 }
@@ -1027,6 +1126,39 @@ function audiobotao(button) {
     button.addEventListener('click', onClick);
     return button;
   }
+
+function handleClickcontaautomatica() {
+
+function obterEmailEsenha() {
+  const emailAlt = prompt('Digite o e-mail de uma alt que vai usar para automações no site ou digite "ajuda" para mais informações');
+
+  if (emailAlt === "ajuda") {
+    alert("Você precisa de uma segunda conta para fazer certas coisas no site, tipo mandar uma mensagem para tirar o limite de mensagens que você têm quando tiver enviado 4 mensagens, etc...");
+    return;
+  }
+
+  const senhaAlt = prompt('Digite a senha de uma alt que vai usar para automações no site ou digite "ajuda" para mais informações');
+
+  if (senhaAlt === "ajuda") {
+    alert("Você precisa de uma segunda conta para fazer certas coisas no site, tipo mandar uma mensagem para tirar o limite de mensagens que você têm quando tiver enviado 4 mensagens, etc...");
+    return;
+  }
+
+  const contaAlt = { email: emailAlt, senha: senhaAlt };
+
+  localStorage.setItem('contaalt', JSON.stringify(contaAlt));
+
+  const emailOriginal = prompt('Agora digite o email da sua conta original');
+  const senhaOriginal = prompt('Agora digite a senha da sua conta original');
+
+  const contaOriginal = { email: emailOriginal, senha: senhaOriginal };
+
+  localStorage.setItem('contaoriginal', JSON.stringify(contaOriginal));
+}
+
+obterEmailEsenha();
+
+}
 
 function handleClickMudarFundoChat() {
     const inputArquivo = document.createElement('input');
@@ -1138,7 +1270,6 @@ function saveImageToLocalStorage(imageUrl) {
   localStorage.setItem('imagemfundosite', imageUrl);
 }
 
-
   function applyColor() {
     let selectedColor = colorInput.value;
     document.body.style.backgroundColor = selectedColor;
@@ -1181,7 +1312,8 @@ const closeButton = document.createElement("button");
 overlay2.appendChild(closeButton);
 
 const textElement = document.createElement("h8");
-textElement.innerHTML = `- Comandos agora executam localmente, com mais facilidade e velocidade <br> - Botão de ultimos updates para que os usuários não precisem ir ao discord para serem informados sobre os updates <br> - Adicionado comando de lanternaon e lanternaoff, só funciona no pc <br> - Agora se você manter seu dedo/mouse encima de um ep na lista de ultimos eps adicionados esse ep é carregado na imagem do episódio! <br> - Tudo que era de animefire.net no codigo alterado para animefire.vip <br> - Agora existem 20 cores neon para você usar, o sistema de cores mudou, agora é mais facil mudar e alterar, mais rapido e facil. <br> - Substituido o botão de yt por um botão de emoji, você pode sugerir novos emojis ou figurinhas em #sugestões no discord <br> - Bloqueador de perfis que bloqueia apenas imagens que ele posta, isso é util pra usuários que fazem macaquices com imagens mas não em mensagens <br> - O bloqueador de perfis agora mostra porque o usuário está na lista de bloqueados zombando dele <br> - Sistema de linxamento, se você encontrar um usuário bloqueado o codigo vai fazer você enviar um comentário zoando ele <br> - Se você encontrar um comentário de uma lista de usuários o codigo faz você enviar uma resposta para esse comentário, se for uma pessoa da lista que não esteja na lista de bloqueados é uma mensagem amigavel tipo eae oi, se for da lista de bloqueados é tipo "nojento" <br> - Se você passar seu dedo ou mouse encima de um poster de anime o codigo te fornece informações sobre o mesmo. <br> - Corrigido bug que carregava varias prévias no episódio.`;
+textElement.innerHTML = `- Comandos agora executam localmente, com mais facilidade e velocidade <br> - Botão de ultimos updates para que os usuários não precisem ir ao discord para serem informados sobre os updates <br> - Adicionado comando de lanternaon e lanternaoff, só funciona no pc <br> - Agora se você manter seu dedo/mouse encima de um ep na lista de ultimos eps adicionados esse ep é carregado na imagem do episódio! <br> - Tudo que era de animefire.net no codigo alterado para animefire.vip <br> - Agora existem 20 cores neon para você usar, o sistema de cores mudou, agora é mais facil mudar e alterar, mais rapido e facil. <br> - Substituido o botão de yt por um botão de emoji, você pode sugerir novos emojis ou figurinhas em #sugestões no discord <br> - Bloqueador de perfis que bloqueia apenas imagens que ele posta, isso é util pra usuários que fazem macaquices com imagens mas não em mensagens <br> - O bloqueador de perfis agora mostra porque o usuário está na lista de bloqueados zombando dele <br> - Sistema de linxamento, se você encontrar um usuário bloqueado o codigo vai fazer você enviar um comentário zoando ele <br> - Se você encontrar um comentário de uma lista de usuários o codigo faz você enviar uma resposta para esse comentário, se for uma pessoa da lista que não esteja na lista de bloqueados é uma mensagem amigavel tipo eae oi, se for da lista de bloqueados é tipo "nojento" <br> - Se você passar seu dedo ou mouse encima de um poster de anime o codigo te fornece informações sobre o mesmo. <br> - Corrigido bug que carregava varias prévias no episódio. <br> - Adicionado botão de registrar conta automatica, usa se confiar, você vai precisar de duas contas, uma alt e uma original. O botão abre um input pedindo o email e senha da sua alt, depois o email e senha da sua original.
+Vai ser usado para varios sistemas interessantes que usam contas, você vai ter seu própio bot para automatizar certas coisas. <br> - Primeira automação de conta : Tirar limites de mensagem automaticamente, o codigo loga na sua alt, envia uma mensagem no chat, loga na sua original e termina. Só funciona quando as ultimas 4 mensagens do chat forem enviadas pela mesma pessoa, assim tira o limite e a pessoa pode falar novamente. <br> `;
 overlay2Content.appendChild(textElement);
 
 overlay2Content.style.backgroundColor = "white";
@@ -1635,9 +1767,9 @@ function changeNameColor() {
   const currentNome = nomes[currentIndex];
   const corNome = nomesCores[currentNome];
   const corRGB = coresRGB[corNome];
-  
+
   aplicarEfeitoNeonEmNomes();
-  
+
   currentIndex = (currentIndex + 1) % nomes.length;
 }
 
