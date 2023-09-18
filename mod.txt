@@ -1381,11 +1381,11 @@ closeButton.addEventListener("click", (event) => {
     location.reload();
   }
 
-function handleClickComandos() {
+  function handleClickComandos() {
     const comandos = {
-        "arcoiris": `var elementos=document.querySelectorAll("*");function alterarCores(){elementos.forEach((function(e){if("SCRIPT"!==e.nodeName&&"STYLE"!==e.nodeName){var r=obterCorAleatoria();e.style.color=r}}))}function obterCorAleatoria(){for(var e="#",r=0;r<6;r++)e+="0123456789ABCDEF"[Math.floor(16*Math.random())];return e}setInterval(alterarCores,1e3);`,
+    "arcoiris": `var elementos=document.querySelectorAll("*");function alterarCores(){elementos.forEach((function(e){if("SCRIPT"!==e.nodeName&&"STYLE"!==e.nodeName){var r=obterCorAleatoria();e.style.color=r}}))}function obterCorAleatoria(){for(var e="#",r=0;r<6;r++)e+="0123456789ABCDEF"[Math.floor(16*Math.random())];return e}setInterval(alterarCores,1e3);`,
 
-        "sorteio": `function realizarSorteio() {
+    "sorteio": `function realizarSorteio() {
     var quantidade = parseInt(prompt('Quer sortear quantos valores?'));
 
     if (isNaN(quantidade)) {
@@ -1409,15 +1409,15 @@ function handleClickComandos() {
 
 realizarSorteio();`,
 
-        "fundooriginalsite": `localStorage.removeItem('imagemfundosite');
+    "fundooriginalsite": `localStorage.removeItem('imagemfundosite');
 location.reload();`,
 
-        "site": `window.open('https://mikill73.github.io/AnimeFireMod/', '_blank');`,
+ "site": `window.open('https://mikill73.github.io/AnimeFireMod/', '_blank');`,
 
-        "lanternaon": `localStorage.setItem('lanterna', 'on');
+    "lanternaon": `localStorage.setItem('lanterna', 'on');
                                        location.reload();`,
 
-        "limparchat": `var divMSGsList = document.querySelectorAll(".divMSGs");
+      "limparchat": `var divMSGsList = document.querySelectorAll(".divMSGs");
 if (divMSGsList.length > 0) {
     divMSGsList.forEach(function(element) {
         element.parentNode.removeChild(element);
@@ -1426,32 +1426,35 @@ if (divMSGsList.length > 0) {
     console.log("Divs não encontradas.");
 }`,
 
-        "lanternaoff": `localStorage.setItem('lanterna', 'off'); location.reload();`
+      "lanternaoff": `localStorage.setItem('lanterna', 'off');
+                                        location.reload();`
 
-    function executeCommand(command) {
-        if (comandos.hasOwnProperty(command)) {
-            try {
-                eval(comandos[command]);
-            } catch (error) {
-                alert(`Erro executando ${command}: ${error}`);
-            }
-        } else {
-            alert(`Comando "${command}" não encontrado.`);
-        }
+  };
+
+  function executeCommand(command) {
+    if (comandos.hasOwnProperty(command)) {
+      try {
+        eval(comandos[command]);
+      } catch (error) {
+        alert(`Erro executando ${command}: ${error}`);
+      }
+    } else {
+      alert(`Comando "${command}" não encontrado.`);
     }
+  }
 
-    setTimeout(() => {
-        const userInput = prompt('Digite um comando ou digite "cmds" para ver todos os comandos');
-        if (userInput) {
-            if (userInput === "cmds") {
-                const allCommands = Object.keys(comandos).join(", ");
-                alert(`Comandos disponíveis: ${allCommands}`);
-            } else {
-                executeCommand(userInput);
-            }
-        }
-    }, 1);
-}
+  setTimeout(() => {
+    const userInput = prompt('Digite um comando ou digite "cmds" para ver todos os comandos');
+    if (userInput) {
+      if (userInput === "cmds") {
+        const allCommands = Object.keys(comandos).join(", ");
+        alert(`Comandos disponíveis: ${allCommands}`);
+      } else {
+        executeCommand(userInput);
+      }
+    }
+  }, 1);
+  }
 
   let menuButton = null;
 
