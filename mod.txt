@@ -9,6 +9,48 @@
 // @grant        none
 // ==/UserScript==
 
+//tag firedeluxe para usuários no chat
+(function() {
+  'use strict'
+
+function getCookie(name) {
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; ${name}=`);
+  if (parts.length === 2) return parts.pop().split(';').shift();
+}
+
+function removerDominioDosLinks() {
+  const linksPerfilPC = document.querySelectorAll(".linkPerfilPC");
+
+  const cookieAprovados = getCookie("aprovados");
+  const aprovados = cookieAprovados ? cookieAprovados.split(" ") : [];
+
+  linksPerfilPC.forEach(function (link) {
+    const href = link.getAttribute("href");
+
+    if (href && href.startsWith("https://animefire.vip")) {
+      const novoHref = href.replace("https://animefire.vip", "");
+      link.setAttribute("href", novoHref);
+      if (aprovados.includes(novoHref)) {
+        const spanTag = document.createElement("span");
+        spanTag.className = "modTag";
+        spanTag.textContent = "FireDeluxe";
+        link.parentNode.insertBefore(spanTag, link.nextSibling);
+      }
+    }
+  });
+}
+
+removerDominioDosLinks();
+
+const observer = new MutationObserver(function () {
+  removerDominioDosLinks();
+});
+
+const config = { childList: true, subtree: true };
+observer.observe(document.body, config);
+})();
+
 //algo aleátorio pra acionar ouvintes, isso substitui os intervalos que consomem ram
 (function() {
   'use strict';
