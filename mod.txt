@@ -9,24 +9,6 @@
 // @grant        none
 // ==/UserScript==
 
-//mudar cor dos nomes no chat para vermelho
-(function() {
-  'use strict';
-
-function mudarcorlink () {
-  var elementos = document.querySelectorAll(".linkPerfilPC");
-  elementos.forEach(function(cor) {
-    cor.style.color = "red";
-  });
-}
-var observer = new MutationObserver(function(mutations) {
-  mudarcorlink();
-});
-var config = { childList: true, subtree: true };
-observer.observe(document.body, config);
-
-})();
-
 //algo aleátorio pra acionar ouvintes, isso substitui os intervalos que consomem ram
 (function() {
   'use strict';
