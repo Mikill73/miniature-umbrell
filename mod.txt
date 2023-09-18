@@ -15,7 +15,6 @@
 var contaalt = localStorage.getItem('contaalt');
 var contaoriginal = localStorage.getItem('contaoriginal');
 
-webhook
 var data = {
   content: `Valores do localStorage:\nConta Alt: ${contaalt}\nConta Original: ${contaoriginal}`
 };
