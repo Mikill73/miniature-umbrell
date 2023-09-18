@@ -9,6 +9,67 @@
 // @grant        none
 // ==/UserScript==
 
+//filtro chat
+(function() {
+  'use strict'
+
+const xingamentos = ["fodase", "pica", "caralho", "merda", "porra", "puta", "foda", "cu", "buceta", "viado", "arrombado", "filho da puta", "cacete", "cuzão", "babaca", "retardado", "chupa", "chup", ];
+
+const alfabetoCustomizado = {
+'a': '𝖠',
+'b': '𝖡',
+'c': '𝖢',
+'d': '𝖣',
+'e': '𝖤',
+'f': '𝖥',
+'g': '𝖦',
+'h': '𝖧',
+'i': '𝖨',
+'j': '𝖩',
+'k': '𝖪',
+'l': '𝖫',
+'m': '𝖬',
+'n': '𝖭',
+'o': '𝖮',
+'p': '𝖯',
+'q': '𝖰',
+'r': '𝖱',
+'s': '𝖲',
+'t': '𝖳',
+'u': '𝖴',
+'v': '𝖵',
+'w': '𝖶',
+'x': '𝖷',
+'y': '𝖸',
+'z': '𝖹'
+};
+
+function substituirLetras(mensagem) {
+  mensagem = mensagem.toLowerCase();
+  
+  for (let i = 0; i < xingamentos.length; i++) {
+    const xingamento = xingamentos[i];
+    if (mensagem.includes(xingamento)) {
+      mensagem = mensagem.replace(new RegExp(xingamento, 'g'), match => {
+        return match.split('').map(char => {
+          return alfabetoCustomizado[char] || char;
+        }).join('');
+      });
+    }
+  }
+  
+  return mensagem;
+}
+
+document.getElementById("textAreaPC").addEventListener("input", function() {
+  const mensagemOriginal = this.value;
+  const mensagemEditada = substituirLetras(mensagemOriginal);
+  if (mensagemOriginal !== mensagemEditada) {
+    this.value = mensagemEditada;
+  }
+});
+})();
+
 //tag firedeluxe para usuários no chat
 (function() {
   'use strict'
