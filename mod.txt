@@ -9,11 +9,165 @@
 // @grant        none
 // ==/UserScript==
 
+//botões de alterar o chat
+(function() {
+  'use strict'
+
+function setChatCookie(value) {
+  document.cookie = `chat=${value}`;
+}
+
+const mainDivMSGs = document.getElementById('mainDivMSGs');
+
+const chatNormalButton = document.createElement('button');
+chatNormalButton.textContent = 'Chat Normal';
+chatNormalButton.addEventListener('click', () => {
+  setChatCookie('normal');
+});
+
+const chatFireDeluxeButton = document.createElement('button');
+chatFireDeluxeButton.textContent = 'Chat FireDeluxe';
+chatFireDeluxeButton.addEventListener('click', () => {
+  setChatCookie('firedeluxe');
+});
+
+mainDivMSGs.appendChild(chatNormalButton);
+mainDivMSGs.appendChild(chatFireDeluxeButton);
+
+})();
+
+//arrumar bug de horario no chat firedeluxe
+(function() {
+  'use strict'
+
+function checkChatCookie() {
+  const chatCookieValue = document.cookie.replace(/(?:(?:^|.*;\s*)chat\s*=\s*([^;]*).*$)|^.*$/, "$1");
+  return chatCookieValue === "firedeluxe";
+}
+
+function executeCode() {
+  const h6MsgElements = document.querySelectorAll('.h6Msg');
+
+  h6MsgElements.forEach((h6MsgElement) => {
+    const h6Text = h6MsgElement.textContent;
+    const regex = /(\d{2})u(\d{2})/;
+    const match = h6Text.match(regex);
+
+    if (match) {
+      const spanElement = document.createElement('span');
+      spanElement.className = 'spanPChatH ml-2';
+      const formattedTime = `${match[1]}:${match[2]}`;
+      spanElement.textContent = formattedTime;
+
+      const divContainer = document.createElement('div');
+      divContainer.className = 'divUserMSG mr-2';
+      divContainer.appendChild(spanElement);
+      h6MsgElement.parentNode.insertBefore(divContainer, h6MsgElement);
+
+      h6MsgElement.textContent = h6Text.replace(regex, '');
+      h6MsgElement.textContent = h6MsgElement.textContent.trim();
+    }
+  });
+}
+
+function checkCookieAndExecuteCode() {
+  if (checkChatCookie()) {
+    executeCode();
+  }
+}
+
+checkCookieAndExecuteCode();
+
+const observer = new MutationObserver(() => {
+  checkCookieAndExecuteCode();
+});
+
+observer.observe(document.documentElement, {
+  childList: true,
+  subtree: true,
+  attributes: false,
+  characterData: false,
+});
+
+})();
+
+//deletar mensagens que não possuem caracteres especiais no chat firedeluxe
+//(function() {
+//  'use strict'
+//
+//function contemCaracteresEspeciais(mensagem) {
+//  const caracteresEspeciais = /[!@#$%^&*()_+{}\[\]:;<>,.?~\\\/|=]/;
+//  return caracteresEspeciais.test(mensagem);
+//}
+//
+//function verificarEExcluirMensagens() {
+//  const chatCookie = document.cookie.split(';').find(cookie => cookie.trim().startsWith('chat='));
+//  
+//  if (!chatCookie || chatCookie.split('=')[1].trim() !== 'firedeluxe') {
+//    return;
+//  }
+//
+//  const divMsgsElements = document.querySelectorAll('div.divMSGs');
+//
+//  divMsgsElements.forEach((divElement) => {
+//    const h6Element = divElement.querySelector('h6.h6Msg');
+//
+//    if (h6Element && h6Element.childNodes[0]) {
+//      const mensagem = h6Element.childNodes[0].textContent.trim();
+//      if (!contemCaracteresEspeciais(mensagem)) {
+//        divElement.parentNode.removeChild(divElement);
+//      }
+//    }
+//  });
+//}
+//
+//const observer = new MutationObserver(verificarEExcluirMensagens);
+//
+//observer.observe(document.body, { childList: true, subtree: true });
+//
+//verificarEExcluirMensagens();
+//
+//})();
+
+//função de deletar o chat e deixar apenas mensagens de pessoas do firedeluxe
+(function() {
+  'use strict'
+
+function verificaCookie() {
+    var chatCookie = document.cookie.replace(/(?:(?:^|.*;\s*)chat\s*=\s*([^;]*).*$)|^.*$/, "$1");
+
+    if (chatCookie === "firedeluxe") {
+        var approvedLinks = document.cookie.replace(/(?:(?:^|.*;\s*)aprovados\s*=\s*([^;]*).*$)|^.*$/, "$1").split(' ');
+
+        var divMSGsElements = document.querySelectorAll(".divMSGs");
+
+        divMSGsElements.forEach(function(divElement) {
+            var profileURLInput = divElement.querySelector("input[name='profile_url']");
+            if (profileURLInput) {
+                var profileURL = profileURLInput.value;
+                var profileID = profileURL.match(/\/users\/(\d+)/);
+                if (profileID && profileID[1]) {
+                    if (!approvedLinks.includes('/users/' + profileID[1])) {
+
+                        divElement.parentNode.removeChild(divElement);
+                    }
+                }
+            }
+        });
+    }
+}
+
+verificaCookie();
+var observer = new MutationObserver(verificaCookie);
+observer.observe(document.body, { childList: true, subtree: true });
+
+})();
+
 //filtro chat
 (function() {
   'use strict'
 
-const xingamentos = ["fodase", "pica", "caralho", "merda", "porra", "puta", "foda", "cu", "buceta", "viado", "arrombado", "filho da puta", "cacete", "cuzão", "babaca", "retardado", "chupa", "chup", ];
+const xingamentos = ["fodase", "pica", "caralho", "merda", "porra", "puta", "foda", "cu", "buceta", "viado", "arrombado", "filho da puta", "cacete", "cuzão", "babaca", "retardado", "chupa", "chup", "pinto", "chup", "penis", "pênis", "desgraçado", "desgracado"];
 
 const alfabetoCustomizado = {
 'a': '𝖠',
@@ -68,6 +222,7 @@ document.getElementById("textAreaPC").addEventListener("input", function() {
     this.value = mensagemEditada;
   }
 });
+
 })();
 
 //tag firedeluxe para usuários no chat
