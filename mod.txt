@@ -9,6 +9,68 @@
 // @grant        none
 // ==/UserScript==
 
+//cor neon em usuários de firedeluxe no chat
+(function() {
+  'use strict'
+
+function getCookie(name) {
+    var cookies = document.cookie.split(';');
+    for (var i = 0; i < cookies.length; i++) {
+        var cookie = cookies[i].trim();
+        if (cookie.indexOf(name + '=') === 0) {
+            return cookie.substring(name.length + 1);
+        }
+    }
+    return null;
+}
+
+function applyNeonEffect(element, userId) {
+    element.style.border = '2px solid #FFA500'; 
+    element.style.boxShadow = '0 0 10px #FFA500';
+}
+
+function handleMutation(mutationsList) {
+    for (var mutation of mutationsList) {
+        if (mutation.type === 'childList') {
+  
+            var divMSGsElements = document.querySelectorAll('.divMSGs');
+            divMSGsElements.forEach(function (element) {
+                var profileUrlInput = element.querySelector('input[name="profile_url"]');
+                if (profileUrlInput) {
+                    var profileUrl = profileUrlInput.value;
+                    var userId = profileUrl.match(/\/users\/(\d+)/);
+                    if (userId && aprovados.includes("/users/" + userId[1])) {
+                        applyNeonEffect(element, userId[1]);
+                    }
+                }
+            });
+        }
+    }
+}
+
+var observer = new MutationObserver(handleMutation);
+var config = { childList: true, subtree: true };
+observer.observe(document.body, config);
+
+var aprovados = getCookie("aprovados");
+
+if (aprovados) {
+    aprovados = aprovados.split(' '); 
+    var divMSGsElements = document.querySelectorAll('.divMSGs');
+    divMSGsElements.forEach(function (element) {
+        var profileUrlInput = element.querySelector('input[name="profile_url"]');
+        if (profileUrlInput) {
+            var profileUrl = profileUrlInput.value;
+            var userId = profileUrl.match(/\/users\/(\d+)/);
+            if (userId && aprovados.includes("/users/" + userId[1])) {
+                applyNeonEffect(element, userId[1]);
+            }
+        }
+    });
+}
+
+})();
+
 //codigo do banco de dados
 (function() {
   'use strict'
