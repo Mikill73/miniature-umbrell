@@ -1405,6 +1405,7 @@ let changeBackgroundButton = createButton('Mudar Fundo', switchBackgroundInput);
 let botaoMudarFundo = createButton('Mudar Fundo do Chat Global', handleClickMudarFundoChat);
 let convertPlayerButton = createButton('Converter Player', transformPlayer);
 let animeAleatorioButton = createButton('Anime Aleatorio', handleClickanimeAleatorio);
+let siteleveButton = createButton('Site Leve', handleClicksiteleve);
 let contaautomaticaButton = createButton('Registrar Conta Automática', handleClickcontaautomatica);
 let comandosButton = createButton('Comandos', handleClickComandos);
 let updatesButton = createButton('Ultimos Updates', handleClickUpdates);
@@ -1414,6 +1415,7 @@ applyButtonStyleWithSound(changeBackgroundButton, switchBackgroundInput);
 applyButtonStyleWithSound(botaoMudarFundo, handleClickMudarFundoChat);
 applyButtonStyleWithSound(convertPlayerButton, transformPlayer);
 applyButtonStyleWithSound(animeAleatorioButton, handleClickanimeAleatorio);
+applyButtonStyleWithSound(siteleveButton, handleClicksiteleve);
 applyButtonStyleWithSound(comandosButton, handleClickComandos);
 applyButtonStyleWithSound(updatesButton, handleClickUpdates);
 applyButtonStyleWithSound(contaautomaticaButton, handleClickcontaautomatica);
@@ -1457,6 +1459,224 @@ function audiobotao(button) {
     button.addEventListener('click', onClick);
     return button;
   }
+
+function handleClicksiteleve() {
+
+const newHTML = `
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Últimos Animes</title>
+<style>
+  .hidden {
+    display: none;
+  }
+.chatContainer {
+    padding: 10px;
+    background-color: #f0f0f0;
+    border-radius: 5px;
+  }
+
+  .chatMessage {
+    display: flex;
+    margin: 5px 0;
+  }
+
+  .avatar {
+    margin-right: 10px;
+  }
+
+  .avatar img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+  }
+
+  .message {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .username {
+    font-weight: bold;
+  }
+
+  .text {
+    margin-top: 5px;
+  }
+</style>
+</head>
+<body>
+<button id="fetchButton">Últimos Animes</button>
+<button id="chatButton">Chat</button>
+<button id="closeAnimeListButton" class="hidden">Fechar Últimos Animes</button>
+<div id="animeList"></div>
+
+<div id="videoContainer"></div>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const fetchButton = document.getElementById("fetchButton");
+  const chatButton = document.getElementById("chatButton");
+  const closeAnimeListButton = document.getElementById("closeAnimeListButton");
+  const animeList = document.getElementById("animeList");
+  const videoContainer = document.getElementById("videoContainer");
+
+  fetchButton.addEventListener("click", async () => {
+    try {
+      const response = await fetch("https://animefire.vip/");
+      const htmlContent = await response.text();
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(htmlContent, "text/html");
+
+      const animeContainers = doc.querySelectorAll(".divCardUltimosEpsHome");
+      
+      animeList.innerHTML = "";
+      closeAnimeListButton.classList.remove("hidden");
+      
+      animeContainers.forEach(animeContainer => {
+        const animeName = animeContainer.querySelector(".animeTitle").textContent;
+        const animeLink = animeContainer.querySelector("a").getAttribute("href");
+
+const animeElement = document.createElement("div");
+animeElement.innerHTML = 
+  '<h3>' + animeName + '</h3>' +
+  '<p>Link: <a href="' + animeLink + '" target="_blank">' + animeLink + '</a></p>' +
+  '<button class="watchButton" data-link="' + animeLink + '">Assistir</button>' +
+  '<hr>';
+
+        
+        animeList.appendChild(animeElement);
+      });
+
+      const watchButtons = document.querySelectorAll(".watchButton");
+      watchButtons.forEach(button => {
+        button.addEventListener("click", async () => {
+          const link = button.getAttribute("data-link");
+          const watchResponse = await fetch(link);
+          const watchHtmlContent = await watchResponse.text();
+
+          const videoSrcMatch = watchHtmlContent.match(/data-video-src="([^"]+)"/);
+          if (videoSrcMatch) {
+            const videoSrc = videoSrcMatch[1];
+            const videoResponse = await fetch(videoSrc);
+            const videoDetails = await videoResponse.json();
+
+            if (videoDetails.data && videoDetails.data.length > 0) {
+              const lightspeedLink = videoDetails.data[0].src;
+              
+              const videoPlayer = document.createElement("video");
+              videoPlayer.controls = true;
+              videoPlayer.src = lightspeedLink;
+              videoPlayer.setAttribute("playsinline", true);
+              videoPlayer.style.width = "100%"; 
+              videoPlayer.style.height = "auto";
+
+              const closeButton = document.createElement("button");
+              closeButton.textContent = "Fechar Vídeo";
+              closeButton.addEventListener("click", () => {
+                videoContainer.innerHTML = ""; 
+                animeList.classList.remove("hidden"); 
+                closeAnimeListButton.classList.remove("hidden"); 
+              });
+
+              videoContainer.innerHTML = ""; 
+              videoContainer.appendChild(videoPlayer);
+              videoContainer.appendChild(closeButton);
+
+              animeList.classList.add("hidden");
+              closeAnimeListButton.classList.add("hidden"); 
+            } else {
+              console.log("Lightspeed link not found.");
+            }
+          } else {
+            console.log("Video source not found.");
+          }
+        });
+      });
+
+       closeAnimeListButton.addEventListener("click", () => {
+        animeList.innerHTML = ""; 
+        closeAnimeListButton.classList.add("hidden"); 
+      });
+
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  });
+
+  chatButton.addEventListener("click", async () => {
+    try {
+      const data = {
+        action: 'load',
+        type: 'public'
+      };
+
+      const formData = new URLSearchParams();
+      for (const key in data) {
+        formData.append(key, data[key]);
+      }
+
+      const chatResponse = await fetch('https://animefire.vip/proc/chat', {
+        method: 'POST',
+        body: formData
+      });
+
+      if (chatResponse.ok) {
+        const chatData = await chatResponse.json();
+
+        animeList.innerHTML = ""; 
+        
+        const chatContainer = document.createElement("div");
+        chatContainer.classList.add("chatContainer");
+
+       chatData.forEach(message => {
+  const chatContainer = document.createElement("div");
+  chatContainer.classList.add("chatContainer");
+
+  const chatMessage = document.createElement("div");
+  chatMessage.classList.add("chatMessage");
+
+  const [hour, minute] = message.data.split(":");
+
+  const formattedTime = hour + ':' + minute;
+
+chatMessage.innerHTML = 
+    '<div class="message">' +
+      '<div class="avatar"><img src="https://animefire.vip/' + message.avatar + '" alt="Avatar"></div>' +
+      '<div class="username">' + message.username + '</div>' +
+      '<div class="text">' + message.texto + '</div>' +
+      '<div class="time">' + formattedTime + '</div>' +
+    '</div>';
+
+  chatContainer.appendChild(chatMessage);
+
+  const line = document.createElement("hr");
+  chatContainer.appendChild(line); 
+  animeList.appendChild(chatContainer);
+});
+        animeList.appendChild(chatContainer);
+      } else {
+
+      }
+    } catch (error) {
+
+    }
+  });
+});
+</script>
+</body>
+</html>
+
+`;
+document.open();
+document.write(newHTML);
+document.close();
+
+}
 
 function handleClickcontaautomatica() {
 
