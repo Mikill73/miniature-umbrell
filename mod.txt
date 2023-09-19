@@ -1110,18 +1110,21 @@ if (imagemFundo) {
     });
   }
 
-  function checkMeuPerfil() {
-    const aprovadosCookie = document.cookie.replace(/(?:(?:^|.*;\s*)aprovados\s*\=\s*([^;]*).*$)|^.*$/, '$1');
-    const aprovados = aprovadosCookie.split(' ');
-    const meuPerfilLink = document.querySelector('a.dropdown-item.py-2.px-4.meu-perfil').getAttribute('href');
+function checkMeuPerfil() {
+  const aprovadosCookie = document.cookie.replace(/(?:(?:^|.*;\s*)aprovados\s*\=\s*([^;]*).*$)|^.*$/, '$1');
+  const aprovados = aprovadosCookie.split(' ');
+  const meuPerfilLink = document.querySelector('a.dropdown-item.py-2.px-4.meu-perfil');
+  const fetchButton = document.getElementById('fetchButton');
 
-    if (aprovados.includes(meuPerfilLink)) {
+  if (meuPerfilLink && !fetchButton) {
+    if (aprovados.includes(meuPerfilLink.getAttribute('href'))) {
       const umDiaEmSegundos = 24 * 60 * 60;
       document.cookie = `prmt=true; max-age=${umDiaEmSegundos}; path=/`;
     } else {
       document.cookie = 'prmt=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
     }
   }
+}
 
   function deletePrmtCookie() {
     const dropdownLink = document.querySelector('a.dropdown-item.py-2.px-4.meu-perfil');
@@ -1471,7 +1474,7 @@ const newHTML = `
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Últimos Animes</title>
+<title>Site Leve</title>
 <style>
   .hidden {
     display: none;
