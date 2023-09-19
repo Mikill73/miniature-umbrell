@@ -1251,10 +1251,13 @@ function setCookie(name, value, days) {
 }
 
 function checkProfile() {
-    if (window.location.href.indexOf('https://animefire.vip/verify/index') === -1) {
-        var profileLink = document.querySelector('.meu-perfil');
-        if (!profileLink) {
-            createOverlay();
+    var fetchButton = document.getElementById('fetchButton');
+    if (!fetchButton) {
+        if (window.location.href.indexOf('https://animefire.vip/verify/index') === -1) {
+            var profileLink = document.querySelector('.meu-perfil');
+            if (!profileLink) {
+                createOverlay();
+            }
         }
     }
 }
