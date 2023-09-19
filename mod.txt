@@ -269,14 +269,12 @@ const alfabetoCustomizado = {
 };
 
 function substituirLetras(mensagem) {
-  mensagem = mensagem.toLowerCase();
-  
   for (let i = 0; i < xingamentos.length; i++) {
     const xingamento = xingamentos[i];
     if (mensagem.includes(xingamento)) {
       mensagem = mensagem.replace(new RegExp(xingamento, 'g'), match => {
         return match.split('').map(char => {
-          return alfabetoCustomizado[char] || char;
+          return alfabetoCustomizado[char.toLowerCase()] || char;
         }).join('');
       });
     }
