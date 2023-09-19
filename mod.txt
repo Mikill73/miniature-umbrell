@@ -9,6 +9,40 @@
 // @grant        none
 // ==/UserScript==
 
+//botão pular intro
+(function() {
+  'use strict'
+
+var tituloEpisodio = document.querySelector('h1.sectionVideoEpTitle');
+
+if (tituloEpisodio) {
+  var botaoPularIntro = document.createElement('button');
+  botaoPularIntro.innerText = 'Pular Intro';
+  botaoPularIntro.className = 'btnSub';
+  botaoPularIntro.addEventListener('click', function() {
+    var nomeAnime = obterNomeDoAnime();
+    var localStorageData = localStorage.getItem('animeIntroData');
+
+    if (!localStorageData) {
+      localStorageData = '{}';
+    }
+
+    var introData = JSON.parse(localStorageData);
+
+    if (!introData[nomeAnime]) {
+      alert('Você precisa definir quando a intro acaba. O código salvará o tempo quando você definir pela primeira vez.');
+      var tempoIntro = prompt('Coloque quando a intro do anime acaba (no formato: minuto:segundo)');
+      introData[nomeAnime] = tempoIntro;
+      localStorage.setItem('animeIntroData', JSON.stringify(introData));
+    }
+
+    pularIntro(introData[nomeAnime]);
+  });
+  tituloEpisodio.insertAdjacentElement('afterend', botaoPularIntro);
+}
+
+})();
+
 //cor neon em usuários de firedeluxe no chat
 (function() {
   'use strict'
