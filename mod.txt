@@ -13,33 +13,57 @@
 (function() {
   'use strict'
 
-var tituloEpisodio = document.querySelector('h1.sectionVideoEpTitle');
 
-if (tituloEpisodio) {
-  var botaoPularIntro = document.createElement('button');
-  botaoPularIntro.innerText = 'Pular Intro';
-  botaoPularIntro.className = 'btnSub';
-  botaoPularIntro.addEventListener('click', function() {
-    var nomeAnime = obterNomeDoAnime();
-    var localStorageData = localStorage.getItem('animeIntroData');
-
-    if (!localStorageData) {
-      localStorageData = '{}';
-    }
-
-    var introData = JSON.parse(localStorageData);
-
-    if (!introData[nomeAnime]) {
-      alert('Você precisa definir quando a intro acaba. O código salvará o tempo quando você definir pela primeira vez.');
-      var tempoIntro = prompt('Coloque quando a intro do anime acaba (no formato: minuto:segundo)');
-      introData[nomeAnime] = tempoIntro;
-      localStorage.setItem('animeIntroData', JSON.stringify(introData));
-    }
-
-    pularIntro(introData[nomeAnime]);
-  });
-  tituloEpisodio.insertAdjacentElement('afterend', botaoPularIntro);
+function obterNomeDoAnime() {
+  var url = window.location.href;
+  var partesDaURL = url.split('/');
+  var nomeDoAnime = partesDaURL[partesDaURL.length - 2];
+  return nomeDoAnime;
 }
+
+
+function pularIntro(tempoIntro) {
+  var video = document.getElementById('my-video_html5_api');
+  if (video) {
+    var partesTempo = tempoIntro.split(':');
+    var minutos = parseInt(partesTempo[0]);
+    var segundos = parseInt(partesTempo[1]);
+    var tempoTotalSegundos = minutos * 60 + segundos;
+    video.currentTime = tempoTotalSegundos;
+  }
+}
+
+function adicionarBotaoPularIntro() {
+  var h1Element = document.querySelector('h1.sectionVideoEpTitle');
+  if (h1Element) {
+    var botaoPularIntro = document.createElement('button');
+    botaoPularIntro.className = 'btnSub'; 
+    botaoPularIntro.innerText = 'Pular Intro';
+    botaoPularIntro.addEventListener('click', function() {
+      var nomeAnime = obterNomeDoAnime();
+      var localStorageData = localStorage.getItem('animeIntroData');
+
+      if (!localStorageData) {
+        localStorageData = '{}';
+      }
+
+      var introData = JSON.parse(localStorageData);
+
+      if (!introData[nomeAnime]) {
+        alert('Você precisa definir quando a intro acaba. O código salvará o tempo quando você definir pela primeira vez.');
+        var tempoIntro = prompt('Coloque quando a intro do anime acaba (no formato: minuto:segundo)');
+        introData[nomeAnime] = tempoIntro;
+        localStorage.setItem('animeIntroData', JSON.stringify(introData));
+      }
+
+      pularIntro(introData[nomeAnime]);
+    });
+
+h1Element.parentNode.insertBefore(botaoPularIntro, h1Element.nextSibling);
+  }
+}
+
+adicionarBotaoPularIntro();
 
 })();
 
