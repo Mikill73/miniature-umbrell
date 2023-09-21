@@ -14,8 +14,8 @@ answerTextarea.style.zIndex = '9999';
 answerTextarea.style.width = '300px';
 answerTextarea.style.height = '200px';
 
-answerTextarea.style.boxShadow = '0 0 10px rgba(255, 69, 0, 0.8)';
-answerTextarea.style.backgroundColor = 'transparent';
+answerTextarea.style.boxShadow = '0 0 10px rgba(255, 69, 0, 0.8), 0 0 10px rgba(255, 69, 0, 0.8), 0 0 10px rgba(255, 69, 0, 0.8)';
+answerTextarea.style.backgroundColor = 'white';
 answerTextarea.style.border = 'none';
 
   let isDragging = false;
