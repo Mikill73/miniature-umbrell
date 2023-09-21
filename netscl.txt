@@ -4,15 +4,19 @@
 
 function createAnswerTextarea() {
 
-  const answerTextarea = document.createElement('textarea');
-  answerTextarea.classList.add('custom-answer-textarea');
-  answerTextarea.setAttribute('readonly', 'true');
-  answerTextarea.style.position = 'absolute';
-  answerTextarea.style.top = '50px';
-  answerTextarea.style.left = '50px';
-  answerTextarea.style.zIndex = '9999';
-  answerTextarea.style.width = '300px';
-  answerTextarea.style.height = '200px';
+const answerTextarea = document.createElement('textarea');
+answerTextarea.classList.add('custom-answer-textarea');
+answerTextarea.setAttribute('readonly', 'true');
+answerTextarea.style.position = 'absolute';
+answerTextarea.style.top = '50px';
+answerTextarea.style.left = '50px';
+answerTextarea.style.zIndex = '9999';
+answerTextarea.style.width = '300px';
+answerTextarea.style.height = '200px';
+
+answerTextarea.style.boxShadow = '0 0 10px rgba(255, 69, 0, 0.8)';
+answerTextarea.style.backgroundColor = 'transparent';
+answerTextarea.style.border = 'none';
 
   let isDragging = false;
   let offsetX, offsetY;
