@@ -17,6 +17,7 @@ answerTextarea.style.height = '200px';
 answerTextarea.style.boxShadow = '0 0 10px rgba(255, 69, 0, 0.8), 0 0 10px rgba(255, 69, 0, 0.8), 0 0 10px rgba(255, 69, 0, 0.8)';
 answerTextarea.style.backgroundColor = 'white';
 answerTextarea.style.border = 'none';
+answerTextarea.style.borderRadius = '10px';
 
   let isDragging = false;
   let offsetX, offsetY;
