@@ -1219,7 +1219,7 @@ if (imagemFundo) {
       if (newAprovados.length !== lastAprovados.length || !newAprovados.every((link, index) => link === lastAprovados[index])) {
         lastAprovados = newAprovados;
       }
-    }, 10000);
+    }, 100000);
   }
 
   function handlePageReload() {
