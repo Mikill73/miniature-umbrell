@@ -861,7 +861,7 @@ setInterval(checkAndRemoveYouTubeLinks, 500);
   'use strict';
 
 const memeLinks = [
-  "https://animefire.vip/uploads/cmt/6276990_1692998733.webp",
+  "https://animefire.vip/uploads/cmt/242162_1695580158.webp",
   "https://animefire.vip/uploads/cmt/5920567_1693016725.webp",
   "https://animefire.vip/uploads/cmt/5643666_1693071987.webp",
   "https://animefire.vip/uploads/cmt/4531479_1693072827.webp",
