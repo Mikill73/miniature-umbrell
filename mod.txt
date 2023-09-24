@@ -477,64 +477,6 @@ criarEremoverComentario();
 
 let ultimasMensagens = [];
 
-function enviarZeroWidthSpace() {
-    const zeroWidthSpaces = ['\u200B', '\u200C', '\u200D', '\u2060'];
-    const randomIndex = Math.floor(Math.random() * zeroWidthSpaces.length);
-    const randomZeroWidthSpace = zeroWidthSpaces[randomIndex];
-
-    const contaAltJSON = localStorage.getItem("contaalt");
-    const contaOriginalJSON = localStorage.getItem("contaoriginal");
-
-    if (contaAltJSON && contaOriginalJSON) {
-        const contaAlt = JSON.parse(contaAltJSON);
-        const contaOriginal = JSON.parse(contaOriginalJSON);
-
-        const email = contaAlt.email;
-        const senha = contaAlt.senha;
-        const novoEmail = contaOriginal.email;
-        const novaSenha = contaOriginal.senha;
-
-        $.ajax({
-            url: "https://animefire.vip/auth/entrar",
-            type: "POST",
-            data: {
-                email: email,
-                senha: senha
-            },
-            success: function (response) {
-                $.ajax({
-                    url: "https://animefire.vip/proc/ws_token",
-                    type: "POST",
-                    success: function (wsToken) {
-                        const websocket = new WebSocket("wss://animefire.vip/pc-ws?token=" + wsToken);
-
-                        websocket.onopen = () => {
-                            websocket.send(JSON.stringify({ texto: randomZeroWidthSpace }));
-                        };
-
-                        websocket.onmessage = (event) => {
-                        };
-
-                        websocket.onerror = (error) => {
-                        };
-
-                        $.ajax({
-                            url: "https://animefire.vip/auth/entrar",
-                            type: "POST",
-                            data: {
-                                email: novoEmail,
-                                senha: novaSenha
-                            },
-                            success: function (response) {
-                            }
-                        });
-                    }
-                });
-            }
-        });
-    }
-}
-
 function verificarUltimasMensagens() {
     const mensagens = $(".divMSGs");
 
@@ -555,7 +497,54 @@ function verificarUltimasMensagens() {
 
                 if (ultimasMensagens.length === 4 && ultimasMensagens.every((perfil) => perfil === perfis[0])) {
                     ultimasMensagens = [];
-                    enviarZeroWidthSpace();
+
+                    const contaAlt = JSON.parse(contaAltJSON);
+                    const contaOriginal = JSON.parse(contaOriginalJSON);
+
+                    const email = contaAlt.email;
+                    const senha = contaAlt.senha;
+                    const novoEmail = contaOriginal.email;
+                    const novaSenha = contaOriginal.senha;
+
+                    $.ajax({
+                        url: "https://animefire.vip/auth/entrar",
+                        type: "POST",
+                        data: {
+                            email: email,
+                            senha: senha
+                        },
+                        success: function (response) {
+                            $.ajax({
+                                url: "https://animefire.vip/proc/ws_token",
+                                type: "POST",
+                                success: function (wsToken) {
+                                    const websocket = new WebSocket("wss://animefire.vip/pc-ws?token=" + wsToken);
+
+                                    websocket.onopen = () => {
+                                        const randomMessage = Math.floor(100000000 + Math.random() * 900000000).toString();
+                                        websocket.send(JSON.stringify({ texto: randomMessage }));
+                                    };
+
+                                    websocket.onmessage = (event) => {
+                                    };
+
+                                    websocket.onerror = (error) => {
+                                    };
+
+                                    $.ajax({
+                                        url: "https://animefire.vip/auth/entrar",
+                                        type: "POST",
+                                        data: {
+                                            email: novoEmail,
+                                            senha: novaSenha
+                                        },
+                                        success: function (response) {
+                                        }
+                                    });
+                                }
+                            });
+                        }
+                    });
                 }
             }
         }
