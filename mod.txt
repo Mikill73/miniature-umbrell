@@ -69,7 +69,7 @@ adicionarBotaoPularIntro();
 //cor neon em usuários de firedeluxe no chat
 //(function() {
 //  'use strict'
-
+//
 //function getCookie(name) {
 //    var cookies = document.cookie.split(';');
 //    for (var i = 0; i < cookies.length; i++) {
@@ -85,11 +85,11 @@ adicionarBotaoPularIntro();
 //    element.style.border = '2px solid #FFA500'; 
 //    element.style.boxShadow = '0 0 10px #FFA500';
 //}
-
+//
 //function handleMutation(mutationsList) {
 //    for (var mutation of mutationsList) {
 //        if (mutation.type === 'childList') {
-  
+//  
 //            var divMSGsElements = document.querySelectorAll('.divMSGs');
 //            divMSGsElements.forEach(function (element) {
 //                var profileUrlInput = element.querySelector('input[name="profile_url"]');
@@ -223,7 +223,7 @@ document.body.addEventListener('click', fetchData);
 //mainDivMSGs.appendChild(chatNormalButton);
 //mainDivMSGs.appendChild(chatFireDeluxeButton);
 
-})();
+//})();
 
 //arrumar bug de horario no chat firedeluxe
 (function() {
