@@ -13,7 +13,6 @@
 (function() {
   'use strict'
 
-
 function obterNomeDoAnime() {
   var url = window.location.href;
   var partesDaURL = url.split('/');
@@ -200,29 +199,29 @@ document.body.addEventListener('click', fetchData);
 })();
 
 //botões de alterar o chat
-(function() {
-  'use strict'
+//(function() {
+//  'use strict'
 
-function setChatCookie(value) {
-  document.cookie = `chat=${value}`;
-}
+//function setChatCookie(value) {
+//  document.cookie = `chat=${value}`;
+//}
 
-const mainDivMSGs = document.getElementById('mainDivMSGs');
+//const mainDivMSGs = document.getElementById('mainDivMSGs');
 
-const chatNormalButton = document.createElement('button');
-chatNormalButton.textContent = 'Chat Normal';
-chatNormalButton.addEventListener('click', () => {
-  setChatCookie('normal');
-});
+//const chatNormalButton = document.createElement('button');
+/chatNormalButton.textContent = 'Chat Normal';
+//chatNormalButton.addEventListener('click', () => {
+//  setChatCookie('normal');
+//});
 
-const chatFireDeluxeButton = document.createElement('button');
-chatFireDeluxeButton.textContent = 'Chat FireDeluxe';
-chatFireDeluxeButton.addEventListener('click', () => {
-  setChatCookie('firedeluxe');
-});
+//const chatFireDeluxeButton = document.createElement('button');
+//chatFireDeluxeButton.textContent = 'Chat FireDeluxe';
+//chatFireDeluxeButton.addEventListener('click', () => {
+//  setChatCookie('firedeluxe');
+//});
 
-mainDivMSGs.appendChild(chatNormalButton);
-mainDivMSGs.appendChild(chatFireDeluxeButton);
+//mainDivMSGs.appendChild(chatNormalButton);
+//mainDivMSGs.appendChild(chatFireDeluxeButton);
 
 })();
 
