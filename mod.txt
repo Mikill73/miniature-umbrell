@@ -209,7 +209,7 @@ document.body.addEventListener('click', fetchData);
 //const mainDivMSGs = document.getElementById('mainDivMSGs');
 
 //const chatNormalButton = document.createElement('button');
-/chatNormalButton.textContent = 'Chat Normal';
+//chatNormalButton.textContent = 'Chat Normal';
 //chatNormalButton.addEventListener('click', () => {
 //  setChatCookie('normal');
 //});
