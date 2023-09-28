@@ -54,7 +54,6 @@ function obterNomeDoAnime() {
   return nomeDoAnime;
 }
 
-
 function pularIntro(tempoIntro) {
   var video = document.getElementById('my-video_html5_api');
   if (video) {
@@ -62,7 +61,7 @@ function pularIntro(tempoIntro) {
     var minutos = parseInt(partesTempo[0]);
     var segundos = parseInt(partesTempo[1]);
     var tempoTotalSegundos = minutos * 60 + segundos;
-    video.currentTime = tempoTotalSegundos;
+    video.currentTime = tempoTotalSegundos + 90; // Pula 90 segundos adicionais
   }
 }
 
@@ -74,25 +73,10 @@ function adicionarBotaoPularIntro() {
     botaoPularIntro.innerText = 'Pular Intro';
     botaoPularIntro.addEventListener('click', function() {
       var nomeAnime = obterNomeDoAnime();
-      var localStorageData = localStorage.getItem('animeIntroData');
-
-      if (!localStorageData) {
-        localStorageData = '{}';
-      }
-
-      var introData = JSON.parse(localStorageData);
-
-      if (!introData[nomeAnime]) {
-        alert('Você precisa definir quando a intro acaba. O código salvará o tempo quando você definir pela primeira vez.');
-        var tempoIntro = prompt('Coloque quando a intro do anime acaba (no formato: minuto:segundo)');
-        introData[nomeAnime] = tempoIntro;
-        localStorage.setItem('animeIntroData', JSON.stringify(introData));
-      }
-
-      pularIntro(introData[nomeAnime]);
+      pularIntro('0:00'); // Pule a introdução definindo o tempo como '0:00' + 90 segundos
     });
 
-h1Element.parentNode.insertBefore(botaoPularIntro, h1Element.nextSibling);
+    h1Element.parentNode.insertBefore(botaoPularIntro, h1Element.nextSibling);
   }
 }
 
