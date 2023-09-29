@@ -9,6 +9,22 @@
 // @grant        none
 // ==/UserScript==
 
+(function() {
+  'use strict'
+
+const btnOpenPC = document.getElementById("btnOpenPC");
+const btnClosePC = document.getElementById("btnClosePC");
+
+function pressionarBotao() {
+  btnOpenPC.click();
+  setTimeout(function() {
+    btnClosePC.click();
+  }, 500);
+}
+
+pressionarBotao();
+
+})();
 
 (function() {
   'use strict'
