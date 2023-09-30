@@ -12,6 +12,102 @@
 (function() {
   'use strict'
 
+function addMessagesToMainDiv(divsHTMLData) {
+  const mainDivMSGs = document.getElementById('mainDivMSGs');
+
+  function isMessageDuplicate(htmlData) {
+    const existingMessages = mainDivMSGs.querySelectorAll('.message');
+    for (const message of existingMessages) {
+      if (message.innerHTML === htmlData) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  for (let i = divsHTMLData.length - 1; i >= 0; i--) {
+    const htmlData = divsHTMLData[i];
+    if (!isMessageDuplicate(htmlData)) {
+      const divElement = document.createElement('div');
+      divElement.className = 'message';
+      divElement.innerHTML = htmlData;
+      mainDivMSGs.insertBefore(divElement, mainDivMSGs.firstChild);
+    }
+  }
+}
+
+function checkAndDeleteDuplicateMessages() {
+  const mainDivMSGs = document.getElementById('mainDivMSGs');
+  const messages = mainDivMSGs.querySelectorAll('.message');
+  const messageTexts = Array.from(messages).map((message) => message.innerHTML);
+
+  messages.forEach((message, index) => {
+    const messageText = message.innerHTML;
+    const duplicateIndex = messageTexts.indexOf(messageText, index + 1);
+    if (duplicateIndex !== -1) {
+      if (message.classList.contains('message')) {
+        mainDivMSGs.removeChild(message);
+      }
+    }
+  });
+}
+
+const observer = new MutationObserver(() => {
+  checkAndDeleteDuplicateMessages();
+});
+
+observer.observe(document.getElementById('mainDivMSGs'), {
+  childList: true,
+});
+
+if (localStorage.getItem('divsHTML')) {
+  const divsHTMLData = JSON.parse(localStorage.getItem('divsHTML'));
+  addMessagesToMainDiv(divsHTMLData);
+}
+})();
+
+(function() {
+  'use strict'
+
+function formatarData(data) {
+  const dia = data.getDate().toString().padStart(2, '0');
+  const mes = (data.getMonth() + 1).toString().padStart(2, '0');
+  const horas = data.getHours().toString().padStart(2, '0');
+  const minutos = data.getMinutes().toString().padStart(2, '0');
+  return `${dia}/${mes} - ${horas}:${minutos}`;
+}
+
+function adicionarHTMLDasDivsAoLocalStorage() {
+  function verificarEAtualizar() {
+    const divsMsg = document.querySelectorAll('.divMSGs');
+    const dadosLocalStorage = JSON.parse(localStorage.getItem('divsHTML')) || [];
+
+    divsMsg.forEach((divMsg) => {
+      const htmlDaDiv = divMsg.outerHTML;
+
+      if (!dadosLocalStorage.includes(htmlDaDiv)) {
+        dadosLocalStorage.push(htmlDaDiv);
+        const dataAtual = formatarData(new Date());
+        const spanPChatH = divMsg.querySelector('.spanPChatH');
+        if (spanPChatH) {
+          spanPChatH.textContent = dataAtual;
+        }
+      }
+    });
+
+    localStorage.setItem('divsHTML', JSON.stringify(dadosLocalStorage));
+  }
+
+  setInterval(verificarEAtualizar, 1000);
+}
+
+adicionarHTMLDasDivsAoLocalStorage();
+
+})();
+
+(function() {
+  'use strict'
+
 const btnOpenPC = document.getElementById("btnOpenPC");
 const btnClosePC = document.getElementById("btnClosePC");
 
