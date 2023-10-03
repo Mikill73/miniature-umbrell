@@ -37,14 +37,11 @@ function obterNomeDoAnime() {
   return nomeDoAnime;
 }
 
-function pularIntro(tempoIntro) {
+function pularIntro() {
   var video = document.getElementById('my-video_html5_api');
   if (video) {
-    var partesTempo = tempoIntro.split(':');
-    var minutos = parseInt(partesTempo[0]);
-    var segundos = parseInt(partesTempo[1]);
-    var tempoTotalSegundos = minutos * 60 + segundos;
-    video.currentTime = tempoTotalSegundos + 90; // Pula 90 segundos adicionais
+    var tempoAtual = video.currentTime;
+    video.currentTime = tempoAtual + 90;
   }
 }
 
@@ -55,11 +52,17 @@ function adicionarBotaoPularIntro() {
     botaoPularIntro.className = 'btnSub'; 
     botaoPularIntro.innerText = 'Pular Intro';
     botaoPularIntro.addEventListener('click', function() {
-      var nomeAnime = obterNomeDoAnime();
-      pularIntro('0:00'); // Pule a introdução definindo o tempo como '0:00' + 90 segundos
+      pularIntro();
     });
 
     h1Element.parentNode.insertBefore(botaoPularIntro, h1Element.nextSibling);
+  }
+
+  var barraDeProgresso = document.querySelector('.ytp-progress-bar');
+  if (barraDeProgresso) {
+    barraDeProgresso.addEventListener('click', function() {
+      pularIntro();
+    });
   }
 }
 
