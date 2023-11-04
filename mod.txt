@@ -803,6 +803,10 @@ function checkMessages() {
       profileUrl: 'https://animefire.vip/users/610144334',
       blockedImageText: 'Imagem Bloqueada : Esse usuário posta soft porn, qualquer imagem postada por ele vai ser bloqueada'
     },
+    {
+      profileUrl: 'https://animefire.vip/users/704302842',
+      blockedImageText: 'Imagem Bloqueada : Esse usuário posta soft porn, qualquer imagem postada por ele vai ser bloqueada'
+    },
   ];
 
   const imageSelector = '.divUserMSG img';
