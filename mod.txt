@@ -797,8 +797,12 @@ function checkMessages() {
     },
     {
       profileUrl: 'https://animefire.vip/users/450952355',
-      blockedImageText: 'Retardado posta porn e usa foto de perfil de porn, banner de porn, amigos de porn, nunca tocou em uma mulher e nunca vai tocar, os neuronios estão sendo destruidos pelo consumo de pornografia'
-    }
+      blockedImageText: 'Imagem Bloqueada : Posta porn, usa foto de perfil de porn, banner de porn e amigos que fazem o mesmo'
+    },
+    {
+      profileUrl: 'https://animefire.vip/users/610144334',
+      blockedImageText: 'Imagem Bloqueada : Esse usuário posta soft porn, qualquer imagem postada por ele vai ser bloqueada'
+    },
   ];
 
   const imageSelector = '.divUserMSG img';
