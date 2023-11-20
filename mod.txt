@@ -4,8 +4,8 @@
 // @version      0.5.1
 // @description  FIREMOD, criado por Mikill para modificar o site animefire.vip
 // @author       Mikill
-// @match        https://animefire.vip/*
-// @icon         https://animefire.vip/uploads/cmt/8578871_1689091569.webp
+// @match        https://animefire.plus/*
+// @icon         https://animefire.plus/uploads/cmt/8578871_1689091569.webp
 // @grant        none
 // ==/UserScript==
 
@@ -854,7 +854,7 @@ function checkMessages() {
       blockedImageText: 'Imagem Bloqueada : Devoluido postou hentai de estupro no chat'
     },
     {
-      profileUrl: 'https://animefire.net/users/359161384',
+      profileUrl: 'https://animefire.plus/users/359161384',
       blockedImageText: 'Imagem Bloqueada : Esse sem cérebro aspirante a nazista postando 30 terabytes de gore no chat'
     },
     {
