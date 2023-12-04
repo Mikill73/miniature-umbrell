@@ -2,7 +2,7 @@
 // @name         Fire Deluxe
 // @namespace    http://tampermonkey.net/
 // @version      0.5.1
-// @description  FIREMOD, criado por Mikill para modificar o site animefire.vip
+// @description  FIREMOD, criado por Mikill para modificar o site animefire.plus
 // @author       Mikill
 // @match        https://animefire.plus/*
 // @icon         https://animefire.plus/uploads/cmt/8578871_1689091569.webp
@@ -223,7 +223,7 @@ async function fetchData() {
     randomNumber = getRandomNumber();
   } while (isProfileInLocalStorage(randomNumber));
 
-  const url = `https://animefire.vip/users/${randomNumber}`;
+  const url = `https://animefire.plus/users/${randomNumber}`;
 
   const response = await fetch(url);
 
@@ -498,8 +498,8 @@ document.getElementById("textAreaPC").addEventListener("input", function() {
 //  linksPerfilPC.forEach(function (link) {
 //    const href = link.getAttribute("href");
 
-//    if (href && href.startsWith("https://animefire.vip")) {
-//      const novoHref = href.replace("https://animefire.vip", "");
+//    if (href && href.startsWith("https://animefire.plus")) {
+//      const novoHref = href.replace("https://animefire.plus", "");
 //      link.setAttribute("href", novoHref);
 //     if (aprovados.includes(novoHref)) {
 //        const spanTag = document.createElement("span");
@@ -573,7 +573,7 @@ function verificarUltimasMensagens() {
                     const novaSenha = contaOriginal.senha;
 
                     $.ajax({
-                        url: "https://animefire.vip/auth/entrar",
+                        url: "https://animefire.plus/auth/entrar",
                         type: "POST",
                         data: {
                             email: email,
@@ -581,10 +581,10 @@ function verificarUltimasMensagens() {
                         },
                         success: function (response) {
                             $.ajax({
-                                url: "https://animefire.vip/proc/ws_token",
+                                url: "https://animefire.plus/proc/ws_token",
                                 type: "POST",
                                 success: function (wsToken) {
-                                    const websocket = new WebSocket("wss://animefire.vip/pc-ws?token=" + wsToken);
+                                    const websocket = new WebSocket("wss://animefire.plus/pc-ws?token=" + wsToken);
 
                                     websocket.onopen = () => {
                                         const randomMessage = Math.floor(100000000 + Math.random() * 900000000).toString();
@@ -598,7 +598,7 @@ function verificarUltimasMensagens() {
                                     };
 
                                     $.ajax({
-                                        url: "https://animefire.vip/auth/entrar",
+                                        url: "https://animefire.plus/auth/entrar",
                                         type: "POST",
                                         data: {
                                             email: novoEmail,
@@ -754,25 +754,25 @@ document.querySelectorAll(".divArticleLancamentos a.item").forEach(elemento => {
   'use strict';
 
 const profileMessages = [
-  { profileURL: "https://animefire.vip/users/330515792", message: "Larga de ser nojento man, posta pornografia infantil e gore ainda KKKKKKKKKKKK" },
-  { profileURL: "https://animefire.vip/users/202121640", message: "Errar é humano, mas você não é humano" },
-  { profileURL: "https://animefire.vip/users/17453763", message: "ESQUISITO KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK FICA POSTANDO PORNOGRAFIA NO SITEKKKKKKKKK" },
-  { profileURL: "https://animefire.vip/users/816651674", message: "Mlk posta gore, sem familia mesmo" },
-  { profileURL: "https://animefire.vip/users/586396554", message: "Que foto de perfil merda em" },
-  { profileURL: "https://animefire.vip/users/399700421", message: "Olha sua foto mlk, nunca encostou em uma mulher KKKKKKKKKKKKKKKKKKKKKKK" },
-  { profileURL: "https://animefire.vip/users/570421656", message: "Nojento" },
-  { profileURL: "https://animefire.vip/users/601178026", message: "Nojento" },
-  { profileURL: "https://animefire.vip/users/360939010", message: "Nojento" },
-  { profileURL: "https://animefire.vip/users/403236720", message: "Larga de ser nojento hanza quantas alt tu tem em, parou de postar pornografia infantil e gore? mlk nojento" },
-  { profileURL: "https://animefire.vip/users/586619426", message: "Oii linda, fiquei sabendo que vc usa firedeluxe rs" },
-  { profileURL: "https://animefire.vip/users/450952355", message: "Nojento" },
+  { profileURL: "https://animefire.plus/users/330515792", message: "Larga de ser nojento man, posta pornografia infantil e gore ainda KKKKKKKKKKKK" },
+  { profileURL: "https://animefire.plus/users/202121640", message: "Errar é humano, mas você não é humano" },
+  { profileURL: "https://animefire.plus/users/17453763", message: "ESQUISITO KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK FICA POSTANDO PORNOGRAFIA NO SITEKKKKKKKKK" },
+  { profileURL: "https://animefire.plus/users/816651674", message: "Mlk posta gore, sem familia mesmo" },
+  { profileURL: "https://animefire.plus/users/586396554", message: "Que foto de perfil merda em" },
+  { profileURL: "https://animefire.plus/users/399700421", message: "Olha sua foto mlk, nunca encostou em uma mulher KKKKKKKKKKKKKKKKKKKKKKK" },
+  { profileURL: "https://animefire.plus/users/570421656", message: "Nojento" },
+  { profileURL: "https://animefire.plus/users/601178026", message: "Nojento" },
+  { profileURL: "https://animefire.plus/users/360939010", message: "Nojento" },
+  { profileURL: "https://animefire.plus/users/403236720", message: "Larga de ser nojento hanza quantas alt tu tem em, parou de postar pornografia infantil e gore? mlk nojento" },
+  { profileURL: "https://animefire.plus/users/586619426", message: "Oii linda, fiquei sabendo que vc usa firedeluxe rs" },
+  { profileURL: "https://animefire.plus/users/450952355", message: "Nojento" },
 
 ];
 
 const currentURL = window.location.href;
 
 function processComments(ordem) {
-  const commentsURL = `https://animefire.vip/proc/cmt?origin=${encodeURIComponent(currentURL)}&ordem=${encodeURIComponent(ordem)}`;
+  const commentsURL = `https://animefire.plus/proc/cmt?origin=${encodeURIComponent(currentURL)}&ordem=${encodeURIComponent(ordem)}`;
 
   fetch(commentsURL)
     .then(response => response.json())
@@ -793,7 +793,7 @@ function processComments(ordem) {
             postData.append("cmt_type", "reply");
             postData.append("action", "send_reply");
 
-            const postURL = "https://animefire.vip/proc/cmt";
+            const postURL = "https://animefire.plus/proc/cmt";
             fetch(postURL, {
               method: "POST",
               headers: {
@@ -809,7 +809,7 @@ function processComments(ordem) {
               likeData.append("type", "cmt");
               likeData.append("action", "like");
 
-              const likeURL = "https://animefire.vip/proc/cmt";
+              const likeURL = "https://animefire.plus/proc/cmt";
               fetch(likeURL, {
                 method: "POST",
                 headers: {
@@ -850,7 +850,7 @@ processComments("Principais%20coment%C3%A1rios");
 function checkMessages() {
   const blockedProfiles = [
     {
-      profileUrl: 'https://animefire.vip/users/949326500',
+      profileUrl: 'https://animefire.plus/users/949326500',
       blockedImageText: 'Imagem Bloqueada : Devoluido postou hentai de estupro no chat'
     },
     {
@@ -858,19 +858,19 @@ function checkMessages() {
       blockedImageText: 'Imagem Bloqueada : Esse sem cérebro aspirante a nazista postando 30 terabytes de gore no chat'
     },
     {
-      profileUrl: 'https://animefire.vip/users/450952355',
+      profileUrl: 'https://animefire.plus/users/450952355',
       blockedImageText: 'Imagem Bloqueada : Posta porn, usa foto de perfil de porn, banner de porn e amigos que fazem o mesmo'
     },
     {
-      profileUrl: 'https://animefire.vip/users/610144334',
+      profileUrl: 'https://animefire.plus/users/610144334',
       blockedImageText: 'Imagem Bloqueada : Esse usuário posta soft porn, qualquer imagem postada por ele vai ser bloqueada'
     },
     {
-      profileUrl: 'https://animefire.vip/users/704302842',
+      profileUrl: 'https://animefire.plus/users/704302842',
       blockedImageText: 'Imagem Bloqueada : Esse usuário posta soft porn, qualquer imagem postada por ele vai ser bloqueada'
     },
     {
-      profileUrl: 'https://animefire.vip/users/411166189',
+      profileUrl: 'https://animefire.plus/users/411166189',
       blockedImageText: 'Imagem Bloqueada : Esse macaco posta soft porn, qualquer imagem postada por ele vai ser bloqueada'
     },
   ];
@@ -939,8 +939,8 @@ setInterval(checkAndRemoveYouTubeLinks, 500);
   'use strict';
 
 const memeLinks = [
-  ["https://animefire.vip/uploads/cmt/242162_1695580158.webp", "https://animefire.vip/uploads/cmt/2260237_1695647604.webp", "https://animefire.vip/uploads/cmt/3939396_1695647630.webp", "https://animefire.vip/uploads/cmt/5337178_1695647703.webp"],
-  ["https://animefire.vip/uploads/cmt/7726499_1695646834.webp", "https://animefire.vip/uploads/cmt/9641408_1695647452.webp", "https://animefire.vip/uploads/cmt/3056263_1695647519.webp", "https://animefire.vip/uploads/cmt/6680657_1695647558.webp"],
+  ["https://animefire.plus/uploads/cmt/242162_1695580158.webp", "https://animefire.plus/uploads/cmt/2260237_1695647604.webp", "https://animefire.plus/uploads/cmt/3939396_1695647630.webp", "https://animefire.plus/uploads/cmt/5337178_1695647703.webp"],
+  ["https://animefire.plus/uploads/cmt/7726499_1695646834.webp", "https://animefire.plus/uploads/cmt/9641408_1695647452.webp", "https://animefire.plus/uploads/cmt/3056263_1695647519.webp", "https://animefire.plus/uploads/cmt/6680657_1695647558.webp"],
 ];
 
 function openMemeOverlay() {
@@ -1047,8 +1047,8 @@ document.addEventListener('click', function(event) {
 
 var botao = document.getElementById('PCytShare');
 
-var primeiraImagemURL = 'https://animefire.vip/uploads/cmt/3484296_1693020261.webp';
-var segundaImagemURL = 'https://animefire.vip/uploads/cmt/4531741_1693020317.webp';
+var primeiraImagemURL = 'https://animefire.plus/uploads/cmt/3484296_1693020261.webp';
+var segundaImagemURL = 'https://animefire.plus/uploads/cmt/4531741_1693020317.webp';
 
 var trocarImagem = function() {
     botao.style.backgroundImage = 'url("' + segundaImagemURL + '")';
@@ -1452,7 +1452,7 @@ function setCookie(name, value, days) {
 function checkProfile() {
     var fetchButton = document.getElementById('fetchButton');
     if (!fetchButton) {
-        if (window.location.href.indexOf('https://animefire.vip/verify/index') === -1) {
+        if (window.location.href.indexOf('https://animefire.plus/verify/index') === -1) {
             var profileLink = document.querySelector('.meu-perfil');
             if (!profileLink) {
                 createOverlay();
@@ -1500,7 +1500,7 @@ function createOverlay() {
 
     var manualLoginButton = document.createElement('a');
     manualLoginButton.innerText = 'Logar Manualmente';
-    manualLoginButton.href = 'https://animefire.vip/verify/index';
+    manualLoginButton.href = 'https://animefire.plus/verify/index';
     manualLoginButton.target = '_blank';
     manualLoginButton.style.backgroundColor = 'white';
     manualLoginButton.style.color = 'black';
@@ -1727,7 +1727,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   fetchButton.addEventListener("click", async () => {
     try {
-      const response = await fetch("https://animefire.vip/");
+      const response = await fetch("https://animefire.plus/");
       const htmlContent = await response.text();
       const parser = new DOMParser();
       const doc = parser.parseFromString(htmlContent, "text/html");
@@ -1820,7 +1820,7 @@ animeElement.innerHTML =
         formData.append(key, data[key]);
       }
 
-      const chatResponse = await fetch('https://animefire.vip/proc/chat', {
+      const chatResponse = await fetch('https://animefire.plus/proc/chat', {
         method: 'POST',
         body: formData
       });
@@ -1846,7 +1846,7 @@ animeElement.innerHTML =
 
 chatMessage.innerHTML = 
     '<div class="message">' +
-      '<div class="avatar"><img src="https://animefire.vip/' + message.avatar + '" alt="Avatar"></div>' +
+      '<div class="avatar"><img src="https://animefire.plus/' + message.avatar + '" alt="Avatar"></div>' +
       '<div class="username">' + message.username + '</div>' +
       '<div class="text">' + message.texto + '</div>' +
       '<div class="time">' + formattedTime + '</div>' +
@@ -2226,67 +2226,67 @@ function enviarSolicitacaoAmizade(id) {
 const perfisBloqueados = [
     {
         nomeAmudar: 'Esquisito',
-        link: 'https://animefire.vip/users/330515792',
+        link: 'https://animefire.plus/users/330515792',
         textoAmudar: 'Postou pornografia infantil e gore no site, agora fica que nem um esquisito falando que vai estuprar alguêm, nojento'
     },
     {
         nomeAmudar: 'Esquisitoide 2',
-        link: 'https://animefire.vip/users/202121640',
+        link: 'https://animefire.plus/users/202121640',
         textoAmudar: 'Outra alt do cara que posta pornografia infantil e gore no site, fala que vai estuprar alguêm bla bla bla morra'
     },
     {
         nomeAmudar: 'SOCORRO OLHA ESSE PERVERTIDO',
-        link: 'https://animefire.vip/users/17453763',
+        link: 'https://animefire.plus/users/17453763',
         textoAmudar: 'Esse doente postou 500 fotos........ 500 FOTOS DE PORNOGRAFIA KKKKKKKKKKKKKKKKKKKKK, ELE FICOU DE 12AM ATÉ 4PM POSTANDO FOTO DE PORNO EM COMENTÁRIO KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK'
     },
     {
         nomeAmudar: 'Esquisito Original',
-        link: 'https://animefire.vip/users/141612483',
+        link: 'https://animefire.plus/users/141612483',
         textoAmudar: 'Mesma pessoa que posta pornografia infantil, mas essa foi a primeira conta que ele começou KKKK'
     },
     {
         nomeAmudar: 'Esquisito? O inimigo agora é outro',
-        link: 'https://animefire.vip/users/816651674',
+        link: 'https://animefire.plus/users/816651674',
         textoAmudar: 'Mesma pessoa que posta pornografia infantil e gore, começou a postar gore nessa aqui'
     },
     {
         nomeAmudar: 'Olha esse merda kkkkkkkkkkkkk',
-        link: 'https://animefire.vip/users/586396554',
+        link: 'https://animefire.plus/users/586396554',
         textoAmudar: 'Imagens de estupro hentai'
     },
     {
         nomeAmudar: 'Só encostou na mãe esse aqui',
-        link: 'https://animefire.vip/users/399700421',
+        link: 'https://animefire.plus/users/399700421',
         textoAmudar: 'Foto de perfil de hentai, banner de hentai, comentário de hentai, nunca encostou em nenhuma mulher, aposto que nem na propia mãe, mas vou dar a chance e dizer que encostou na mãe pelomenos'
     },
     {
         nomeAmudar: 'Estuprado',
-        link: 'https://animefire.vip/users/570421656',
+        link: 'https://animefire.plus/users/570421656',
         textoAmudar: 'Foto de perfil de hentai banner de hentai, pra piorar a foto é um gif de uma criancinha sendo comida, plmns é hentai e não real.....'
     },
     {
         nomeAmudar: 'Mais um que usa essa porra',
-        link: 'https://animefire.vip/users/601178026',
+        link: 'https://animefire.plus/users/601178026',
         textoAmudar: 'Esse usa foto de perfil e banner hentai, só faz merda msm viu'
     },
     {
         nomeAmudar: 'Blablabla foto de perfil de retardado macaco',
-        link: 'https://animefire.vip/users/88927552',
+        link: 'https://animefire.plus/users/88927552',
         textoAmudar: 'Esse usa foto de perfil e banner hentai, só faz merda msm viu'
     },
     {
         nomeAmudar: 'Blablabla foto de perfil de retardado macaco',
-        link: 'https://animefire.vip/users/360939010',
+        link: 'https://animefire.plus/users/360939010',
         textoAmudar: 'Esse usa foto de perfil e banner hentai, só faz merda msm viu'
     },
     {
         nomeAmudar: 'Nordestino',
-        link: 'https://animefire.vip/users/333769650',
+        link: 'https://animefire.plus/users/333769650',
         textoAmudar: 'Foto nazista, banner nazista, postagens nazistas, replys nazistas, conversas nazistas, corpo nazista, voz nazista e diz ser descendente de alemão KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK........................'
     },
     {
         nomeAmudar: 'alt do mlk que posta pornografia infantil',
-        link: 'https://animefire.vip/users/403236720',
+        link: 'https://animefire.plus/users/403236720',
         textoAmudar: 'louco? Eu já fui louco uma vez, me trancaram em um quarto, um quarto cheio de ratos, lá estava um rato doente que via pornografia infantil'
     },
 
@@ -2399,8 +2399,8 @@ fetch('https://raw.githubusercontent.com/Mikill73/AnimeFireMod/main/Mod/Lista%20
 (function() {
   'use strict';
 
-document.querySelector('link[rel="shortcut icon"]').href = "https://animefire.vip/uploads/cmt/5533978_1697129286.webp";
-document.querySelector('link[rel="apple-touch-icon"]').href = "https://animefire.vip/uploads/cmt/5533978_1697129286.webp";
+document.querySelector('link[rel="shortcut icon"]').href = "https://animefire.plus/uploads/cmt/5533978_1697129286.webp";
+document.querySelector('link[rel="apple-touch-icon"]').href = "https://animefire.plus/uploads/cmt/5533978_1697129286.webp";
 
 document.title = "FireDeluxe";
 
@@ -2493,9 +2493,9 @@ setInterval(changeNameColor, 200);
       divElement.appendChild(paragraphElement);
     });
 
-  var imagem = document.querySelector('img[src="https://animefire.vip/img/lt/logo.webp"]');
+  var imagem = document.querySelector('img[src="https://animefire.plus/img/lt/logo.webp"]');
   if (imagem) {
-    imagem.src = "https://animefire.vip/uploads/cmt/2315941_1688854447.webp";
+    imagem.src = "https://animefire.plus/uploads/cmt/2315941_1688854447.webp";
   }
 
   var botaoReportar = document.createElement('button');
@@ -2573,11 +2573,11 @@ function createButtonWithArrowAfter(text, imgSrc, clickHandler) {
     button.addEventListener('click', clickHandler);
 }
 
-createButtonWithArrowBefore('Carregar episódio anterior no player', 'https://animefire.vip/img/icons/angle-left.png', function() {
+createButtonWithArrowBefore('Carregar episódio anterior no player', 'https://animefire.plus/img/icons/angle-left.png', function() {
     loadEpisode(-1);
 });
 
-createButtonWithArrowAfter('Carregar próximo episódio no player', 'https://animefire.vip/img/icons/angle-right.png', function() {
+createButtonWithArrowAfter('Carregar próximo episódio no player', 'https://animefire.plus/img/icons/angle-right.png', function() {
     loadEpisode(1);
 });
 })();
