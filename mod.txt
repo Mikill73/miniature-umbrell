@@ -25,7 +25,7 @@ function atualizarMensagem() {
     .catch(error => console.error('Ocorreu um erro ao buscar a mensagem:', error));
 }
 
-setInterval(atualizarMensagem, 10000);
+setInterval(atualizarMensagem, 5000);
 
 })();
 
