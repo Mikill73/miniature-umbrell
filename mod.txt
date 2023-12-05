@@ -9,26 +9,6 @@
 // @grant        none
 // ==/UserScript==
 
-//verificar se o texto é o mesmo que o do github pra atualizar em tempo real
-(function() {
-  'use strict';
-
-function atualizarMensagem() {
-  fetch('https://raw.githubusercontent.com/Mikill73/Bairro-AnimeFire/main/msgs.txt')
-    .then(response => response.text())
-    .then(data => {
-      const textoMensagem = document.getElementById('textoMensagem');
-      if (textoMensagem.textContent !== data) {
-        textoMensagem.textContent = data;
-      }
-    })
-    .catch(error => console.error('Ocorreu um erro ao buscar a mensagem:', error));
-}
-
-setInterval(atualizarMensagem, 3000);
-
-})();
-
 //texto no chat
 (function() {
   'use strict';
