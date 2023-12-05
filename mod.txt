@@ -14,7 +14,7 @@
   'use strict';
 
 function atualizarMensagem() {
-  fetch('https://raw.githubusercontent.com/Mikill73/AnimeFireMod/main/Mod/mensagem.txt')
+  fetch('https://raw.githubusercontent.com/Mikill73/Bairro-AnimeFire/main/msgs.txt')
     .then(response => response.text())
     .then(data => {
       const textoMensagem = document.getElementById('textoMensagem');
@@ -34,7 +34,7 @@ setInterval(atualizarMensagem, 10000);
   'use strict';
 
   const divClosePC = document.getElementById('divClosePC');
-  const urlDoGitHub = 'https://raw.githubusercontent.com/Mikill73/AnimeFireMod/main/Mod/mensagem.txt';
+  const urlDoGitHub = 'https://raw.githubusercontent.com/Mikill73/Bairro-AnimeFire/main/msgs.txt';
 
   let currentText = '';
 
