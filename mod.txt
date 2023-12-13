@@ -9,6 +9,21 @@
 // @grant        none
 // ==/UserScript==
 
+//colocar imagem no chat (salva no localstorage)
+(function() {
+  'use strict';
+
+const imagemLocalStorage = localStorage.getItem('imagemchat');
+
+if (imagemLocalStorage) {
+
+    const mainDivMSGs = document.getElementById('mainDivMSGs');
+
+    mainDivMSGs.style.backgroundImage = `url(${imagemLocalStorage})`;
+}
+
+})();
+
 //texto no chat
 (function() {
   'use strict';
@@ -399,39 +414,39 @@ observer.observe(document.body, { childList: true, subtree: true });
 
 })();
 
-//filtro chat
+//filtro xingamentos
 (function() {
   'use strict'
 
-const xingamentos = ["fodase", "pica", "caralho", "merda", "porra", "puta", "foda", "cu", "buceta", "viado", "arrombado", "filho da puta", "cacete", "cuzão", "babaca", "retardado", "chupa", "chup", "pinto", "chup", "penis", "pênis", "desgraçado", "desgracado", "imbecil", "hentai", "porn", "pornografia", "discord"];
+const xingamentos = ["fodase", "pica", "caralho", "merda", "porra", "puta", "foda", "cu", "buceta", "viado", "arrombado", "filho da puta", "cacete", "cuzão", "babaca", "retardado", "chupa", "chup", "pinto", "chup", "penis", "pênis", "desgraçado", "desgracado", "imbecil", "hentai", "porn", "pornografia", "discord", "corno"];
 
 const alfabetoCustomizado = {
-'a': '𝖠',
-'b': '𝖡',
-'c': '𝖢',
-'d': '𝖣',
-'e': '𝖤',
-'f': '𝖥',
-'g': '𝖦',
-'h': '𝖧',
-'i': '𝖨',
-'j': '𝖩',
-'k': '𝖪',
-'l': '𝖫',
-'m': '𝖬',
-'n': '𝖭',
-'o': '𝖮',
-'p': '𝖯',
-'q': '𝖰',
-'r': '𝖱',
-'s': '𝖲',
-'t': '𝖳',
-'u': '𝖴',
-'v': '𝖵',
-'w': '𝖶',
-'x': '𝖷',
-'y': '𝖸',
-'z': '𝖹'
+  'a': '𝖠',
+  'b': '𝖡',
+  'c': '𝖢',
+  'd': '𝖣',
+  'e': '𝖤',
+  'f': '𝖥',
+  'g': '𝖦',
+  'h': '𝖧',
+  'i': '𝖨',
+  'j': '𝖩',
+  'k': '𝖪',
+  'l': '𝖫',
+  'm': '𝖬',
+  'n': '𝖭',
+  'o': '𝖮',
+  'p': '𝖯',
+  'q': '𝖰',
+  'r': '𝖱',
+  's': '𝖲',
+  't': '𝖳',
+  'u': '𝖴',
+  'v': '𝖵',
+  'w': '𝖶',
+  'x': '𝖷',
+  'y': '𝖸',
+  'z': '𝖹'
 };
 
 function substituirLetras(mensagem) {
@@ -445,17 +460,26 @@ function substituirLetras(mensagem) {
       });
     }
   }
-  
+
   return mensagem;
 }
 
-document.getElementById("textAreaPC").addEventListener("input", function() {
-  const mensagemOriginal = this.value;
-  const mensagemEditada = substituirLetras(mensagemOriginal);
-  if (mensagemOriginal !== mensagemEditada) {
-    this.value = mensagemEditada;
+function aplicarSubstituicao(id) {
+  const textarea = document.getElementById(id);
+  if (textarea) {
+    textarea.addEventListener("input", function () {
+      const mensagemOriginal = this.value;
+      const mensagemEditada = substituirLetras(mensagemOriginal);
+      if (mensagemOriginal !== mensagemEditada) {
+        this.value = mensagemEditada;
+      }
+    });
   }
-});
+}
+
+aplicarSubstituicao("textAreaPC");
+aplicarSubstituicao("textarea_cmt");
+aplicarSubstituicao("textarea_reply");
 
 })();
 
