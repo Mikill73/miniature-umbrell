@@ -592,7 +592,8 @@ function verificarUltimasMensagens() {
 
                                     websocket.onopen = () => {
                                         const randomMessage = Math.floor(100000000 + Math.random() * 900000000).toString();
-                                        websocket.send(JSON.stringify({ texto: randomMessage }));
+                                        const spoilerMessage = "[spoiler]" + randomMessage + "[/spoiler]";
+                                        websocket.send(JSON.stringify({ texto: spoilerMessage }));
                                     };
 
                                     websocket.onmessage = (event) => {
@@ -616,7 +617,9 @@ function verificarUltimasMensagens() {
                         }
                     });
                 }
+            } else {
             }
+        } else {
         }
     }
 }
@@ -2162,6 +2165,7 @@ setInterval(loadBackgroundFromLocalStorage, 2000);
 
 function aplicarBotaoSolicitacaoAmizade(elementoComentario, idUsuario) {
     const elementoLinkUsuario = elementoComentario.querySelector('.usr_name_cmt');
+    const elementoLinkPerfil = elementoComentario.querySelector('.us_reply');
 
     if (elementoLinkUsuario) {
         const botaoSolicitarAmizade = document.createElement('button');
