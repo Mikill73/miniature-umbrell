@@ -1072,7 +1072,7 @@ botao.addEventListener('click', trocarImagem);
 
 })();
 
-//carregar video na imagem dos ultimos eps quando o mouse passar por cima
+//carregar video na imagem dos ultimos eps quando o mouse passar por cima //prévia do anime
 (function() {
   'use strict';
 
@@ -1122,6 +1122,7 @@ async function fetchVideo(cardElement) {
       videoElement.src = firstSrc;
       videoElement.controls = true;
       videoElement.autoplay = true;
+      videoElement.muted = true;
 
       const imgElement = cardElement.querySelector('img');
       imgElement.parentNode.replaceChild(videoElement, imgElement);
