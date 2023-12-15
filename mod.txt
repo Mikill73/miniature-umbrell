@@ -993,6 +993,7 @@ setInterval(checkAndRemoveYouTubeLinks, 500);
 const memeLinks = [
   ["https://animefire.plus/uploads/cmt/242162_1695580158.webp", "https://animefire.plus/uploads/cmt/2260237_1695647604.webp", "https://animefire.plus/uploads/cmt/3939396_1695647630.webp", "https://animefire.plus/uploads/cmt/5337178_1695647703.webp"],
   ["https://animefire.plus/uploads/cmt/7726499_1695646834.webp", "https://animefire.plus/uploads/cmt/9641408_1695647452.webp", "https://animefire.plus/uploads/cmt/3056263_1695647519.webp", "https://animefire.plus/uploads/cmt/6680657_1695647558.webp"],
+  ["https://animefire.plus/uploads/cmt/2580906_1702598561.webp", "https://animefire.plus/uploads/cmt/4022803_1702598681.webp", "https://animefire.plus/uploads/cmt/9030226_1702598765.webp", "https://animefire.plus/uploads/cmt/3689116_1702598793.webp"],
   ["https://animefire.plus/uploads/cmt/310654_1702604219.webp", "https://animefire.plus/uploads/cmt/5832081_1702604289.webp", "https://animefire.plus/uploads/cmt/8059221_1702604319.webp", "https://animefire.plus/uploads/cmt/3790795_1702604384.webp"],
 ];
 
@@ -1004,6 +1005,11 @@ function openMemeOverlay() {
 function closeMemeOverlay() {
   const overlay = document.querySelector('.overlay3');
   overlay.style.display = 'none';
+}
+
+function setFixedSize(img, width, height) {
+  img.style.width = width + 'px';
+  img.style.height = height + 'px';
 }
 
 var botao = document.getElementById("PCytShare");
@@ -1056,11 +1062,13 @@ for (const linkPair of memeLinks) {
   const randomIndex = Math.floor(Math.random() * linkPair.length);
   const link = linkPair[randomIndex];
 
+  const memeDiv = document.createElement('div');
+  memeDiv.className = 'meme-div';
+
   const memeImg = document.createElement('img');
   memeImg.src = link;
   memeImg.classList.add('meme');
-  memeImg.style.maxWidth = '400px';
-  memeImg.style.maxHeight = '300px';
+  setFixedSize(memeImg, 200, 150);
 
   memeImg.addEventListener('click', () => {
     const randomIndex = Math.floor(Math.random() * linkPair.length);
@@ -1077,7 +1085,8 @@ for (const linkPair of memeLinks) {
     }, 100);
   });
 
-  memeContainer.appendChild(memeImg);
+  memeDiv.appendChild(memeImg);
+  memeContainer.appendChild(memeDiv);
 }
 
 memeContainer.style.maxHeight = '300px';
