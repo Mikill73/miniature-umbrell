@@ -948,6 +948,7 @@ setInterval(checkAndRemoveYouTubeLinks, 500);
 const memeLinks = [
   ["https://animefire.plus/uploads/cmt/242162_1695580158.webp", "https://animefire.plus/uploads/cmt/2260237_1695647604.webp", "https://animefire.plus/uploads/cmt/3939396_1695647630.webp", "https://animefire.plus/uploads/cmt/5337178_1695647703.webp"],
   ["https://animefire.plus/uploads/cmt/7726499_1695646834.webp", "https://animefire.plus/uploads/cmt/9641408_1695647452.webp", "https://animefire.plus/uploads/cmt/3056263_1695647519.webp", "https://animefire.plus/uploads/cmt/6680657_1695647558.webp"],
+  ["https://animefire.plus/uploads/cmt/2580906_1702598561.webp", "https://animefire.plus/uploads/cmt/4022803_1702598681.webp", "https://animefire.plus/uploads/cmt/9030226_1702598765.webp", "https://animefire.plus/uploads/cmt/3689116_1702598793.webp"],
 ];
 
 function openMemeOverlay() {
