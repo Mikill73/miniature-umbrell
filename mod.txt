@@ -9,6 +9,48 @@
 // @grant        none
 // ==/UserScript==
 
+//Enviar imagens no chat jogando elas
+(function() {
+  'use strict';
+
+document.getElementById('div_msgs_pc').addEventListener('dragover', function (e) {
+  e.preventDefault();
+  document.getElementById('div_msgs_pc').style.border = '10px dashed #ccc';
+});
+
+document.getElementById('div_msgs_pc').addEventListener('dragleave', function () {
+  document.getElementById('div_msgs_pc').style.border = 'none';
+});
+
+document.getElementById('div_msgs_pc').addEventListener('drop', function (e) {
+  e.preventDefault();
+  document.getElementById('div_msgs_pc').style.border = 'none';
+
+  var files = e.dataTransfer.files;
+  if (files.length > 0) {
+    var file = files[0];
+
+    var formData = new FormData();
+    formData.append('cmt_share_img', file);
+
+    fetch('https://animefire.plus/proc/cmt', {
+      method: 'POST',
+      body: formData,
+    })
+    .then(response => response.json())
+    .then(data => {
+
+      var imageUrl = data.url.replace(/\\/g, '');
+
+      document.getElementById('textAreaPC').value = '[img]' + imageUrl + '[img]';
+
+        document.getElementById('btnEnviarPchat').click();
+    })
+  }
+});
+
+})();
+
 //colocar imagem no chat (salva no localstorage)
 (function() {
   'use strict';
