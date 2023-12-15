@@ -16,15 +16,18 @@
 document.getElementById('div_msgs_pc').addEventListener('dragover', function (e) {
   e.preventDefault();
   document.getElementById('div_msgs_pc').style.border = '10px dashed #ccc';
+  document.getElementById('div_msgs_pc').style.zIndex = '9999';
 });
 
 document.getElementById('div_msgs_pc').addEventListener('dragleave', function () {
   document.getElementById('div_msgs_pc').style.border = 'none';
+  document.getElementById('div_msgs_pc').style.zIndex = 'initial';
 });
 
 document.getElementById('div_msgs_pc').addEventListener('drop', function (e) {
   e.preventDefault();
   document.getElementById('div_msgs_pc').style.border = 'none';
+  document.getElementById('div_msgs_pc').style.zIndex = 'initial';
 
   var files = e.dataTransfer.files;
   if (files.length > 0) {
@@ -44,7 +47,7 @@ document.getElementById('div_msgs_pc').addEventListener('drop', function (e) {
 
       document.getElementById('textAreaPC').value = '[img]' + imageUrl + '[img]';
 
-        document.getElementById('btnEnviarPchat').click();
+      document.getElementById('btnEnviarPchat').click();
     })
   }
 });
