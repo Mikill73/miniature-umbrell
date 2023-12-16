@@ -69,21 +69,22 @@ document.addEventListener('DOMContentLoaded', function() {
 (function() {
   'use strict';
 
-const hrefElement = document.querySelector('.meu-perfil').getAttribute('href');
-const url = `https://animefire.plus${hrefElement}`;
+document.addEventListener('DOMContentLoaded', function () {
+  const hrefElement = document.querySelector('.meu-perfil').getAttribute('href');
+  const url = `https://animefire.plus${hrefElement}`;
 
-fetch(url)
-  .then(response => response.text())
-  .then(data => {
-    const tempElement = document.createElement('div');
-    tempElement.innerHTML = data;
+  fetch(url)
+    .then(response => response.text())
+    .then(data => {
+      const tempElement = document.createElement('div');
+      tempElement.innerHTML = data;
 
-    const usernameElement = tempElement.querySelector('#checkUserName');
-    const username = usernameElement.textContent.trim();
+      const usernameElement = tempElement.querySelector('#checkUserName');
+      const username = usernameElement.textContent.trim();
 
-    localStorage.setItem('nomeusuario', username);
-  });
-
+      localStorage.setItem('nomeusuario', username);
+    });
+});
 })();
 
 //Enviar imagens no chat jogando elas
