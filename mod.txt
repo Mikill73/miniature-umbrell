@@ -9,47 +9,6 @@
 // @grant        none
 // ==/UserScript==
 
-(function() {
-  'use strict';
-
-if (window.location.href === "https://animefire.plus/verify/index") {
-  const originalButton = document.querySelector('.button[name="login"]');
-  
-  if (originalButton) {
-    const duplicateButton = originalButton.cloneNode(true);
-    duplicateButton.textContent = "Entrar Automaticamente";
-    duplicateButton.style.fontSize = "1.5em";
-    duplicateButton.style.color = "rgb(255, 0, 255)";
-    duplicateButton.style.textShadow = "0 0 10px rgba(255, 0, 255, 1)";
-    originalButton.parentNode.appendChild(duplicateButton);
-
-    duplicateButton.addEventListener("click", function() {
-      const contaOriginalData = JSON.parse(localStorage.getItem("contaoriginal"));
-
-      if (contaOriginalData && contaOriginalData.email && contaOriginalData.senha) {
-        const email = contaOriginalData.email;
-        const senha = contaOriginalData.senha;
-
-        $.ajax({
-          url: "https://animefire.plus/auth/entrar",
-          type: "POST",
-          data: {
-            email: email,
-            senha: senha
-          },
-          success: function(response) {
-            window.location.href = "https://animefire.plus/";
-          }
-        });
-      } else {
-        alert("Você precisa registrar sua conta automática no MENU para usar essa função e outras.");
-      }
-    });
-  }
-}
-
-})();
-
 //salvar link de perfil do usuário em localstorage
 (function() {
   'use strict';
@@ -2717,4 +2676,45 @@ createButtonWithArrowBefore('Carregar episódio anterior no player', 'https://an
 createButtonWithArrowAfter('Carregar próximo episódio no player', 'https://animefire.plus/img/icons/angle-right.png', function() {
     loadEpisode(1);
 });
+})();
+
+(function() {
+  'use strict';
+
+if (window.location.href === "https://animefire.plus/verify/index") {
+  const originalButton = document.querySelector('.button[name="login"]');
+  
+  if (originalButton) {
+    const duplicateButton = originalButton.cloneNode(true);
+    duplicateButton.textContent = "Entrar Automaticamente";
+    duplicateButton.style.fontSize = "1.5em";
+    duplicateButton.style.color = "rgb(255, 0, 255)";
+    duplicateButton.style.textShadow = "0 0 10px rgba(255, 0, 255, 1)";
+    originalButton.parentNode.appendChild(duplicateButton);
+
+    duplicateButton.addEventListener("click", function() {
+      const contaOriginalData = JSON.parse(localStorage.getItem("contaoriginal"));
+
+      if (contaOriginalData && contaOriginalData.email && contaOriginalData.senha) {
+        const email = contaOriginalData.email;
+        const senha = contaOriginalData.senha;
+
+        $.ajax({
+          url: "https://animefire.plus/auth/entrar",
+          type: "POST",
+          data: {
+            email: email,
+            senha: senha
+          },
+          success: function(response) {
+            window.location.href = "https://animefire.plus/";
+          }
+        });
+      } else {
+        alert("Você precisa registrar sua conta automática no MENU para usar essa função e outras.");
+      }
+    });
+  }
+}
+
 })();
