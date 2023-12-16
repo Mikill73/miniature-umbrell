@@ -18,9 +18,9 @@ if (window.location.href === "https://animefire.plus/verify/index") {
   if (originalButton) {
     const duplicateButton = originalButton.cloneNode(true);
     duplicateButton.textContent = "Entrar Automaticamente";
-    duplicateButton.style.backgroundImage = "linear-gradient(45deg, #ffcc00, #ff6600)";
-    duplicateButton.style.color = "#fff";
-    duplicateButton.style.textShadow = "0 0 10px rgba(255, 255, 255, 1)";
+    duplicateButton.style.fontSize = "1.5em";
+    duplicateButton.style.color = "rgb(255, 0, 255)";
+    duplicateButton.style.textShadow = "0 0 10px rgba(255, 0, 255, 1)";
     originalButton.parentNode.appendChild(duplicateButton);
 
     duplicateButton.addEventListener("click", function() {
