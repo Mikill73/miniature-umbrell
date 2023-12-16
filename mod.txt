@@ -193,7 +193,7 @@ if (imagemLocalStorage) {
   }
 
   verificarEAtualizarTexto();
-  setInterval(verificarEAtualizarTexto, 100000);
+  setInterval(verificarEAtualizarTexto, 1000000);
 })();
 
 //abrir e fechar chat
@@ -207,7 +207,7 @@ function pressionarBotao() {
   btnOpenPC.click();
   setTimeout(function() {
     btnClosePC.click();
-  }, 500);
+  }, 1000);
 }
 
 pressionarBotao();
