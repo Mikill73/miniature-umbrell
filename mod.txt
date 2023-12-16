@@ -139,10 +139,17 @@ document.getElementById('div_msgs_pc').addEventListener('drop', function (e) {
 const imagemLocalStorage = localStorage.getItem('imagemchat');
 
 if (imagemLocalStorage) {
-
     const mainDivMSGs = document.getElementById('mainDivMSGs');
 
-    mainDivMSGs.style.backgroundImage = `url(${imagemLocalStorage})`;
+    const setBackgroundImage = () => {
+        mainDivMSGs.style.backgroundImage = `url(${imagemLocalStorage})`;
+        mainDivMSGs.style.backgroundSize = 'cover';
+        mainDivMSGs.style.backgroundPosition = 'center';
+    };
+
+    setBackgroundImage();
+
+    window.addEventListener('resize', setBackgroundImage);
 }
 
 })();
