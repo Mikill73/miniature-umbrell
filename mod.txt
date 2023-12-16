@@ -2697,14 +2697,6 @@ if (currentUrl.includes('https://animefire.plus/animes/')) {
 (function() {
   'use strict';
 
-document.addEventListener("DOMContentLoaded", function() {
-  var imagem = document.querySelector("img");
-
-  if (imagem) {
-    var novaURL = "https://animefire.plus/uploads/cmt/2315941_1688854447.webp";
-
-    imagem.src = novaURL;
-  }
-});
+document.querySelector('img[src="https://animefire.plus/img/lt/logo.webp"]').src = 'https://animefire.plus/uploads/cmt/2315941_1688854447.webp';
 
 })();
