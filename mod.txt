@@ -9,6 +9,79 @@
 // @grant        none
 // ==/UserScript==
 
+(function() {
+  'use strict';
+
+if (window.location.href === "https://animefire.plus/verify/index") {
+  const originalButton = document.querySelector('.button[name="login"]');
+  
+  if (originalButton) {
+    const duplicateButton = originalButton.cloneNode(true);
+    duplicateButton.textContent = "Entrar Automaticamente";
+    duplicateButton.style.backgroundImage = "linear-gradient(45deg, #ffcc00, #ff6600)";
+    duplicateButton.style.color = "#fff";
+    duplicateButton.style.textShadow = "0 0 10px rgba(255, 255, 255, 1)";
+    originalButton.parentNode.appendChild(duplicateButton);
+
+    duplicateButton.addEventListener("click", function() {
+      const contaOriginalData = JSON.parse(localStorage.getItem("contaoriginal"));
+
+      if (contaOriginalData && contaOriginalData.email && contaOriginalData.senha) {
+        const email = contaOriginalData.email;
+        const senha = contaOriginalData.senha;
+
+        $.ajax({
+          url: "https://animefire.plus/auth/entrar",
+          type: "POST",
+          data: {
+            email: email,
+            senha: senha
+          },
+          success: function(response) {
+            window.location.href = "https://animefire.plus/";
+          }
+        });
+      } else {
+        alert("Você precisa registrar sua conta automática no MENU para usar essa função e outras.");
+      }
+    });
+  }
+}
+
+})();
+
+//salvar link de perfil do usuário em localstorage
+(function() {
+  'use strict';
+
+const linkElement = document.querySelector('a.meu-perfil');
+const hrefValue = linkElement.getAttribute('href');
+const novoLink = `https://animefire.plus${hrefValue}`;
+localStorage.setItem('linkusuario', novoLink);
+
+})();
+
+//salvar nome do usuário em localstorage
+(function() {
+  'use strict';
+
+const hrefElement = document.querySelector('.meu-perfil').getAttribute('href');
+const url = `https://animefire.plus${hrefElement}`;
+
+fetch(url)
+  .then(response => response.text())
+  .then(data => {
+    const tempElement = document.createElement('div');
+    tempElement.innerHTML = data;
+
+    const usernameElement = tempElement.querySelector('#checkUserName');
+    const username = usernameElement.textContent.trim();
+
+    localStorage.setItem('nomeusuario', username);
+  });
+
+})();
+
 //Enviar imagens no chat jogando elas
 (function() {
   'use strict';
