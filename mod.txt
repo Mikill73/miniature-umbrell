@@ -2622,62 +2622,66 @@ setInterval(changeNameColor, 200);
 (function() {
   'use strict';
 
-var buttonContainer = document.querySelector('.page-item');
+var currentUrl = window.location.href;
 
-function loadEpisode(offset) {
-    var videoElement = document.getElementById('my-video_html5_api');
-    var titleElement = document.querySelector('.sectionVideoEpTitle');
-    if (videoElement && titleElement) {
-        var videoSrc = videoElement.getAttribute('src');
-        var match = videoSrc.match(/\/(\d+)\.mp4$/);
-        if (match) {
-            var currentEpisode = parseInt(match[1]);
-            var newEpisode = currentEpisode + offset;
-            var newVideoSrc = videoSrc.replace('/' + currentEpisode + '.mp4', '/' + newEpisode + '.mp4');
-            videoElement.setAttribute('src', newVideoSrc);
-            videoElement.load();
-            var titleText = titleElement.textContent;
-            var newTitleText = titleText.replace(/Episódio \d+/, 'Episódio ' + newEpisode);
-            titleElement.textContent = newTitleText;
+if (currentUrl.includes('https://animefire.plus/animes/')) {
+    var buttonContainer = document.querySelector('.page-item');
+
+    function loadEpisode(offset) {
+        var videoElement = document.getElementById('my-video_html5_api');
+        var titleElement = document.querySelector('.sectionVideoEpTitle');
+        if (videoElement && titleElement) {
+            var videoSrc = videoElement.getAttribute('src');
+            var match = videoSrc.match(/\/(\d+)\.mp4$/);
+            if (match) {
+                var currentEpisode = parseInt(match[1]);
+                var newEpisode = currentEpisode + offset;
+                var newVideoSrc = videoSrc.replace('/' + currentEpisode + '.mp4', '/' + newEpisode + '.mp4');
+                videoElement.setAttribute('src', newVideoSrc);
+                videoElement.load();
+                var titleText = titleElement.textContent;
+                var newTitleText = titleText.replace(/Episódio \d+/, 'Episódio ' + newEpisode);
+                titleElement.textContent = newTitleText;
+            }
         }
     }
+
+    function createButtonWithArrowBefore(text, imgSrc, clickHandler) {
+        var button = document.createElement('button');
+        button.className = 'btnSub';
+        button.type = 'button';
+        button.name = 'carregar_episodio';
+        var span = document.createElement('span');
+        span.innerHTML = '<img alt="" src="' + imgSrc + '" style="width: 15px; height: 15px;"> ' + text;
+        button.appendChild(span);
+        var buttonDiv = document.createElement('div');
+        buttonDiv.className = 'animeInfo mx-1 mb-2 divBtnFormEp';
+        buttonDiv.appendChild(button);
+        buttonContainer.appendChild(buttonDiv);
+        button.addEventListener('click', clickHandler);
+    }
+
+    function createButtonWithArrowAfter(text, imgSrc, clickHandler) {
+        var button = document.createElement('button');
+        button.className = 'btnSub';
+        button.type = 'button';
+        button.name = 'carregar_episodio';
+        var span = document.createElement('span');
+        span.innerHTML = text + ' <img alt="" src="' + imgSrc + '" style="width: 15px; height: 15px;">';
+        button.appendChild(span);
+        var buttonDiv = document.createElement('div');
+        buttonDiv.className = 'animeInfo mx-1 mb-2 divBtnFormEp';
+        buttonDiv.appendChild(button);
+        buttonContainer.appendChild(buttonDiv);
+        button.addEventListener('click', clickHandler);
+    }
+
+    createButtonWithArrowBefore('Carregar episódio anterior no player', 'https://animefire.plus/img/icons/angle-left.png', function() {
+        loadEpisode(-1);
+    });
+
+    createButtonWithArrowAfter('Carregar próximo episódio no player', 'https://animefire.plus/img/icons/angle-right.png', function() {
+        loadEpisode(1);
+    });
 }
-
-function createButtonWithArrowBefore(text, imgSrc, clickHandler) {
-    var button = document.createElement('button');
-    button.className = 'btnSub';
-    button.type = 'button';
-    button.name = 'carregar_episodio';
-    var span = document.createElement('span');
-    span.innerHTML = '<img alt="" src="' + imgSrc + '" style="width: 15px; height: 15px;"> ' + text;
-    button.appendChild(span);
-    var buttonDiv = document.createElement('div');
-    buttonDiv.className = 'animeInfo mx-1 mb-2 divBtnFormEp';
-    buttonDiv.appendChild(button);
-    buttonContainer.appendChild(buttonDiv);
-    button.addEventListener('click', clickHandler);
-}
-
-function createButtonWithArrowAfter(text, imgSrc, clickHandler) {
-    var button = document.createElement('button');
-    button.className = 'btnSub';
-    button.type = 'button';
-    button.name = 'carregar_episodio';
-    var span = document.createElement('span');
-    span.innerHTML = text + ' <img alt="" src="' + imgSrc + '" style="width: 15px; height: 15px;">';
-    button.appendChild(span);
-    var buttonDiv = document.createElement('div');
-    buttonDiv.className = 'animeInfo mx-1 mb-2 divBtnFormEp';
-    buttonDiv.appendChild(button);
-    buttonContainer.appendChild(buttonDiv);
-    button.addEventListener('click', clickHandler);
-}
-
-createButtonWithArrowBefore('Carregar episódio anterior no player', 'https://animefire.plus/img/icons/angle-left.png', function() {
-    loadEpisode(-1);
-});
-
-createButtonWithArrowAfter('Carregar próximo episódio no player', 'https://animefire.plus/img/icons/angle-right.png', function() {
-    loadEpisode(1);
-});
 })();
