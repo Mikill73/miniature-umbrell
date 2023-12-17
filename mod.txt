@@ -602,91 +602,91 @@ criarEremoverComentario();
 })();
 
 //conta automatizada 1 : retirar limite de mensagens automaticamente
-(function() {
-  'use strict';
+//(function() {
+  //'use strict';
 
-let ultimasMensagens = [];
+//let ultimasMensagens = [];
 
-function verificarUltimasMensagens() {
-    const mensagens = $(".divMSGs");
+//function verificarUltimasMensagens() {
+  //  const mensagens = $(".divMSGs");
 
-    if (mensagens.length >= 4) {
-        const perfis = [
-            mensagens.eq(-1).find('input[name="profile_url"]').val(),
-            mensagens.eq(-2).find('input[name="profile_url"]').val(),
-            mensagens.eq(-3).find('input[name="profile_url"]').val(),
-            mensagens.eq(-4).find('input[name="profile_url"]').val(),
-        ];
+    //if (mensagens.length >= 4) {
+      //  const perfis = [
+        //    mensagens.eq(-1).find('input[name="profile_url"]').val(),
+          //  mensagens.eq(-2).find('input[name="profile_url"]').val(),
+            //mensagens.eq(-3).find('input[name="profile_url"]').val(),
+            //mensagens.eq(-4).find('input[name="profile_url"]').val(),
+        //];
 
-        if (perfis.every((perfil, index) => perfil === perfis[0])) {
-            const contaAltJSON = localStorage.getItem("contaalt");
-            const contaOriginalJSON = localStorage.getItem("contaoriginal");
+        //if (perfis.every((perfil, index) => perfil === perfis[0])) {
+         //   const contaAltJSON = localStorage.getItem("contaalt");
+           // const contaOriginalJSON = localStorage.getItem("contaoriginal");
 
-            if (contaAltJSON && contaOriginalJSON) {
-                ultimasMensagens.push(perfis[0]);
+            //if (contaAltJSON && contaOriginalJSON) {
+              //  ultimasMensagens.push(perfis[0]);
 
-                if (ultimasMensagens.length === 4 && ultimasMensagens.every((perfil) => perfil === perfis[0])) {
-                    ultimasMensagens = [];
+                //if (ultimasMensagens.length === 4 && ultimasMensagens.every((perfil) => perfil === perfis[0])) {
+                  //  ultimasMensagens = [];
 
-                    const contaAlt = JSON.parse(contaAltJSON);
-                    const contaOriginal = JSON.parse(contaOriginalJSON);
+                    //const contaAlt = JSON.parse(contaAltJSON);
+                    //const contaOriginal = JSON.parse(contaOriginalJSON);
 
-                    const email = contaAlt.email;
-                    const senha = contaAlt.senha;
-                    const novoEmail = contaOriginal.email;
-                    const novaSenha = contaOriginal.senha;
+                    //const email = contaAlt.email;
+                    //const senha = contaAlt.senha;
+                    //const novoEmail = contaOriginal.email;
+                    //const novaSenha = contaOriginal.senha;
 
-                    $.ajax({
-                        url: "https://animefire.plus/auth/entrar",
-                        type: "POST",
-                        data: {
-                            email: email,
-                            senha: senha
-                        },
-                        success: function (response) {
-                            $.ajax({
-                                url: "https://animefire.plus/proc/ws_token",
-                                type: "POST",
-                                success: function (wsToken) {
-                                    const websocket = new WebSocket("wss://animefire.plus/pc-ws?token=" + wsToken);
+                    //$.ajax({
+                      //  url: "https://animefire.plus/auth/entrar",
+                        //type: "POST",
+                        //data: {
+                          //  email: email,
+                            //senha: senha
+                        //},
+                        //success: function (response) {
+                          //  $.ajax({
+                            //    url: "https://animefire.plus/proc/ws_token",
+                              //  type: "POST",
+                                //success: function (wsToken) {
+                                  //  const websocket = new WebSocket("wss://animefire.plus/pc-ws?token=" + wsToken);
 
-                                    websocket.onopen = () => {
-                                        const randomMessage = Math.floor(100000000 + Math.random() * 900000000).toString();
-                                        const spoilerMessage = "[spoiler]" + randomMessage + "[/spoiler]";
-                                        websocket.send(JSON.stringify({ texto: spoilerMessage }));
-                                    };
+                                    //websocket.onopen = () => {
+                                      //  const randomMessage = Math.floor(100000000 + Math.random() * 900000000).toString();
+                                        //const spoilerMessage = "[spoiler]" + randomMessage + "[/spoiler]";
+                                        //websocket.send(JSON.stringify({ texto: spoilerMessage }));
+                                    //};
 
-                                    websocket.onmessage = (event) => {
-                                    };
+                                    //websocket.onmessage = (event) => {
+                                    //};
 
-                                    websocket.onerror = (error) => {
-                                    };
+                                    //websocket.onerror = (error) => {
+                                    //};
 
-                                    $.ajax({
-                                        url: "https://animefire.plus/auth/entrar",
-                                        type: "POST",
-                                        data: {
-                                            email: novoEmail,
-                                            senha: novaSenha
-                                        },
-                                        success: function (response) {
-                                        }
-                                    });
-                                }
-                            });
-                        }
-                    });
-                }
-            } else {
-            }
-        } else {
-        }
-    }
-}
+                                    //$.ajax({
+                                      //  url: "https://animefire.plus/auth/entrar",
+                                        //type: "POST",
+                                        //data: {
+                                          //  email: novoEmail,
+                                            //senha: novaSenha
+                                        //},
+                                        //success: function (response) {
+                                        //}
+                                    //});
+                                //}
+                            //});
+                        //}
+                    //});
+                //}
+            //} else {
+            //}
+        //} else {
+        //}
+    //}
+//}
 
-setInterval(verificarUltimasMensagens, 1000);
+//setInterval(verificarUltimasMensagens, 1000);
 
-})();
+//})();
 
 //dados do anime ao passar mouse encima
 (function() {
