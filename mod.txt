@@ -2229,72 +2229,72 @@ setInterval(loadBackgroundFromLocalStorage, 2000);
 
 
 //botão pedido de amizade comentários
-(function() {
-  'use strict';
+//(function() {
+  //'use strict';
 
-function aplicarBotaoSolicitacaoAmizade(elementoComentario, idUsuario) {
-    const elementoLinkUsuario = elementoComentario.querySelector('.usr_name_cmt');
-    const elementoLinkPerfil = elementoComentario.querySelector('.us_reply');
+//function aplicarBotaoSolicitacaoAmizade(elementoComentario, idUsuario) {
+  //  const elementoLinkUsuario = elementoComentario.querySelector('.usr_name_cmt');
+    //const elementoLinkPerfil = elementoComentario.querySelector('.us_reply');
 
-    if (elementoLinkUsuario) {
-        const botaoSolicitarAmizade = document.createElement('button');
-        botaoSolicitarAmizade.textContent = 'Enviar Pedido de Amizade';
-        botaoSolicitarAmizade.style.background = 'transparent';
-        botaoSolicitarAmizade.style.color = '#FF4500';
-        botaoSolicitarAmizade.style.border = 'none';
-        botaoSolicitarAmizade.style.outline = 'none';
-        botaoSolicitarAmizade.style.cursor = 'pointer';
-        botaoSolicitarAmizade.style.marginLeft = '5px';
-        botaoSolicitarAmizade.style.textShadow = '0 0 2px #FF4500, 0 0 5px #FF4500';
-        botaoSolicitarAmizade.addEventListener('click', () => {
-            enviarSolicitacaoAmizade(idUsuario);
-        });
+    /if (elementoLinkUsuario) {
+    //    const botaoSolicitarAmizade = document.createElement('button');
+      //  botaoSolicitarAmizade.textContent = 'Enviar Pedido de Amizade';
+        //botaoSolicitarAmizade.style.background = 'transparent';
+        //botaoSolicitarAmizade.style.color = '#FF4500';
+        //botaoSolicitarAmizade.style.border = 'none';
+        //botaoSolicitarAmizade.style.outline = 'none';
+        //botaoSolicitarAmizade.style.cursor = 'pointer';
+        //botaoSolicitarAmizade.style.marginLeft = '5px';
+        //botaoSolicitarAmizade.style.textShadow = '0 0 2px #FF4500, 0 0 5px #FF4500';
+        //botaoSolicitarAmizade.addEventListener('click', () => {
+          //  enviarSolicitacaoAmizade(idUsuario);
+        //});
 
-        const botaoExistente = elementoComentario.querySelector('.botao-solicitar-amizade');
-        if (!botaoExistente) {
-            elementoLinkUsuario.parentNode.insertBefore(botaoSolicitarAmizade, elementoLinkUsuario.nextSibling);
-            botaoSolicitarAmizade.classList.add('botao-solicitar-amizade');
-        }
-    }
-}
+       // const botaoExistente = elementoComentario.querySelector('.botao-solicitar-amizade');
+       // if (!botaoExistente) {
+      //      elementoLinkUsuario.parentNode.insertBefore(botaoSolicitarAmizade, elementoLinkUsuario.nextSibling);
+      //      botaoSolicitarAmizade.classList.add('botao-solicitar-amizade');
+      //  }
+//    }
+//}
 
-function verificarNovosComentarios() {
-    const elementosComentario = document.querySelectorAll('.cmt');
-    elementosComentario.forEach(elementoComentario => {
-        const elementoLinkUsuario = elementoComentario.querySelector('.usr_name_cmt');
-        if (elementoLinkUsuario) {
-            const urlUsuario = elementoLinkUsuario.href;
-            const correspondenciaIdUsuario = urlUsuario.match(/\/users\/(\d+)/);
+//function verificarNovosComentarios() {
+//    const elementosComentario = document.querySelectorAll('.cmt');
+//    elementosComentario.forEach(elementoComentario => {
+//        const elementoLinkUsuario = elementoComentario.querySelector('.usr_name_cmt');
+//        if (elementoLinkUsuario) {
+ //           const urlUsuario = elementoLinkUsuario.href;
+//            const correspondenciaIdUsuario = urlUsuario.match(/\/users\/(\d+)/);
 
-            if (correspondenciaIdUsuario && correspondenciaIdUsuario.length >= 2) {
-                const idUsuario = correspondenciaIdUsuario[1];
-                aplicarBotaoSolicitacaoAmizade(elementoComentario, idUsuario);
-            }
-        }
-    });
-}
+//            if (correspondenciaIdUsuario && correspondenciaIdUsuario.length >= 2) {
+  //              const idUsuario = correspondenciaIdUsuario[1];
+   //             aplicarBotaoSolicitacaoAmizade(elementoComentario, idUsuario);
+  //          }
+  //      }
+ //   });
+//}
 
-verificarNovosComentarios();
-setInterval(verificarNovosComentarios, 3000);
+//verificarNovosComentarios();
+//setInterval(verificarNovosComentarios, 3000);
 
-function enviarSolicitacaoAmizade(id) {
-    $.ajax({
-        url: site_url + "/edit/friend",
-        type: "post",
-        data: {
-            action: "send_friend_request",
-            id: id
-        },
-        success: function(response) {
-            alert('Pedido de amizade enviado')
-        },
-        error: function() {
-            alert('Falha')
-        }
-    });
-}
+//function enviarSolicitacaoAmizade(id) {
+   // $.ajax({
+   //     url: site_url + "/edit/friend",
+   //     type: "post",
+    //    data: {
+    //        action: "send_friend_request",
+    //        id: id
+    //    },
+    //    success: function(response) {
+   //         alert('Pedido de amizade enviado')
+     //   },
+     //   error: function() {
+     //       alert('Falha')
+    //    }
+  //  });
+//}
 
-})();
+//})();
 
 // bloqueador de perfis / comentários e reply de comentários
 (function() {
