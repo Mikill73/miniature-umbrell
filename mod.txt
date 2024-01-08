@@ -20,6 +20,7 @@
 // @grant        none
 // ==/UserScript==
 
+//registrar tempo gasto no site
 (function() {
     'use strict';
 
@@ -153,44 +154,54 @@ window.addEventListener('beforeunload', saveAndSumTimeSpent);
 (function() {
   'use strict';
 
-document.getElementById('div_msgs_pc').addEventListener('dragover', function (e) {
-  e.preventDefault();
-  document.getElementById('div_msgs_pc').style.border = '10px dashed #ccc';
-  document.getElementById('div_msgs_pc').style.zIndex = '9999';
-});
+  var divMsgsPc = document.getElementById('div_msgs_pc');
 
-document.getElementById('div_msgs_pc').addEventListener('dragleave', function () {
-  document.getElementById('div_msgs_pc').style.border = 'none';
-  document.getElementById('div_msgs_pc').style.zIndex = 'initial';
-});
+  divMsgsPc.addEventListener('dragover', function (e) {
+    e.preventDefault();
+    divMsgsPc.style.border = '10px dashed #ccc';
+    divMsgsPc.style.zIndex = '9999';
+  });
 
-document.getElementById('div_msgs_pc').addEventListener('drop', function (e) {
-  e.preventDefault();
-  document.getElementById('div_msgs_pc').style.border = 'none';
-  document.getElementById('div_msgs_pc').style.zIndex = 'initial';
+  divMsgsPc.addEventListener('dragleave', function () {
+    divMsgsPc.style.border = 'none';
+    divMsgsPc.style.zIndex = 'initial';
+  });
 
-  var files = e.dataTransfer.files;
-  if (files.length > 0) {
-    var file = files[0];
+  divMsgsPc.addEventListener('mouseenter', function () {
+    divMsgsPc.style.zIndex = '9999';
+  });
 
-    var formData = new FormData();
-    formData.append('cmt_share_img', file);
+  divMsgsPc.addEventListener('mouseleave', function () {
+    if (!divMsgsPc.classList.contains('dragging')) {
+      divMsgsPc.style.zIndex = 'initial';
+    }
+  });
 
-    fetch('https://animefire.plus/proc/cmt', {
-      method: 'POST',
-      body: formData,
-    })
-    .then(response => response.json())
-    .then(data => {
+  divMsgsPc.addEventListener('drop', function (e) {
+    e.preventDefault();
+    divMsgsPc.style.border = 'none';
+    divMsgsPc.style.zIndex = '9999';
 
-      var imageUrl = data.url.replace(/\\/g, '');
+    var files = e.dataTransfer.files;
+    if (files.length > 0) {
+      var file = files[0];
 
-      document.getElementById('textAreaPC').value = '[img]' + imageUrl + '[img]';
+      var formData = new FormData();
+      formData.append('cmt_share_img', file);
 
-      document.getElementById('btnEnviarPchat').click();
-    })
-  }
-});
+      fetch('https://animefire.plus/proc/cmt', {
+        method: 'POST',
+        body: formData,
+      })
+      .then(response => response.json())
+      .then(data => {
+        var imageUrl = data.url.replace(/\\/g, '');
+
+        document.getElementById('textAreaPC').value = '[img]' + imageUrl + '[img]';
+        document.getElementById('btnEnviarPchat').click();
+      })
+    }
+  });
 
 })();
 
@@ -1748,7 +1759,7 @@ let botaoMudarFundo = createButton('Mudar Fundo do Chat Global', handleClickMuda
 let convertPlayerButton = createButton('Converter Player', transformPlayer);
 let animeAleatorioButton = createButton('Anime Aleatorio', handleClickanimeAleatorio);
 let siteleveButton = createButton('Site Leve', handleClicksiteleve);
-let contaautomaticaButton = createButton('Registrar Conta Automática', handleClickcontaautomatica);
+//let contaautomaticaButton = createButton('Registrar Conta Automática', handleClickcontaautomatica);
 let comandosButton = createButton('Comandos', handleClickComandos);
 
 applyButtonStyleWithSound(changeColorButton, switchColorInput);
@@ -1758,7 +1769,7 @@ applyButtonStyleWithSound(convertPlayerButton, transformPlayer);
 applyButtonStyleWithSound(animeAleatorioButton, handleClickanimeAleatorio);
 applyButtonStyleWithSound(siteleveButton, handleClicksiteleve);
 applyButtonStyleWithSound(comandosButton, handleClickComandos);
-applyButtonStyleWithSound(contaautomaticaButton, handleClickcontaautomatica);
+//applyButtonStyleWithSound(contaautomaticaButton, handleClickcontaautomatica);
 
 document.body.appendChild(buttonContainer);
 
@@ -2018,38 +2029,38 @@ document.close();
 
 }
 
-function handleClickcontaautomatica() {
+//function handleClickcontaautomatica() {
 
-function obterEmailEsenha() {
-  const emailAlt = prompt('Digite o e-mail de uma alt que vai usar para automações no site ou digite "ajuda" para mais informações');
+//function obterEmailEsenha() {
+//  const emailAlt = prompt('Digite o e-mail de uma alt que vai usar para automações no site ou digite "ajuda" para mais informações');
 
-  if (emailAlt === "ajuda") {
-    alert("Você precisa de uma segunda conta para fazer certas coisas no site, tipo mandar uma mensagem para tirar o limite de mensagens que você têm quando tiver enviado 4 mensagens, etc...");
-    return;
-  }
+//  if (emailAlt === "ajuda") {
+//    alert("Você precisa de uma segunda conta para fazer certas coisas no site, tipo mandar uma mensagem para tirar o limite de //mensagens que você têm quando tiver enviado 4 mensagens, etc...");
+//    return;
+ // }
 
-  const senhaAlt = prompt('Digite a senha de uma alt que vai usar para automações no site ou digite "ajuda" para mais informações');
+//  const senhaAlt = prompt('Digite a senha de uma alt que vai usar para automações no site ou digite "ajuda" para mais informações');
 
-  if (senhaAlt === "ajuda") {
-    alert("Você precisa de uma segunda conta para fazer certas coisas no site, tipo mandar uma mensagem para tirar o limite de mensagens que você têm quando tiver enviado 4 mensagens, etc...");
-    return;
-  }
+//  if (senhaAlt === "ajuda") {
+//    alert("Você precisa de uma segunda conta para fazer certas coisas no site, tipo mandar uma mensagem para tirar o limite de //mensagens que você têm quando tiver enviado 4 mensagens, etc...");
+//    return;
+//  }
 
-  const contaAlt = { email: emailAlt, senha: senhaAlt };
+//  const contaAlt = { email: emailAlt, senha: senhaAlt };
 
-  localStorage.setItem('contaalt', JSON.stringify(contaAlt));
+//  localStorage.setItem('contaalt', JSON.stringify(contaAlt));
 
-  const emailOriginal = prompt('Agora digite o email da sua conta original');
-  const senhaOriginal = prompt('Agora digite a senha da sua conta original');
+//  const emailOriginal = prompt('Agora digite o email da sua conta original');
+//  const senhaOriginal = prompt('Agora digite a senha da sua conta original');
 
-  const contaOriginal = { email: emailOriginal, senha: senhaOriginal };
+//  const contaOriginal = { email: emailOriginal, senha: senhaOriginal };
 
-  localStorage.setItem('contaoriginal', JSON.stringify(contaOriginal));
-}
+//  localStorage.setItem('contaoriginal', JSON.stringify(contaOriginal));
+//}
 
-obterEmailEsenha();
+//obterEmailEsenha();
 
-}
+//}
 
 function handleClickMudarFundoChat() {
     const inputArquivo = document.createElement('input');
