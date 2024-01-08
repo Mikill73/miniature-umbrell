@@ -9,6 +9,39 @@
 // @grant        none
 // ==/UserScript==
 
+(function() {
+    'use strict';
+
+const blockPersonalizadoJson = localStorage.getItem('blockpersonalizado');
+let blockPersonalizadoArray = [];
+
+if (blockPersonalizadoJson) {
+  try {
+    
+    blockPersonalizadoArray = JSON.parse(blockPersonalizadoJson);
+
+    const linkSet = new Set();
+    const uniqueBlockPersonalizadoArray = blockPersonalizadoArray.filter(item => {
+      const link = item.link;
+      if (!linkSet.has(link)) {
+        linkSet.add(link);
+        return true;
+      }
+      return false;
+    });
+
+    if (uniqueBlockPersonalizadoArray.length !== blockPersonalizadoArray.length) {
+      localStorage.setItem('blockpersonalizado', JSON.stringify(uniqueBlockPersonalizadoArray));
+    }
+
+  } catch (error) {
+
+  }
+} else {
+}
+
+})();
+
 //registrar tempo gasto no site
 (function() {
     'use strict';
