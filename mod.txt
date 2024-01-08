@@ -2236,7 +2236,7 @@ setInterval(loadBackgroundFromLocalStorage, 2000);
   //  const elementoLinkUsuario = elementoComentario.querySelector('.usr_name_cmt');
     //const elementoLinkPerfil = elementoComentario.querySelector('.us_reply');
 
-    /if (elementoLinkUsuario) {
+    //if (elementoLinkUsuario) {
     //    const botaoSolicitarAmizade = document.createElement('button');
       //  botaoSolicitarAmizade.textContent = 'Enviar Pedido de Amizade';
         //botaoSolicitarAmizade.style.background = 'transparent';
