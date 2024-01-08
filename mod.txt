@@ -9,6 +9,98 @@
 // @grant        none
 // ==/UserScript==
 
+//deletar notificações do bloqueado
+(function() {
+    'use strict';
+
+const notifications = document.querySelectorAll('.dropdown-item');
+
+notifications.forEach(notification => {
+  const imgElement = notification.querySelector('.img_cmt_noti');
+  if (imgElement) {
+    const src = imgElement.getAttribute('src');
+    const userId = extractUserIdFromSrc(src);
+    
+    if (isUserBlocked(userId)) {
+      notification.remove();
+    }
+  }
+});
+
+function extractUserIdFromSrc(src) {
+  const startIndex = src.indexOf('/avatar/') + '/avatar/'.length;
+  const endIndex = src.indexOf('/large');
+  return src.substring(startIndex, endIndex);
+}
+
+function isUserBlocked(userId) {
+  const blockedUsers = JSON.parse(localStorage.getItem('blockpersonalizado')) || [];
+  return blockedUsers.some(user => user.link.includes(`/users/${userId}`));
+}
+
+})();
+
+//deletar comentários, replys e ocultar mensagens de usuários bloqueados
+(function() {
+    'use strict';
+
+function verificarBloqueio() {
+    
+    const blockPersonalizado = JSON.parse(localStorage.getItem('blockpersonalizado')) || [];
+
+    const divMsgsElements = document.querySelectorAll('.divMSGs');
+    divMsgsElements.forEach((divMsgs) => {
+        const profileUrl = divMsgs.querySelector('input[name="profile_url"]').value;
+        const h6Msg = divMsgs.querySelector('.h6Msg');
+
+        if (blockPersonalizado.some((block) => block.link === profileUrl) && !h6Msg.classList.contains('dontblock')) {
+
+            if (!h6Msg.dataset.originalMessage) {
+                h6Msg.dataset.originalMessage = h6Msg.innerHTML;
+            }
+
+            h6Msg.innerHTML = '';
+
+            const verMensagemBtn = document.createElement('button');
+            verMensagemBtn.innerText = 'Usuário bloqueado! Clique aqui para ver a mensagem';
+            verMensagemBtn.style.backgroundColor = 'transparent';
+            verMensagemBtn.style.color = '#FF4500';
+            verMensagemBtn.style.textShadow = '0 0 2px #FF4500, 0 0 5px #FF4500, 0 0 10px #FF4500, 0 0 15px #FF4500, 0 0 20px #FF4500, 0 0 25px #FF4500';
+
+            verMensagemBtn.addEventListener('click', () => {
+
+                h6Msg.innerHTML = h6Msg.dataset.originalMessage;
+                verMensagemBtn.style.display = 'none';
+
+                h6Msg.classList.add('dontblock');
+            });
+
+            h6Msg.appendChild(verMensagemBtn);
+        }
+    });
+
+    const cmtsElements = document.querySelectorAll('.cmt');
+    cmtsElements.forEach((cmt) => {
+        const profileUrl = cmt.querySelector('a.usr_name_cmt').getAttribute('href');
+        if (blockPersonalizado.some((block) => block.link === profileUrl)) {
+            cmt.remove();
+        }
+    });
+
+    const replyDivElements = document.querySelectorAll('.cmt_reply_div');
+    replyDivElements.forEach((replyDiv) => {
+        const profileUrl = replyDiv.querySelector('a.us_reply').getAttribute('href');
+        if (blockPersonalizado.some((block) => block.link === profileUrl)) {
+            replyDiv.remove();
+        }
+    });
+}
+
+setInterval(verificarBloqueio, 1000);
+
+})();
+
+//remover perfis duplicados no sistema de bloquear
 (function() {
     'use strict';
 
