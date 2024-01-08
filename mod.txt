@@ -894,7 +894,6 @@ const profileMessages = [
   { profileURL: "https://animefire.plus/users/403236720", message: "Larga de ser nojento hanza quantas alt tu tem em, parou de postar pornografia infantil e gore? mlk nojento" },
   { profileURL: "https://animefire.plus/users/795475003", message: "Oii linda, fiquei sabendo que vc usa firedeluxe rs" },
   { profileURL: "https://animefire.plus/users/450952355", message: "Nojento" },
-  { profileURL: "https://animefire.plus/users/86453828", message: "🐒🐒🐒🐒🐒🐒" },
 
 ];
 
@@ -2058,19 +2057,30 @@ function handleClickBloquear() {
     textarea.style.padding = '5px';
     textarea.placeholder = 'Link do perfil do usuário';
 
-    var button = document.createElement('button');
-    button.style.padding = '8px';
-    button.style.backgroundColor = 'transparent';
-    button.style.color = '#FF6';
-    button.style.border = 'none';
-    button.style.cursor = 'pointer';
-    button.textContent = '[ Bloquear ]';
-    button.style.textShadow = '0 0 2px #FF4500, 0 0 5px #FF4500, 0 0 10px #FF4500, 0 0 15px #FF4500, 0 0 20px #FF4500, 0 0 25px #FF4500';
-    button.addEventListener('click', bloquearUsuario);
+    var fetchButton = document.createElement('button');
+    fetchButton.style.padding = '8px';
+    fetchButton.style.backgroundColor = 'transparent';
+    fetchButton.style.color = '#FF6';
+    fetchButton.style.border = 'none';
+    fetchButton.style.cursor = 'pointer';
+    fetchButton.textContent = '[ Bloquear ]';
+    fetchButton.style.textShadow = '0 0 2px #FF4500, 0 0 5px #FF4500, 0 0 10px #FF4500, 0 0 15px #FF4500, 0 0 20px #FF4500, 0 0 25px #FF4500';
+    fetchButton.addEventListener('click', bloquearUsuario);
+
+    var verBloqueadosButton = document.createElement('button');
+    verBloqueadosButton.style.padding = '8px';
+    verBloqueadosButton.style.backgroundColor = 'transparent';
+    verBloqueadosButton.style.color = '#FF6';
+    verBloqueadosButton.style.border = 'none';
+    verBloqueadosButton.style.cursor = 'pointer';
+    verBloqueadosButton.textContent = '[ Ver Usuários Bloqueados ]';
+    verBloqueadosButton.style.textShadow = '0 0 2px #FF4500, 0 0 5px #FF4500, 0 0 10px #FF4500, 0 0 15px #FF4500, 0 0 20px #FF4500, 0 0 25px #FF4500';
+    verBloqueadosButton.addEventListener('click', verUsuariosBloqueados);
 
     container.appendChild(closeButton);
     container.appendChild(textarea);
-    container.appendChild(button);
+    container.appendChild(fetchButton);
+    container.appendChild(verBloqueadosButton);
     overlay.appendChild(container);
 
     document.body.appendChild(overlay);
@@ -2082,16 +2092,117 @@ function handleClickBloquear() {
     function bloquearUsuario() {
         var userLink = textarea.value;
 
-        if (userLink.trim() !== '') {
-            var blockList = JSON.parse(localStorage.getItem('blockpersonalizado')) || [];
-            blockList.push(userLink);
-            localStorage.setItem('blockpersonalizado', JSON.stringify(blockList));
-            alert('Usuário bloqueado com sucesso!');
+        if (userLink.includes('https://animefire.plus/users/')) {
+            fetch(userLink)
+                .then(response => response.text())
+                .then(data => {
+                    var matchName = data.match(/<h4 id="checkUserName".*?>(.*?)<\/h4>/);
+                    var matchImage = data.match(/<img class="p-2.*?src="(.*?)"/);
+
+                    if (matchName && matchImage) {
+                        var username = matchName[1];
+                        var imagem = matchImage[1];
+
+                        var blockList = JSON.parse(localStorage.getItem('blockpersonalizado')) || [];
+                        var blockedUser = {
+                            link: userLink,
+                            tipo: 'bloqueadopeloautor',
+                            imagem: imagem,
+                            username: username
+                        };
+                        blockList.push(blockedUser);
+                        localStorage.setItem('blockpersonalizado', JSON.stringify(blockList));
+                        alert('Usuário bloqueado');
+                    } else {
+                        alert('Usuário não encontrado');
+                    }
+                })
+                .catch(error => {
+                    alert('Erro, tente novamente');
+                    document.body.removeChild(overlay);
+                });
         } else {
-            alert('Por favor, insira o link do perfil do usuário.');
+            alert('Link errado, tenha certeza que o link é nesse formato : "https://animefire.plus/users/".');
         }
-        document.body.removeChild(overlay);
     }
+
+function verUsuariosBloqueados() {
+    var blockList = JSON.parse(localStorage.getItem('blockpersonalizado')) || [];
+
+    var verOverlay = document.createElement('div');
+    verOverlay.style.position = 'fixed';
+    verOverlay.style.top = '0';
+    verOverlay.style.left = '0';
+    verOverlay.style.width = '100%';
+    verOverlay.style.height = '100%';
+    verOverlay.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+    verOverlay.style.display = 'flex';
+    verOverlay.style.justifyContent = 'center';
+    verOverlay.style.alignItems = 'center';
+    verOverlay.style.zIndex = '9999';
+
+    var verContainer = document.createElement('div');
+    verContainer.style.width = '300px';
+    verContainer.style.textAlign = 'center';
+    verContainer.style.overflowY = 'auto';
+    verContainer.style.maxHeight = '70vh';
+    verContainer.style.backgroundColor = 'white';
+
+    blockList.forEach(user => {
+        var userDiv = document.createElement('div');
+        userDiv.style.marginBottom = '10px';
+        userDiv.style.padding = '10px';
+
+        var userImg = document.createElement('img');
+        userImg.src = user.imagem;
+        userImg.style.width = '50px';
+        userImg.style.height = '50px';
+
+        var usernameLink = document.createElement('a');
+        usernameLink.href = user.link;
+        usernameLink.textContent = user.username;
+        usernameLink.style.color = 'black';
+        usernameLink.target = '_blank';
+
+        var desbloquearButton = document.createElement('button');
+        desbloquearButton.style.padding = '8px';
+        desbloquearButton.style.backgroundColor = 'transparent';
+        desbloquearButton.style.color = '#FF6';
+        desbloquearButton.style.border = 'none';
+        desbloquearButton.style.cursor = 'pointer';
+        desbloquearButton.textContent = 'Desbloquear';
+        desbloquearButton.style.textShadow = '0 0 2px #FF4500, 0 0 5px #FF4500, 0 0 10px #FF4500, 0 0 15px #FF4500, 0 0 20px #FF4500, 0 0 25px #FF4500';
+        desbloquearButton.addEventListener('click', () => desbloquearUsuario(user.link));
+
+        userDiv.appendChild(userImg);
+        userDiv.appendChild(usernameLink);
+        userDiv.appendChild(desbloquearButton);
+
+        verContainer.appendChild(userDiv);
+        verContainer.appendChild(document.createElement('hr'));
+    });
+
+    var fecharButton = document.createElement('button');
+    fecharButton.innerHTML = 'Fechar';
+    fecharButton.style.padding = '8px';
+    fecharButton.style.backgroundColor = 'transparent';
+    fecharButton.style.color = '#FF6';
+    fecharButton.style.border = 'none';
+    fecharButton.style.cursor = 'pointer';
+    fecharButton.style.textShadow = '0 0 2px #FF4500, 0 0 5px #FF4500, 0 0 10px #FF4500, 0 0 15px #FF4500, 0 0 20px #FF4500, 0 0 25px #FF4500';
+    fecharButton.addEventListener('click', () => document.body.removeChild(verOverlay));
+
+    verOverlay.appendChild(verContainer);
+    verOverlay.appendChild(fecharButton);
+    document.body.appendChild(verOverlay);
+}
+
+function desbloquearUsuario(link) {
+    var blockList = JSON.parse(localStorage.getItem('blockpersonalizado')) || [];
+    var updatedList = blockList.filter(user => user.link !== link);
+    localStorage.setItem('blockpersonalizado', JSON.stringify(updatedList));
+    alert('Usuário desbloqueado');
+}
 
 }
 //function handleClickcontaautomatica() {
