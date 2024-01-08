@@ -9,6 +9,68 @@
 // @grant        none
 // ==/UserScript==
 
+// ==UserScript==
+// @name         utilidades
+// @namespace    http://tampermonkey.net/
+// @version      2024-01-07
+// @description  try to take over the world!
+// @author       You
+// @match        https://*/*
+// @icon         https://www.google.com/s2/favicons?sz=64&domain=animefire.plus
+// @grant        none
+// ==/UserScript==
+
+(function() {
+    'use strict';
+
+let startTime;
+
+function startTimer() {
+  startTime = new Date();
+}
+
+function saveAndSumTimeSpent() {
+  if (startTime) {
+    const endTime = new Date();
+    const timeSpent = endTime - startTime;
+
+    const secondsSpent = Math.floor(timeSpent / 1000);
+
+    const storedTimeJSON = localStorage.getItem('tempoGastoJSON');
+    const storedTime = storedTimeJSON ? JSON.parse(storedTimeJSON) : {};
+
+    storedTime.segundos = (storedTime.segundos || 0) + secondsSpent;
+
+    if (storedTime.segundos >= 60) {
+      storedTime.minutos = (storedTime.minutos || 0) + Math.floor(storedTime.segundos / 60);
+      storedTime.segundos = storedTime.segundos % 60;
+    }
+    if (storedTime.minutos >= 60) {
+      storedTime.horas = (storedTime.horas || 0) + Math.floor(storedTime.minutos / 60);
+      storedTime.minutos = storedTime.minutos % 60;
+    }
+    if (storedTime.horas >= 24) {
+      storedTime.dias = (storedTime.dias || 0) + Math.floor(storedTime.horas / 24);
+      storedTime.horas = storedTime.horas % 24;
+    }
+    if (storedTime.dias >= 30) {
+      storedTime.meses = (storedTime.meses || 0) + Math.floor(storedTime.dias / 30);
+      storedTime.dias = storedTime.dias % 30;
+    }
+
+    localStorage.setItem('tempoGastoJSON', JSON.stringify(storedTime));
+
+    startTime = null;
+  }
+}
+
+window.addEventListener('load', startTimer);
+
+window.addEventListener('beforeunload', saveAndSumTimeSpent);
+
+})();
+
+
 //(function() {
   //'use strict';
 
