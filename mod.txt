@@ -1741,7 +1741,7 @@ function applyButtonStyleWithSound(button, clickFunction) {
   buttonContainer.appendChild(button);
 }
 
-let comandosButton = createButton('Bloquear Usuário', handleClickBloquear);
+let bloquearButton = createButton('Bloquear Usuário', handleClickBloquear);
 let changeColorButton = createButton('Mudar Cor do Fundo', switchColorInput);
 let changeBackgroundButton = createButton('Mudar Fundo', switchBackgroundInput);
 let botaoMudarFundo = createButton('Mudar Fundo do Chat Global', handleClickMudarFundoChat);
