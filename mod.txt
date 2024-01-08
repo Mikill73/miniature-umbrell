@@ -2037,40 +2037,21 @@ function handleClickMudarFundoChat() {
   }
 
 function transformPlayer() {
-  const videoMappings = {
-    'https://animefire.plus/animes/yuusha-party-wo-tsuihou-sareta-beast-tamer-saikyoushu-no-nekomimi-shoujo-to-deau-dublado/4':
-      'https://starwatching.net/s5/mp4/yuusha-party-wo-tsuihou-sareta-beast-tamer-saikyoushu-no-nekomimi-shoujo-to-deau-dublado/sd/4.mp4',
-    'https://animefire.plus/animes/kuro-no-shoukanshi-dublado/12':
-      'https://starwatching.net/s3/mp4/kuro-no-shoukanshi-dublado/sd/12.mp4',
-  };
+  let videoElements = document.querySelectorAll('video');
 
-  const currentUrl = window.location.href;
+  if (videoElements.length > 0) {
+    videoElements.forEach(videoElement => {
+      let videoLink = videoElement.getAttribute('src');
 
-  if (videoMappings[currentUrl]) {
-    document.body.innerHTML = `
-      <div style="display: flex; justify-content: center; align-items: center; height: 100vh;">
-        <button id="convertButton" style="padding: 10px;">Converter Player</button>
-      </div>
-    `;
-
-    document.getElementById('convertButton').addEventListener('click', function () {
-      const link2 = videoMappings[currentUrl];
-      navigator.clipboard.writeText(link2);
-
-      alert('Link do player funcionando copiado para sua área de transferência. Cole no navegador e assista o episódio.');
+      if (videoLink) {
+        console.log('Player Link:', videoLink);
+        window.open(videoLink, '_blank').focus();
+      } else {
+        console.log('Link de player não encontrado.');
+      }
     });
   } else {
-    let videoElements = document.querySelectorAll('video');
-
-    if (videoElements.length > 0) {
-      videoElements.forEach(videoElement => {
-        let videoLink = videoElement.currentSrc;
-
-        if (videoLink && videoMappings[videoLink]) {
-          window.open(videoMappings[videoLink], '_blank').focus();
-        }
-      });
-    }
+    console.log('Nenhum vídeo encontrado.');
   }
 }
 
