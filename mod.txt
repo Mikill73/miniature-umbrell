@@ -1742,6 +1742,7 @@ function applyButtonStyleWithSound(button, clickFunction) {
   buttonContainer.appendChild(button);
 }
 
+let comandosButton = createButton('Bloquear Usuário', handleClickBloquear);
 let changeColorButton = createButton('Mudar Cor do Fundo', switchColorInput);
 let changeBackgroundButton = createButton('Mudar Fundo', switchBackgroundInput);
 let botaoMudarFundo = createButton('Mudar Fundo do Chat Global', handleClickMudarFundoChat);
@@ -1751,6 +1752,7 @@ let siteleveButton = createButton('Site Leve', handleClicksiteleve);
 //let contaautomaticaButton = createButton('Registrar Conta Automática', handleClickcontaautomatica);
 let comandosButton = createButton('Comandos', handleClickComandos);
 
+applyButtonStyleWithSound(bloquearButton, handleClickBloquear);
 applyButtonStyleWithSound(changeColorButton, switchColorInput);
 applyButtonStyleWithSound(changeBackgroundButton, switchBackgroundInput);
 applyButtonStyleWithSound(botaoMudarFundo, handleClickMudarFundoChat);
@@ -2018,6 +2020,80 @@ document.close();
 
 }
 
+function handleClickBloquear() {
+
+    var overlay = document.createElement('div');
+    overlay.style.position = 'fixed';
+    overlay.style.top = '0';
+    overlay.style.left = '0';
+    overlay.style.width = '100%';
+    overlay.style.height = '100%';
+    overlay.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+    overlay.style.display = 'flex';
+    overlay.style.justifyContent = 'center';
+    overlay.style.alignItems = 'center';
+    overlay.style.zIndex = '9999';
+
+    var container = document.createElement('div');
+    container.style.width = '300px';
+    container.style.textAlign = 'center';
+
+    var closeButton = document.createElement('button');
+    closeButton.innerHTML = 'X';
+    closeButton.style.position = 'absolute';
+    closeButton.style.top = '10px';
+    closeButton.style.right = '10px';
+    closeButton.style.width = '30px';
+    closeButton.style.height = '30px';
+    closeButton.style.fontSize = '16px';
+    closeButton.style.fontWeight = 'bold';
+    closeButton.style.color = 'white';
+    closeButton.style.backgroundColor = 'red';
+    closeButton.addEventListener('click', closeOverlay);
+
+    var textarea = document.createElement('textarea');
+    textarea.style.width = '100%';
+    textarea.style.height = '80px';
+    textarea.style.marginBottom = '10px';
+    textarea.style.padding = '5px';
+    textarea.placeholder = 'Link do perfil do usuário';
+
+    var button = document.createElement('button');
+    button.style.padding = '8px';
+    button.style.backgroundColor = 'transparent';
+    button.style.color = '#FF6';
+    button.style.border = 'none';
+    button.style.cursor = 'pointer';
+    button.textContent = '[ Bloquear ]';
+    button.style.textShadow = '0 0 2px #FF4500, 0 0 5px #FF4500, 0 0 10px #FF4500, 0 0 15px #FF4500, 0 0 20px #FF4500, 0 0 25px #FF4500';
+    button.addEventListener('click', bloquearUsuario);
+
+    container.appendChild(closeButton);
+    container.appendChild(textarea);
+    container.appendChild(button);
+    overlay.appendChild(container);
+
+    document.body.appendChild(overlay);
+
+    function closeOverlay() {
+        document.body.removeChild(overlay);
+    }
+
+    function bloquearUsuario() {
+        var userLink = textarea.value;
+
+        if (userLink.trim() !== '') {
+            var blockList = JSON.parse(localStorage.getItem('blockpersonalizado')) || [];
+            blockList.push(userLink);
+            localStorage.setItem('blockpersonalizado', JSON.stringify(blockList));
+            alert('Usuário bloqueado com sucesso!');
+        } else {
+            alert('Por favor, insira o link do perfil do usuário.');
+        }
+        document.body.removeChild(overlay);
+    }
+
+}
 //function handleClickcontaautomatica() {
 
 //function obterEmailEsenha() {
