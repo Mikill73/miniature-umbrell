@@ -13,6 +13,20 @@
     'use strict';
 
 if (window.location.href === 'https://animefire.plus/animes/mashle-2nd-season/2') {
+    var episodeNotFoundDiv = document.querySelector('div[style="min-height: 236.81px"]');
+    if (episodeNotFoundDiv) {
+        episodeNotFoundDiv.remove();
+    }
+}
+
+
+})();
+
+//erro arrumado https://animefire.plus/animes/mashle-2nd-season/2
+(function() {
+    'use strict';
+
+if (window.location.href === 'https://animefire.plus/animes/mashle-2nd-season/2') {
     var mainDivVideo = document.getElementById('main_div_video');
 
     if (mainDivVideo) {
