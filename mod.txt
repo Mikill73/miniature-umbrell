@@ -22,52 +22,7 @@ function addHoverEffect() {
 addHoverEffect();
 
 })();
-//salvar os comentários do usuário pro codigo de histórico 
-(function() {
-    'use strict';
 
-function verificarComentarios() { 
-  if (localStorage.getItem("hrefusuario")) { 
-    const hrefUsuario = localStorage.getItem("hrefusuario"); 
-    const comentarios = document.querySelectorAll('.usr_name_cmt'); 
-
-    comentarios.forEach((comentario) =&gt; { 
-      const hrefComentario = comentario.getAttribute('href'); 
-      const idComentario = comentario.closest('.cmt').id; 
-
-      if (hrefComentario === hrefUsuario) { 
-        const textoComentario = comentario.closest('.cmt').querySelector('.p_tag_cmt').textContent.trim(); 
-        const urlPagina = window.location.href; 
-
-        const historicoComentarios = JSON.parse(localStorage.getItem("historicocomentarios")) || []; 
-        const index = historicoComentarios.findIndex(item =&gt; item.iddocomentario === idComentario.replace('cmt-', '')); 
-
-        if (index === -1) { 
-          historicoComentarios.push({ 
-            "comentario": textoComentario, 
-            "iddocomentario": idComentario.replace('cmt-', ''), 
-            "link": urlPagina 
-          });
-
-          localStorage.setItem(&quot;historicocomentarios", JSON.stringify(historicoComentarios)); 
-        }
-      }
-    });
-
-    const historicoComentarios = JSON.parse(localStorage.getItem("historicocomentarios")) || []; 
-    const uniqueHistorico = historicoComentarios.filter((value, index, self) =&gt; 
-      index === self.findIndex((v) =&gt; ( 
-        v.iddocomentario === value.iddocomentario
-      ))
-    );
-
-    localStorage.setItem("historicocomentarios", JSON.stringify(uniqueHistorico));
-  }
-}
-
-setInterval(verificarComentarios, 2000);
-
-})();
 //salvar link de perfil do usuário em localstorage, util para vários codigos
 (function() {
     'use strict';
