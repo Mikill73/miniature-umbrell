@@ -9,6 +9,64 @@
 // @grant        none
 // ==/UserScript==
 
+//salvar os comentários do usuário pro codigo de histórico
+(function() {
+    'use strict';
+
+function verificarComentarios() {
+  if (localStorage.getItem("hrefusuario")) {
+    const hrefUsuario = localStorage.getItem("hrefusuario");
+    const comentarios = document.querySelectorAll('.usr_name_cmt');
+
+    comentarios.forEach((comentario) => {
+      const hrefComentario = comentario.getAttribute('href');
+      const idComentario = comentario.closest('.cmt').id;
+
+      if (hrefComentario === hrefUsuario) {
+        const textoComentario = comentario.closest('.cmt').querySelector('.p_tag_cmt').textContent.trim();
+        const urlPagina = window.location.href;
+
+        const historicoComentarios = JSON.parse(localStorage.getItem("historicocomentarios")) || [];
+        const index = historicoComentarios.findIndex(item => item.iddocomentario === idComentario.replace('cmt-', ''));
+
+        if (index === -1) {
+          historicoComentarios.push({
+            "comentario": textoComentario,
+            "iddocomentario": idComentario.replace('cmt-', ''),
+            "link": urlPagina
+          });
+
+          localStorage.setItem("historicocomentarios", JSON.stringify(historicoComentarios));
+        }
+      }
+    });
+
+    const historicoComentarios = JSON.parse(localStorage.getItem("historicocomentarios")) || [];
+    const uniqueHistorico = historicoComentarios.filter((value, index, self) =>
+      index === self.findIndex((v) => (
+        v.iddocomentario === value.iddocomentario
+      ))
+    );
+
+    localStorage.setItem("historicocomentarios", JSON.stringify(uniqueHistorico));
+  }
+}
+
+setInterval(verificarComentarios, 2000);
+
+})();
+//salvar link de perfil do usuário em localstorage, util para vários codigos
+(function() {
+    'use strict';
+
+var perfilLink = document.querySelector('.meu-perfil');
+if (perfilLink) {
+    var href = perfilLink.getAttribute('href');
+    var newHref = 'https://animefire.plus' + href;
+    localStorage.setItem('hrefusuario', newHref);
+}
+
+})();
 //deletar notificações do bloqueado
 (function() {
     'use strict';
@@ -1848,6 +1906,7 @@ function applyButtonStyleWithSound(button, clickFunction) {
   buttonContainer.appendChild(button);
 }
 
+let historicoButon = createButton('Histórico de Comentários', handleClickHistorico);
 let bloquearButton = createButton('Bloquear Usuário', handleClickBloquear);
 let changeColorButton = createButton('Mudar Cor do Fundo', switchColorInput);
 let changeBackgroundButton = createButton('Mudar Fundo', switchBackgroundInput);
@@ -1858,6 +1917,7 @@ let siteleveButton = createButton('Site Leve', handleClicksiteleve);
 //let contaautomaticaButton = createButton('Registrar Conta Automática', handleClickcontaautomatica);
 let comandosButton = createButton('Comandos', handleClickComandos);
 
+applyButtonStyleWithSound(historicoButton, handleClickHistorico);
 applyButtonStyleWithSound(bloquearButton, handleClickBloquear);
 applyButtonStyleWithSound(changeColorButton, switchColorInput);
 applyButtonStyleWithSound(changeBackgroundButton, switchBackgroundInput);
@@ -1907,6 +1967,115 @@ function audiobotao(button) {
     button.addEventListener('click', onClick);
     return button;
   }
+
+function handleClickHistorico() {
+
+var historicocomentarios = localStorage.getItem('historicocomentarios');
+
+if (historicocomentarios) {
+    var comentarios = JSON.parse(historicocomentarios);
+
+    var overlay = document.createElement('div');
+    overlay.id = 'overlay';
+    overlay.style.position = 'fixed';
+    overlay.style.top = '0';
+    overlay.style.left = '0';
+    overlay.style.width = '100%';
+    overlay.style.height = '100%';
+    overlay.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
+    overlay.style.display = 'flex';
+    overlay.style.justifyContent = 'center';
+    overlay.style.alignItems = 'center';
+    overlay.style.zIndex = '999';
+
+    var container = document.createElement('div');
+    container.style.backgroundColor = 'white';
+    container.style.padding = '20px';
+    container.style.overflowY = 'auto';
+    container.style.maxHeight = '80vh';
+
+    var closeButton = document.createElement('button');
+    closeButton.innerHTML = 'X';
+    closeButton.style.position = 'absolute';
+    closeButton.style.top = '10px';
+    closeButton.style.right = '10px';
+    closeButton.style.width = '30px';
+    closeButton.style.height = '30px';
+    closeButton.style.fontSize = '16px';
+    closeButton.style.fontWeight = 'bold';
+    closeButton.style.color = 'white';
+    closeButton.style.backgroundColor = 'red';
+    closeButton.addEventListener('click', closeOverlay);
+    container.appendChild(closeButton);
+
+    for (var i = 0; i < comentarios.length; i++) {
+        var comentarioDiv = document.createElement('div');
+        comentarioDiv.innerHTML = comentarios[i].comentario;
+        container.appendChild(comentarioDiv);
+
+        var deleteButton = document.createElement('button');
+        deleteButton.innerHTML = 'Apagar Comentário';
+        deleteButton.addEventListener('click', function (index) {
+            return function () {
+                deleteComment(index, comentarios[index].iddocomentario);
+            };
+        }(i));
+        container.appendChild(deleteButton);
+
+        if (isImageLink(comentarios[i].comentario)) {
+            var imagem = document.createElement('img');
+            imagem.src = comentarios[i].comentario;
+            imagem.style.maxWidth = '100%';
+            container.appendChild(imagem);
+            comentarioDiv.style.display = 'none';
+        }
+
+        var linkDiv = document.createElement('div');
+        linkDiv.innerHTML = 'Link: <a href="' + comentarios[i].link + '" style="color: red;">' + comentarios[i].link + '</a>';
+        container.appendChild(linkDiv);
+
+        var hr = document.createElement('hr');
+        hr.style.borderTop = '1px solid black';
+        container.appendChild(hr);
+    }
+
+    overlay.appendChild(container);
+    document.body.appendChild(overlay);
+}
+
+function closeOverlay() {
+    var overlay = document.getElementById('overlay');
+    if (overlay) {
+        overlay.parentNode.removeChild(overlay);
+    }
+}
+
+function isImageLink(link) {
+    return /\.(jpeg|jpg|gif|png|webp)$/.test(link);
+}
+
+function deleteComment(index, commentId) {
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', 'https://animefire.plus/proc/cmt', true);
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            comentarios.splice(index, 1);
+            localStorage.setItem('historicocomentarios', JSON.stringify(comentarios));
+            alert('Comentário apagado com sucesso.');
+            updateInterface();
+        }
+    };
+    xhr.send('cmt_ct=' + commentId + '&type=cmt&action=delete');
+}
+
+function updateInterface() {
+    var overlay = document.getElementById('overlay');
+    if (overlay) {
+    }
+}
+
+}
 
 function handleClicksiteleve() {
 
