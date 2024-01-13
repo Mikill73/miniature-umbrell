@@ -12,6 +12,23 @@
 (function() {
     'use strict';
 
+if (window.location.href === 'https://animefire.plus/animes/mashle-2nd-season/2') {
+    var mainDivVideo = document.getElementById('main_div_video');
+
+    if (mainDivVideo) {
+        mainDivVideo.innerHTML = '<div style="color: #FF4500;">Episódio com erro, clique no botão abaixo para assistir</div><button onclick="replaceVideo()" style="color: red; background-color: transparent;">Assistir</button>';
+
+        function replaceVideo() {
+            mainDivVideo.innerHTML = '<video controls="" autoplay="" name="media"><source src="https://hd2.animesdigital.org/animes/m/mashle-2nd-season/02.mp4" type="video/mp4"></video>';
+        }
+    }
+}
+
+})();
+
+(function() {
+    'use strict';
+
 function addHoverEffect() {
     $(".divMSGs").on("mouseenter", function() {
         $(this).css("box-shadow", "0 0 10px rgba(255, 255, 255, 0.7)");
