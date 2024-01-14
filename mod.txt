@@ -22,18 +22,18 @@ if (window.location.href === 'https://animefire.plus/animes/mashle-2nd-season/2'
 
 })();
 
-//erro arrumado https://animefire.plus/animes/mashle-2nd-season/2
+//erro arrumado para https://animefire.plus/animes/kuro-no-shoukanshi-dublado/12
 (function() {
     'use strict';
 
-if (window.location.href === 'https://animefire.plus/animes/mashle-2nd-season/2') {
+if (window.location.href === 'https://animefire.plus/animes/kuro-no-shoukanshi-dublado/12') {
     var mainDivVideo = document.getElementById('main_div_video');
 
     if (mainDivVideo) {
         mainDivVideo.innerHTML = '<div style="color: #FF4500;">Episódio com erro, clique no botão abaixo para assistir</div><button onclick="replaceVideo()" style="color: red; background-color: transparent;">Assistir</button>';
 
         function replaceVideo() {
-            mainDivVideo.innerHTML = '<video controls="" autoplay="" name="media"><source src="https://hd2.animesdigital.org/animes/m/mashle-2nd-season/02.mp4" type="video/mp4"></video>';
+            mainDivVideo.innerHTML = '<video controls="" autoplay="" name="media"><source src="https://rr5---sn-n2xxqoxxucg-btoe.googlevideo.com/videoplayback?expire=1705240228&ei=JHajZeanLvPhxtYPgvSZgAI&ip=45.177.255.65&id=510d05fc161333ad&itag=18&source=blogger&xpc=Egho7Zf3LnoBAQ%3D%3D&mh=Fk&mm=31&mn=sn-n2xxqoxxucg-btoe&ms=au&mv=m&mvi=5&pl=24&susc=bl&eaua=Rw8r8yZ3dnI&mime=video/mp4&vprv=1&dur=1420.085&lmt=1666044607858468&mt=1705211107&txp=1311224&sparams=expire,ei,ip,id,itag,source,xpc,susc,eaua,mime,vprv,dur,lmt&sig=AJfQdSswRgIhAIaQZpue04zqobWgQkWLndBshykNup5EBw__nnEeBHIuAiEAmy4RZvi23hjR5d1Ob3WS6vI1WuR6FTaPwDdiDELDfF0%3D&lsparams=mh,mm,mn,ms,mv,mvi,pl&lsig=AAO5W4owRQIhAI1ig5l6D4MAhId_IxTnWAcO32VAt-ihzCwzq-n3QXaCAiAqbRLb38A1Rz6o1bJIDCtpJBg-K6jtcUDmQQmdmtNNlw%3D%3D&cpn=4hbvWTxcTphVWU-J&c=WEB_EMBEDDED_PLAYER&cver=1.20240109.00.00" type="video/mp4"></video>';
         }
     }
 }
