@@ -68,13 +68,17 @@ addHoverEffect();
                 var userId = href.substring(userIdIndex + '/users/'.length);
                 var newHref = '/users/' + userId;
                 localStorage.setItem('linkusuario', newHref);
+            } else {
+                localStorage.removeItem('linkusuario');
             }
+        } else {
+            localStorage.removeItem('linkusuario');
         }
     }
 
     saveUserLink();
 
-    setInterval(saveUserLink, 5000);
+    setInterval(saveUserLink, 2000);
 })();
 //deletar notificações do bloqueado
 (function() {
