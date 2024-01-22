@@ -58,13 +58,23 @@ addHoverEffect();
 (function() {
     'use strict';
 
-var perfilLink = document.querySelector('.meu-perfil');
-if (perfilLink) {
-    var href = perfilLink.getAttribute('href');
-    var newHref = 'https://animefire.plus' + href;
-    localStorage.setItem('hrefusuario', newHref);
-}
+    function saveUserLink() {
+        var perfilLink = document.querySelector('.meu-perfil');
+        if (perfilLink) {
+            var href = perfilLink.getAttribute('href');
+            var userIdIndex = href.indexOf('/users/');
 
+            if (userIdIndex !== -1) {
+                var userId = href.substring(userIdIndex + '/users/'.length);
+                var newHref = '/users/' + userId;
+                localStorage.setItem('linkusuario', newHref);
+            }
+        }
+    }
+
+    saveUserLink();
+
+    setInterval(saveUserLink, 5000);
 })();
 //deletar notificações do bloqueado
 (function() {
@@ -1623,154 +1633,50 @@ function checkMeuPerfil() {
 //verificar login 2
 
 (function() {
-    'use strict';
-
-    function setCookie(name, value, days) {
-        var expires = "";
-        if (days) {
-            var date = new Date();
-            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-            expires = "; expires=" + date.toUTCString();
-        }
-        document.cookie = name + "=" + value + expires + "; path=/";
-    }
-
-    function getCookie(name) {
-        var nameEQ = name + "=";
-        var cookies = document.cookie.split(';');
-        for (var i = 0; i < cookies.length; i++) {
-            var cookie = cookies[i];
-            while (cookie.charAt(0) === ' ') cookie = cookie.substring(1, cookie.length);
-            if (cookie.indexOf(nameEQ) === 0) return cookie.substring(nameEQ.length, cookie.length);
-        }
-        return null;
-    }
-
-    function checkProfile() {
-        var approvedProfiles = getCookie('aprovados');
-        if (approvedProfiles) {
-            var profileLink = document.querySelector('.meu-perfil');
-            if (profileLink) {
-                var profileHref = profileLink.getAttribute('href');
-                if (approvedProfiles.split(' ').indexOf(profileHref) === -1) {
-                    createOverlay();
-                }
-            }
-        }
-    }
-
-    function createOverlay() {
-        var overlay = document.createElement('div');
-        overlay.style.position = 'fixed';
-        overlay.style.top = '0';
-        overlay.style.left = '0';
-        overlay.style.width = '100%';
-        overlay.style.height = '100%';
-        overlay.style.backgroundColor = 'rgba(0, 0, 0, 1)';
-        overlay.style.zIndex = '9999';
-        overlay.style.color = 'white';
-        overlay.style.display = 'flex';
-        overlay.style.flexDirection = 'column';
-        overlay.style.alignItems = 'center';
-        overlay.style.justifyContent = 'center';
-
-        var message = document.createElement('div');
-        message.style.textAlign = 'center';
-        message.style.padding = '20px';
-        message.innerHTML = 'Você não tem permissão para usar o Fire Deluxe. Peça permissão para Mikill#9150 no Discord.';
-
-        overlay.appendChild(message);
-        document.body.appendChild(overlay);
-    }
-
-    setInterval(checkProfile, 1000);
-
-})();
-
-//verificar login
-(function() {
   'use strict';
 
-function setCookie(name, value, days) {
-    var expires = "";
-    if (days) {
-        var date = new Date();
-        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-        expires = "; expires=" + date.toUTCString();
-    }
-    document.cookie = name + "=" + value + expires + "; path=/";
-}
+  function checkProfile() {
+      if (window.location.href.indexOf('https://animefire.plus/verify/index') === -1) {
+          var approvedUsers = (document.cookie.match(/(?:^|;) *aprovados=([^;]*)/)||[,null])[1];
+          if (!approvedUsers) return;
+          var currentUser = localStorage.getItem('linkusuario');
 
-function checkProfile() {
-    var fetchButton = document.getElementById('fetchButton');
-    if (!fetchButton) {
-        if (window.location.href.indexOf('https://animefire.plus/verify/index') === -1) {
-            var profileLink = document.querySelector('.meu-perfil');
-            if (!profileLink) {
-                createOverlay();
-            }
-        }
-    }
-}
+          var approvedUsersArray = approvedUsers.split(' ');
 
-function createOverlay() {
-    var overlay = document.createElement('div');
-    overlay.style.position = 'fixed';
-    overlay.style.top = '0';
-    overlay.style.left = '0';
-    overlay.style.width = '100%';
-    overlay.style.height = '100%';
-    overlay.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
-    overlay.style.zIndex = '9999';
-    overlay.style.color = 'white';
-    overlay.style.display = 'flex';
-    overlay.style.flexDirection = 'column';
-    overlay.style.alignItems = 'center';
-    overlay.style.justifyContent = 'center';
+          if (!approvedUsersArray.includes(currentUser)) {
+              createOverlay();
+          }
+      }
+  }
 
-    var message = document.createElement('div');
-    message.style.textAlign = 'center';
-    message.style.padding = '20px';
-    message.innerHTML = 'Para usar o Fire Deluxe, você precisa logar na sua conta para o código verificar se seu perfil tem acesso ao mod.';
+  function createOverlay() {
+      var overlay = document.createElement('div');
+      overlay.style.position = 'fixed';
+      overlay.style.top = '0';
+      overlay.style.left = '0';
+      overlay.style.width = '100%';
+      overlay.style.height = '100%';
+      overlay.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
+      overlay.style.zIndex = '9999';
+      overlay.style.color = 'white';
+      overlay.style.display = 'flex';
+      overlay.style.flexDirection = 'column';
+      overlay.style.alignItems = 'center';
+      overlay.style.justifyContent = 'center';
 
-    var buttonContainer = document.createElement('div');
-    buttonContainer.style.display = 'flex';
-    buttonContainer.style.flexDirection = 'column';
-    buttonContainer.style.gap = '10px';
+      var message = document.createElement('div');
+      message.style.textAlign = 'center';
+      message.style.padding = '20px';
+      message.innerHTML = 'Seu perfil não tem acesso ao mod.';
 
-    var autoLoginButton = document.createElement('button');
-    autoLoginButton.innerText = 'Logar Automaticamente (só funciona se você não tiver apertado sair da conta)';
-    autoLoginButton.style.backgroundColor = 'white';
-    autoLoginButton.style.color = 'black';
-    autoLoginButton.style.border = 'none';
-    autoLoginButton.style.padding = '10px 20px';
-    autoLoginButton.style.cursor = 'pointer';
-    autoLoginButton.addEventListener('click', function() {
-        setCookie('isLoggedIn', '1', 5);
-        location.reload();
-    });
+      overlay.appendChild(message);
+      document.body.appendChild(overlay);
+  }
 
-    var manualLoginButton = document.createElement('a');
-    manualLoginButton.innerText = 'Logar Manualmente';
-    manualLoginButton.href = 'https://animefire.plus/verify/index';
-    manualLoginButton.target = '_blank';
-    manualLoginButton.style.backgroundColor = 'white';
-    manualLoginButton.style.color = 'black';
-    manualLoginButton.style.border = 'none';
-    manualLoginButton.style.padding = '10px 20px';
-    manualLoginButton.style.textDecoration = 'none';
-
-    buttonContainer.appendChild(autoLoginButton);
-    buttonContainer.appendChild(manualLoginButton);
-
-    message.appendChild(buttonContainer);
-    overlay.appendChild(message);
-    document.body.appendChild(overlay);
-}
-
-setInterval(checkProfile, 15000);
+  setInterval(checkProfile, 15000);
 
 })();
+
 // animefiremod
 
 (function() {
