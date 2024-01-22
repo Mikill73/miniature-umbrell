@@ -1179,6 +1179,14 @@ function checkMessages() {
       profileUrl: 'https://animefire.plus/users/411166189',
       blockedImageText: 'Imagem Bloqueada : Esse macaco posta soft porn, qualquer imagem postada por ele vai ser bloqueada'
     },
+    {
+      profileUrl: 'https://animefire.plus/users/567695645',
+      blockedImageText: 'Imagem Bloqueada : Esse cara postou gore cp e porn, nenhuma imagem que ele postar vai poder ser vista'
+    },
+    {
+      profileUrl: 'https://animefire.plus/users/86453828',
+      blockedImageText: 'Imagem Bloqueada : Esse cara postou gore cp e porn, nenhuma imagem que ele postar vai poder ser vista'
+    },
   ];
 
   const imageSelector = '.divUserMSG img';
