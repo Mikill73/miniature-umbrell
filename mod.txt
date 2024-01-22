@@ -2691,116 +2691,56 @@ setInterval(loadBackgroundFromLocalStorage, 2000);
 (function() {
     'use strict';
 
-const perfisBloqueados = [
-    {
-        nomeAmudar: 'Esquisito',
-        link: 'https://animefire.plus/users/330515792',
-        textoAmudar: 'Postou pornografia infantil e gore no site, agora fica que nem um esquisito falando que vai estuprar alguêm, nojento'
-    },
-    {
-        nomeAmudar: 'Esquisitoide 2',
-        link: 'https://animefire.plus/users/202121640',
-        textoAmudar: 'Outra alt do cara que posta pornografia infantil e gore no site, fala que vai estuprar alguêm bla bla bla morra'
-    },
-    {
-        nomeAmudar: 'SOCORRO OLHA ESSE PERVERTIDO',
-        link: 'https://animefire.plus/users/17453763',
-        textoAmudar: 'Esse doente postou 500 fotos........ 500 FOTOS DE PORNOGRAFIA KKKKKKKKKKKKKKKKKKKKK, ELE FICOU DE 12AM ATÉ 4PM POSTANDO FOTO DE PORNO EM COMENTÁRIO KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK'
-    },
-    {
-        nomeAmudar: 'Esquisito Original',
-        link: 'https://animefire.plus/users/141612483',
-        textoAmudar: 'Mesma pessoa que posta pornografia infantil, mas essa foi a primeira conta que ele começou KKKK'
-    },
-    {
-        nomeAmudar: 'Esquisito? O inimigo agora é outro',
-        link: 'https://animefire.plus/users/816651674',
-        textoAmudar: 'Mesma pessoa que posta pornografia infantil e gore, começou a postar gore nessa aqui'
-    },
-    {
-        nomeAmudar: 'Olha esse merda kkkkkkkkkkkkk',
-        link: 'https://animefire.plus/users/586396554',
-        textoAmudar: 'Imagens de estupro hentai'
-    },
-    {
-        nomeAmudar: 'Só encostou na mãe esse aqui',
-        link: 'https://animefire.plus/users/399700421',
-        textoAmudar: 'Foto de perfil de hentai, banner de hentai, comentário de hentai, nunca encostou em nenhuma mulher, aposto que nem na propia mãe, mas vou dar a chance e dizer que encostou na mãe pelomenos'
-    },
-    {
-        nomeAmudar: 'Estuprado',
-        link: 'https://animefire.plus/users/570421656',
-        textoAmudar: 'Foto de perfil de hentai banner de hentai, pra piorar a foto é um gif de uma criancinha sendo comida, plmns é hentai e não real.....'
-    },
-    {
-        nomeAmudar: 'Mais um que usa essa porra',
-        link: 'https://animefire.plus/users/601178026',
-        textoAmudar: 'Esse usa foto de perfil e banner hentai, só faz merda msm viu'
-    },
-    {
-        nomeAmudar: 'Blablabla foto de perfil de retardado macaco',
-        link: 'https://animefire.plus/users/88927552',
-        textoAmudar: 'Esse usa foto de perfil e banner hentai, só faz merda msm viu'
-    },
-    {
-        nomeAmudar: 'Blablabla foto de perfil de retardado macaco',
-        link: 'https://animefire.plus/users/360939010',
-        textoAmudar: 'Esse usa foto de perfil e banner hentai, só faz merda msm viu'
-    },
-    {
-        nomeAmudar: 'Nordestino',
-        link: 'https://animefire.plus/users/333769650',
-        textoAmudar: 'Foto nazista, banner nazista, postagens nazistas, replys nazistas, conversas nazistas, corpo nazista, voz nazista e diz ser descendente de alemão KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK........................'
-    },
-    {
-        nomeAmudar: 'alt do mlk que posta pornografia infantil',
-        link: 'https://animefire.plus/users/403236720',
-        textoAmudar: 'louco? Eu já fui louco uma vez, me trancaram em um quarto, um quarto cheio de ratos, lá estava um rato doente que via pornografia infantil'
-    },
-    {
-        nomeAmudar: 'DeathBlood',
-        link: 'https://animefire.plus/users/86453828',
-        textoAmudar: 'Esse perfil posta porn, cp e gore e por isso está bloqueado'
-    },
-    {
-        nomeAmudar: 'DeathBlood',
-        link: 'https://animefire.plus/users/567695645',
-        textoAmudar: 'Esse perfil posta porn, cp e gore e por isso está bloqueado'
-    },
+function getBlockedLinksFromCookie() {
+        const cookieValue = document.cookie
+            .split('; ')
+            .find(row => row.startsWith('block='))
+            .split('=')[1];
 
+        if (cookieValue) {
+            return cookieValue.split(' ');
+        } else {
+            return [];
+        }
+    }
 
-];
+    function checkCommentsAndRepliesForBlockedUsers() {
+        const prmtCookie = document.cookie
+            .split('; ')
+            .find(row => row.startsWith('prmt='));
 
-function checkCommentsAndRepliesForBlockedUsers() {
-    const elementsToCheck = document.querySelectorAll('.cmt, .cmt_reply_div');
+        if (!prmtCookie) {
+            return;
+        }
 
-    elementsToCheck.forEach(element => {
-        const userLink = element.querySelector('.us_reply, .usr_name_cmt').getAttribute('href');
+        const blockedLinks = getBlockedLinksFromCookie();
 
-        const blockedProfile = perfisBloqueados.find(profile => profile.link === userLink);
+        const elementsToCheck = document.querySelectorAll('.cmt, .cmt_reply_div');
 
-        if (blockedProfile) {
+        elementsToCheck.forEach(element => {
+            const userLink = element.querySelector('.us_reply, .usr_name_cmt').getAttribute('href');
             const userImage = element.querySelector('.avatar_reply, .pic_cmt');
             const userName = element.querySelector('.us_reply, .usr_name_cmt');
             const commentTextElement = element.querySelector('.p_reply, .p_tag_cmt');
 
-            if (userImage) {
-                userImage.parentNode.removeChild(userImage);
+            if (blockedLinks.includes(userLink)) {
+                if (userImage) {
+                    userImage.parentNode.removeChild(userImage);
+                }
+
+                userName.textContent = 'Perfil Bloqueado';
+                userName.style.color = 'red';
+
+                const commentText = commentTextElement.textContent;
+                commentTextElement.textContent = 'Mensagem Bloqueada! Esse perfil postou alguma coisa errada no site e por isso está na lista de bloqueados, reporte usuários no discord do fire deluxe';
+                commentTextElement.style.color = 'red';
             }
+        });
+    }
 
-            userName.textContent = blockedProfile.nomeAmudar;
-            userName.style.color = 'red';
+    checkCommentsAndRepliesForBlockedUsers();
 
-            const commentText = commentTextElement.textContent;
-            commentTextElement.textContent = blockedProfile.textoAmudar;
-            commentTextElement.style.color = 'red';
-        }
-    });
-}
-
-checkCommentsAndRepliesForBlockedUsers();
-
-setInterval(checkCommentsAndRepliesForBlockedUsers, 250);
+    setInterval(checkCommentsAndRepliesForBlockedUsers, 250);
 
 })();
 
@@ -2858,7 +2798,7 @@ let verificarchat = document.query
 
     blockMessages();
 
-    setInterval(blockMessages, 500); // 500 milisegundos, melhor não diminuir o tempo para não lagar
+    setInterval(blockMessages, 500);
 
 })();
 
