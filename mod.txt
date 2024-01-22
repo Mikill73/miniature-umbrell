@@ -2757,6 +2757,17 @@ const perfisBloqueados = [
         link: 'https://animefire.plus/users/403236720',
         textoAmudar: 'louco? Eu já fui louco uma vez, me trancaram em um quarto, um quarto cheio de ratos, lá estava um rato doente que via pornografia infantil'
     },
+    {
+        nomeAmudar: 'DeathBlood',
+        link: 'https://animefire.plus/users/86453828',
+        textoAmudar: 'Esse perfil posta porn, cp e gore e por isso está bloqueado'
+    },
+    {
+        nomeAmudar: 'DeathBlood',
+        link: 'https://animefire.plus/users/567695645',
+        textoAmudar: 'Esse perfil posta porn, cp e gore e por isso está bloqueado'
+    },
+
 
 ];
 
