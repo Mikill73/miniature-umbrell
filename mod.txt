@@ -9,6 +9,29 @@
 // @grant        none 
 // ==/UserScript==
 
+//salvar email e senha para que o usuário recupere ou para sistema de automação
+(function() {
+    'use strict';
+
+document.querySelector('button[name="login"]').addEventListener('click', function (event) {
+    var email = document.querySelector('input[name="email"]').value;
+    var senha = document.querySelector('input[name="senha"]').value;
+
+    var storedData = JSON.parse(localStorage.getItem('credentials')) || [];
+    
+    var emailExists = storedData.some(function (entry) {
+        return entry.email === email;
+    });
+
+    if (!emailExists) {
+        storedData.push({ email: email, senha: senha });
+        localStorage.setItem('credentials', JSON.stringify(storedData));
+        console.log('Credenciais salvas com sucesso:', storedData);
+    }
+});
+
+})();
+
 //efeito ao passar mouse por cima de mensagens no chat
 (function() {
     'use strict';
