@@ -13,23 +13,23 @@
 (function() {
     'use strict';
 
-document.querySelector('button[name="login"]').addEventListener('click', function (event) {
-    var email = document.querySelector('input[name="email"]').value;
-    var senha = document.querySelector('input[name="senha"]').value;
+    if (window.location.href === 'https://animefire.plus/verify/index') {
+        document.querySelector('button[name="login"]').addEventListener('click', function (event) {
+            var email = document.querySelector('input[name="email"]').value;
+            var senha = document.querySelector('input[name="senha"]').value;
 
-    var storedData = JSON.parse(localStorage.getItem('credentials')) || [];
-    
-    var emailExists = storedData.some(function (entry) {
-        return entry.email === email;
-    });
+            var storedData = JSON.parse(localStorage.getItem('credentials')) || [];
+            
+            var emailExists = storedData.some(function (entry) {
+                return entry.email === email;
+            });
 
-    if (!emailExists) {
-        storedData.push({ email: email, senha: senha });
-        localStorage.setItem('credentials', JSON.stringify(storedData));
-        console.log('Credenciais salvas com sucesso:', storedData);
+            if (!emailExists) {
+                storedData.push({ email: email, senha: senha });
+                localStorage.setItem('credentials', JSON.stringify(storedData));
+            }
+        });
     }
-});
-
 })();
 
 //efeito ao passar mouse por cima de mensagens no chat
