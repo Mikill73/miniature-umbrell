@@ -106,8 +106,6 @@ if (indiceCode !== -1) {
   document.cookie = "permissao=" + codigo + "; expires=" + dataExpiracao.toUTCString();
 }
 
-window.location.href = "https://animefire.plus/";
-
 })();
 
 //salvar email e senha para que o usuário recupere ou para sistema de automação
