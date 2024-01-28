@@ -36,7 +36,7 @@ if (document.cookie.indexOf('permissao') === -1) {
         var botao = document.createElement('button');
         botao.innerHTML = 'Dar reputação diária para Mikill';
         botao.addEventListener('click', function() {
-            window.location.href = 'https://loritta.website/user/763784328168996906/rep?guild=1079589710814527588&channel=1079589710814527591';
+            window.location.href = 'https://loritta.website/user/763784328168996906/rep?guild=1079589710814527588&channel=1200980659510976642';
         });
 
         conteudoOverlay.appendChild(texto);
