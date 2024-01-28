@@ -81,7 +81,7 @@ if (!isNaN(cookieVersao)) {
 (function() {
     'use strict';
 
-if (!document.cookie.includes('versao')) {
+if (!document.cookie.includes('vs')) {
     alert("Você precisa instalar a versão mais nova. Normalmente não é necessário, mas desta vez é essencial.");
 
     window.location.href = "https://greasyfork.org/pt-BR/scripts/470618-firedeluxe";
