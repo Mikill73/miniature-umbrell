@@ -1,14 +1,92 @@
 // ==UserScript==
 // @name         Fire Deluxe  
 // @namespace    http://tampermonkey.net/  
-// @version      0.5.5  
+// @version      6  
 // @description  FIREMOD, criado por Mikill para modificar o site animefire.plus  
 // @author       Mikill  
 // @match        https://animefire.plus/*  
 // @icon         data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC0AAAAuCAYAAAC8jpA0AAAACXBIWXMAAA7EAAAOxAGVKw4bAAAJPElEQVRogbWZeXBb1RXGf/c97bIkS/IqJ46zGAJ1UgMJJMSEkhRCcKBkWqADTZtJ05UulAwMA51pCzMMnba0TAsMLUkZOkM6BQqFJENIGEJI0rRlcWMgxS0kDollydZi7et7/UO2ZVmSJS98M/pD79577vfOO++c79wnXC6XyhyjVzLxm1CAnTX6uTYNgDRbA53+kaJrQg93ddjZriRna74kZkTaGB/iDnua26Mp5mu0ReOyHSxXy9y30cmdyfSsSU7GtEnvvV7Lnmtb0PhhdyzEy1ZT2bm6VsE2m437E9lZkZwMTbUT78yk2dZtI/hyli6SILRQX1dxnX2LzNKdOlDmjnhFT3eOjHD7EsH6q01csedMjvA0cdmNRm6PpmZEsBSmJH3NSITn1  rnYmNaw/dlBAtrKni25iRFWLzJg9g7NaH2RvXIDG0ei/HJTA8GzCrf+y427zjnzTUyC1YuMtGt0M7YxESVjutM/wu+6XSRPqiwfjkPDzDz8aaHI0x2BIH/pctF3LsVF7/dP22CvZMLaLRdvZBYI06zLQs7W5AsvbmhBO0/w2HtBko31c7IJgG6hQNsyN+FRQPruRBbDhYLXj8V4KR6ZtrGJGSLZp5AeLFQI6hylvXHS2yIJvnWTlVBWZVtEQTQ2TttYh05P7VdyJpUIhPcrKKkc8cRJhfTpzNySbrVq0RoE/j/NzHBm0IPVJiHpBWpaZTCmEEqrMObsLJCdG20mQS5bbLnMSmZYZVekWAABtA37UT2esoa21thYs86Yu4FheOLdCEfSn6JgusNiByDRq7KrxlByYrexhicdTSXHrN5hNhtrCq6pmTRqdm7CYTIkgFVLDOgvEBUnr9IbS153yjLLL9GjGX0NDu6JArD5WgtCBxm/yqOHgvQ4bHNDunZo G MkkUDPgTk/tGct1Er1SoaqTPV72LWvBtFJCTYB/Z5bto4Gs0wqEECQjKoOp2Xl9dSDIplAoR/rI/FbMXRLxd1Vu+t9AxcW6dsFSX3D8f09zG9p5goxPJbRPYXc0RMbjpbPZgGSG5EcKb+1N8Iyl9FOqFn+317Jyvgmb3z19PV2zVuKHVjud/hHuTaqYrxDoFgiihxUe/iTAg0YN7RotN55nRlMniB1TeSjkmxXhMeiX5LqiqvX0RKzQ6VnmaMC1ToN+sUTgmSyPe4PjPeEflzah/4wgekThymgcn6O2yMbngmEGshn6nPbqN1ZVBFWS7vSPcGe3C21z7mV1bc+3WP6dWf4aC/OoOVeiZY+X5iULkfQCJa7gk0vnZosk8byjhSs8ZwhW0UxMxKwUTOqsyu5oiJ8Y8gKpp7mNmqskMj6VN/zxsms/zGY5q2R5s7GV5b7ANBhL1ZG+zWwtSfiR/SM8aCz9sNL9Ko+fDpYcA+izWzmRSmJcIbjHVp2nBfA Di 6M60psWmdEtzufxzJBK9LDC34ZCBfPujk8vramqgn6poPNqPV+NJKpasz+TzJMWMtRIpe9BaEEy5kmn4io/Gxzm1KSXaKFGi+PrxVq6Esx2wV21dtYGQhXn9kXDedKmlRKvnD+vaNKaeBJNQ2G1PLgnxrOW8kcH1UDn8dLSpEFIoHEIzJdPXZGNg25cci4UK4bHE3Y7xs/mp0WPKzwZKR+r1WKDsYaulSbiPbnsoqkX3LLAQnzAXXL+2nkmrnQZqyM9Gcn3Vd62V9YQ+qWCn19QT8hdTMI07GdHp51Uv0qiN0datgs+32TGUiZEZVtuDoDUkYiND9g2yxyh/KFhaG+WZUqs7PhESCZBxw16zixczDOZfJwfQc9bS+fRvl6HmpygtytAaHVEjiookVFPhw/k2yAZgdU7XJ2lSXgvlSTtLmRh3yLTdZuRky4TJ10m2rZqsW2WUaIqH0RSZNTKrE0+D4+02NkR8BJsbM6Rzo5AxptbXNcpc6/NMSPSj5 p1h PcpRddlq8DaLWPtlhFagRJTib6pcH+fj6haPH8yvtlgR9siyPhz/yWAB874xkkblgtW6YxcEijdwVTCDUPniB6fmkj4gMLz/41wPFW+Yo7h/niaH22s5cBglIPnonnS/0nnu2hJL1iwQYtLzumLjkSsIHwq4ZTTzoZDZ/HvzJLqL3z04QNZ/DuzXOiNcZ9BwtBUuhMaw32xFFu/ZkOYoP9QmkyzCxgVTD0OGw8fDLDDZEe/SEK3QPCrNfV4Drs5mIjS37iAC+MSslXgOOHDX+GI7JTTzjIlxndfSNE1odv58cgwH08oSA8lFRZ8o/B8e+w24wMDOFobERKc8qZ5wJRPEOP55WgyTv/BfBnWNgl2tTRxk8nCze+5OX4oifFiwRsN86ckPBGPmXXcqsmO/yYSdg75OG+RDlGigIYHBvhFWz1fus5C+pzKH14srAuyxWL5KcCg0cCbQT83p2vQtQnkWoGmTrDmEyOD2Qy/HgiyMmTAGZeJh8P06GYkx QHQe Lzscjax4nIjGocAIUgPqPz2eIB9oShPtzRzyyYLmSGV77wW4AVzYfUtyOQf222kPlKJHMq9SFqXoO7LMvdYHazS6Fh/4gwAl+lnV8IPN7Zy0TID2gkPTYmovBtMsb9hHpu31JAdUYn9Q+X1YIlvOpO/boXcbg43tnL+RTqMFwuEJleF4icUvn00xDuBABoh0anV8aqtpshgOSQHB2nW6nmlvZmWLxZ/p0mdVoi/o2C5RkJV4PTuFN/3e/h3XXH6LSINYPMO85ijkUsvMWC6NP8wEh8oZEOw49gwqAovxSNVHZ9dH4qy1mXiCwtrMK3IO6IAo0Um2acQDCl877VBjjmL27SypAEah3w85WxicYcO85pCPZDsy4XP3n9GcftzL+++RJSeUU1y70RdLSS2b7Ag2wWa+imUnKqS+FAhdlxlq8fN2yX6yoqkAZRBD++7FqI/X2DuKhYySkxFHU3h3t4snt4c2WW3FuoX2VL5ICh1SiXyRpbrBs7ySf3U KXVK0 mM4LxjiqdoGmtbJ6BfPzcH4GLIRlaE/Z/l9LMwTZVq3yaiKNMDqQIirDCa2X5sLAdkp0Dgre7AUlKRKerRaPv1aiI8TaZ4uc4ZYClWTHsPaYJh2jY4dbXZkp6Bm7fQ8Hz2qoMRUXu2L8VwszOFay7TWwwxIA/gG3DTIuVJ2or1tWmvXfHSGsKIQVhRMzVNrj3L4P3txYRuWrfEVAAAAAElFTkSuQmCC  
 // @grant        none 
 // ==/UserScript==
-//123456789 versão atual é 5.5
+
+(function() {
+    'use strict';
+
+if (document.cookie.indexOf('permissao') === -1) {
+
+    var overlay = document.createElement('div');
+    overlay.style.position = 'fixed';
+    overlay.style.top = '0';
+    overlay.style.left = '0';
+    overlay.style.width = '100%';
+    overlay.style.height = '100%';
+    overlay.style.backgroundColor = 'rgba(0, 0, 0, 0.7)';
+    overlay.style.display = 'flex';
+    overlay.style.alignItems = 'center';
+    overlay.style.justifyContent = 'center';
+    overlay.style.zIndex = '999';
+
+    var conteudoOverlay = document.createElement('div');
+    conteudoOverlay.style.textAlign = 'center';
+    conteudoOverlay.style.color = '#fff';
+
+    var texto = document.createElement('p');
+    texto.innerHTML = 'Você não deu sua reputação diária para Mikill, clique no botão abaixo para ir até o site!';
+
+    var botao = document.createElement('button');
+    botao.innerHTML = 'Dar reputação diária para Mikill';
+    botao.addEventListener('click', function() {
+        window.location.href = 'https://loritta.website/user/763784328168996906/rep?guild=1079589710814527588&channel=1079589710814527591';
+    });
+
+    conteudoOverlay.appendChild(texto);
+    conteudoOverlay.appendChild(botao);
+
+    overlay.appendChild(conteudoOverlay);
+
+    document.body.appendChild(overlay);
+}
+
+})();
+
+//verificar versão
+(function() {
+    'use strict';
+
+const cookieVersao = parseFloat(document.cookie.replace(/(?:(?:^|.*;\s*)vs\s*\=\s*([^;]*).*$)|^.*$/, "$1"));
+
+if (!isNaN(cookieVersao)) {
+
+    fetch('https://greasyfork.org/pt-BR/scripts/470618-firedeluxe')
+        .then(response => response.text())
+        .then(html => {
+            const regex = /<dd class="script-show-version"><span>(\d+)<\/span><\/dd>/;
+            const match = html.match(regex);
+            
+            if (match) {
+                const versaoScript = parseFloat(match[1]);
+
+                if (versaoScript > cookieVersao) {
+                    alert("Você está usando uma versão anterior. Você será redirecionado assim que fechar este alerta para a página de atualização.");
+                    window.location.href = 'https://greasyfork.org/pt-BR/scripts/470618-firedeluxe';
+                }
+            }
+        })
+}
+
+})();
+
+//verificar versão anteriores a 6
+(function() {
+    'use strict';
+
+if (!document.cookie.includes('versao')) {
+    alert("Você precisa instalar a versão mais nova. Normalmente não é necessário, mas desta vez é essencial.");
+
+    window.location.href = "https://greasyfork.org/pt-BR/scripts/470618-firedeluxe";
+}
+
+})();
 
 //criar permissão cookie
 (function() {
@@ -22,8 +100,12 @@ if (indiceCode !== -1) {
   var indiceEComercial = parametrosComCode.indexOf("&");
   var indiceFim = (indiceEComercial !== -1) ? indiceEComercial : parametrosComCode.length;
   var codigo = parametrosComCode.substring(0, indiceFim);
-  document.cookie = "permissao=" + codigo;
+  var dataExpiracao = new Date();
+  dataExpiracao.setTime(dataExpiracao.getTime() + (25 * 60 * 60 * 1000));
+  document.cookie = "permissao=" + codigo + "; expires=" + dataExpiracao.toUTCString();
 }
+
+window.location.href = "https://animefire.plus/";
 
 })();
 
