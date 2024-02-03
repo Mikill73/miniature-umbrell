@@ -12,6 +12,34 @@
 (function() {
     'use strict';
 
+function processLocalStorage() {
+    const tudo = JSON.parse(localStorage.getItem('tudo')) || {};
+
+    for (let key in localStorage) {
+        if (key.startsWith('https://animefire.plus/animes/')) {
+            const [, nome, episodio] = key.match(/\/animes\/([^/]+)\/(\d+)\/?$/);
+            const valor = localStorage.getItem(key);
+
+            tudo['tempoanimes'] = tudo['tempoanimes'] || {};
+            tudo['tempoanimes'][nome] = tudo['tempoanimes'][nome] || {};
+            tudo['tempoanimes'][nome][episodio] = tudo['tempoanimes'][nome][episodio] || {};
+            tudo['tempoanimes'][nome][episodio].tempo = valor;
+
+            localStorage.removeItem(key);
+        }
+    }
+
+    localStorage.setItem('tudo', JSON.stringify(tudo));
+}
+
+processLocalStorage();
+setInterval(processLocalStorage, 30000);
+
+})();
+
+(function() {
+    'use strict';
+
 if (document.cookie.indexOf('permissao') === -1) {
     setTimeout(function() {
         var overlay = document.createElement('div');
