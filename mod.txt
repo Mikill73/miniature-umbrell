@@ -20,7 +20,6 @@ function removeCookies() {
     document.cookie = `${cookieName}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
   });
 
-  console.log('Cookies removidos com sucesso!');
 }
 
 setInterval(removeCookies, 10000);
