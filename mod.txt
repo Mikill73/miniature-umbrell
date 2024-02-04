@@ -184,13 +184,16 @@ if (indiceCode !== -1) {
     'use strict';
 
 function addHoverEffect() {
-    $(".divMSGs").on("mouseenter", function() {
-        $(this).css("box-shadow", "0 0 10px rgba(255, 255, 255, 0.7)");
+    $(".divMSGs:not(.hover-added)").on("mouseenter", function() {
+        $(this).css("box-shadow", "0 0 10px rgba(255, 255, 255, 0.7)").addClass("hover-added");
     }).on("mouseleave", function() {
         $(this).css("box-shadow", "none");
     });
 }
-addHoverEffect();
+
+setInterval(function() {
+    addHoverEffect();
+}, 2000);
 
 })();
 
