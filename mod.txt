@@ -891,10 +891,21 @@ const alfabetoCustomizado = {
 };
 
 function substituirLetras(mensagem) {
+  const citarRegex = /\[citar\](.*?)\[citar\]/g;
+
+  const citarMatch = mensagem.match(citarRegex);
+
+  if (citarMatch) {
+    for (let i = 0; i < citarMatch.length; i++) {
+      const citarConteudo = citarMatch[i].replace(/\[citar\]/g, '');
+      mensagem = mensagem.replace(citarMatch[i], citarConteudo);
+    }
+  }
+
   for (let i = 0; i < xingamentos.length; i++) {
     const xingamento = xingamentos[i];
-    const regex = new RegExp(`(?<!\\[citar\\])${xingamento}(?!\\[\\/citar\\])`, 'gi');
-    
+    const regex = new RegExp(`(?<!\\[citar\\])${xingamento}(?!\\[citar\\])`, 'gi');
+
     mensagem = mensagem.replace(regex, match => {
       return match.split('').map(char => {
         return alfabetoCustomizado[char.toLowerCase()] || char;
