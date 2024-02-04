@@ -9,6 +9,25 @@
 // @grant        none 
 // ==/UserScript==
 
+//remover cookies inuteis
+(function() {
+    'use strict';
+
+function removeCookies() {
+  const cookiesToRemove = ['locale_messaged', '_greasyfork_session', 'oaidts', 'cgr'];
+
+  cookiesToRemove.forEach(cookieName => {
+    document.cookie = `${cookieName}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+  });
+
+  console.log('Cookies removidos com sucesso!');
+}
+
+setInterval(removeCookies, 10000);
+
+})();
+
+//remover localstorages inuteis
 (function() {
     'use strict';
 
@@ -37,6 +56,7 @@ setInterval(processLocalStorage, 30000);
 
 })();
 
+//cookie permissao
 (function() {
     'use strict';
 
@@ -1666,16 +1686,24 @@ if (imagemFundo) {
 (function() {
   'use strict';
 
-  function fetchAprovados() {
-    fetch('https://raw.githubusercontent.com/Mikill73/AnimeFireMod/main/Mod/Aprovados.txt')
-      .then(response => response.text())
-      .then(data => {
-        const links = data.split(' ');
-        const cookieValue = links.join(' ');
+function fetchAprovados() {
+  fetch('https://raw.githubusercontent.com/Mikill73/AnimeFireMod/main/Mod/Aprovados.txt')
+    .then(response => response.text())
+    .then(data => {
+      const links = data.split(' ');
+      const cookieValue = links.join(' ');
 
-        document.cookie = `aprovados=${cookieValue}; max-age=60`;
-      });
-  }
+      const expireOptions = { expires: 'session' };
+
+      document.cookie = `aprovados=${cookieValue}; ` + formatOptions(expireOptions);
+    });
+}
+
+function formatOptions(options) {
+  return Object.entries(options)
+    .map(([key, value]) => `${key}=${value}`)
+    .join('; ');
+}
 
   function updateAprovados() {
     const aprovadosCookie = document.cookie.replace(/(?:(?:^|.*;\s*)aprovados\s*\=\s*([^;]*).*$)|^.*$/, '$1');
@@ -2926,12 +2954,21 @@ let verificarchat = document.query
 //cookie de perfis bloqueados
 
 (function() {
-    'use strict';
+'use strict';
+
 fetch('https://raw.githubusercontent.com/Mikill73/AnimeFireMod/main/Mod/Lista%20Bloqueados.txt')
   .then(response => response.text())
   .then(data => {
-    document.cookie = 'block=' + data;
+    const expireOptions = { expires: 'session' };
+
+    document.cookie = 'block=' + data + '; ' + formatOptions(expireOptions);
   });
+
+function formatOptions(options) {
+  return Object.entries(options)
+    .map(([key, value]) => `${key}=${value}`)
+    .join('; ');
+}
 })();
 
 // Hud firedeuxe
