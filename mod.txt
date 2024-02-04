@@ -839,7 +839,7 @@ observer.observe(document.body, { childList: true, subtree: true });
 (function() {
   'use strict'
 
-const xingamentos = ["fodase", "pica", "caralho", "merda", "porra", "puta", "foda", "cu", "buceta", "viado", "arrombado", "filho da puta", "cacete", "cuzão", "babaca", "retardado", "chupa", "chup", "pinto", "chup", "penis", "pênis", "desgraçado", "desgracado", "imbecil", "hentai", "porn", "pornografia", "discord", "corno", "x0t4", "xota"];
+const xingamentos = ["fodase", "pica", "caralho", "merda", "porra", "puta", "foda", "cu", "buceta", "viado", "arrombado", "filho da puta", "cacete", "cuzão", "babaca", "retardado", "chupa", "chup", "pinto", "chup", "penis", "pênis", "desgraçado", "desgracado", "imbecil", "hentai", "porn", "pornografia", "discord", "corno", "x0t4", "xota", "xereca",];
 
 const alfabetoCustomizado = {
   'a': '𝖠',
@@ -873,13 +873,13 @@ const alfabetoCustomizado = {
 function substituirLetras(mensagem) {
   for (let i = 0; i < xingamentos.length; i++) {
     const xingamento = xingamentos[i];
-    if (mensagem.includes(xingamento)) {
-      mensagem = mensagem.replace(new RegExp(xingamento, 'g'), match => {
-        return match.split('').map(char => {
-          return alfabetoCustomizado[char.toLowerCase()] || char;
-        }).join('');
-      });
-    }
+    const regex = new RegExp(`(?<!\\[citar\\])${xingamento}(?!\\[\\/citar\\])`, 'gi');
+    
+    mensagem = mensagem.replace(regex, match => {
+      return match.split('').map(char => {
+        return alfabetoCustomizado[char.toLowerCase()] || char;
+      }).join('');
+    });
   }
 
   return mensagem;
