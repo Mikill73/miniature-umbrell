@@ -893,14 +893,14 @@ const alfabetoCustomizado = {
 };
 
 function substituirLetras(mensagem) {
-  const citarRegex = /\[citar\](.*?)\[citar\]/g;
+  const citarRegex = /\[citar\]([\s\S]*?)\[citar\]/g;
 
   const citarMatch = mensagem.match(citarRegex);
 
   if (citarMatch) {
     for (let i = 0; i < citarMatch.length; i++) {
       const citarConteudo = citarMatch[i].replace(/\[citar\]/g, '');
-      mensagem = mensagem.replace(citarMatch[i], citarConteudo);
+      mensagem = mensagem.replace(citarMatch[i], `[citar]${citarConteudo}[citar]`);
     }
   }
 
