@@ -14,7 +14,7 @@
     'use strict';
 
 function removeCookies() {
-  const cookiesToRemove = ['locale_messaged', '_greasyfork_session', 'oaidts', 'cgr'];
+ const cookiesToRemove = ['locale_messaged', '_greasyfork_session', 'oaidts', 'cgr', 'cf_use_ob', 'cf_ob_info', 'kcp'];
 
   cookiesToRemove.forEach(cookieName => {
     document.cookie = `${cookieName}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
