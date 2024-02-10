@@ -1704,11 +1704,8 @@ function fetchAprovados() {
     .then(response => response.text())
     .then(data => {
       const links = data.split(' ');
-      const cookieValue = links.join(' ');
-
-      const expireOptions = { expires: 'session' };
-
-      document.cookie = `aprovados=${cookieValue}; ` + formatOptions(expireOptions);
+      const linkString = JSON.stringify(links);
+      localStorage.setItem('aprovados', linkString);
     });
 }
 
@@ -1718,110 +1715,66 @@ function formatOptions(options) {
     .join('; ');
 }
 
-  function updateAprovados() {
-    const aprovadosCookie = document.cookie.replace(/(?:(?:^|.*;\s*)aprovados\s*\=\s*([^;]*).*$)|^.*$/, '$1');
-    const lastAprovados = aprovadosCookie.split(' ');
+function updateAprovados() {
+  const lastAprovados = JSON.parse(localStorage.getItem('aprovados')) || [];
 
+  fetchAprovados();
+
+  setInterval(() => {
     fetchAprovados();
 
-    setInterval(() => {
-      fetchAprovados();
+    const newAprovados = JSON.parse(localStorage.getItem('aprovados')) || [];
 
-      const newAprovadosCookie = document.cookie.replace(/(?:(?:^|.*;\s*)aprovados\s*\=\s*([^;]*).*$)|^.*$/, '$1');
-      const newAprovados = newAprovadosCookie.split(' ');
+    if (newAprovados.length !== lastAprovados.length || !newAprovados.every((link, index) => link === lastAprovados[index])) {
+      localStorage.setItem('lastAprovados', JSON.stringify(newAprovados));
+    }
+  }, 100000);
+}
 
-      if (newAprovados.length !== lastAprovados.length || !newAprovados.every((link, index) => link === lastAprovados[index])) {
-        lastAprovados = newAprovados;
-      }
-    }, 100000);
-  }
-
-  function handlePageReload() {
-    window.addEventListener('load', () => {
-      fetchAprovados();
-    });
-  }
+function handlePageReload() {
+  window.addEventListener('load', () => {
+    fetchAprovados();
+  });
+}
 
 function checkMeuPerfil() {
-  const aprovadosCookie = document.cookie.replace(/(?:(?:^|.*;\s*)aprovados\s*\=\s*([^;]*).*$)|^.*$/, '$1');
-  const aprovados = aprovadosCookie.split(' ');
+  const aprovados = JSON.parse(localStorage.getItem('aprovados')) || [];
   const meuPerfilLink = document.querySelector('a.dropdown-item.py-2.px-4.meu-perfil');
   const fetchButton = document.getElementById('fetchButton');
 
   if (meuPerfilLink && !fetchButton) {
     if (aprovados.includes(meuPerfilLink.getAttribute('href'))) {
-      const umDiaEmSegundos = 24 * 60 * 60;
-      document.cookie = `prmt=true; max-age=${umDiaEmSegundos}; path=/`;
+      localStorage.setItem('prmt', 'true');
     } else {
-      document.cookie = 'prmt=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+      localStorage.removeItem('prmt');
     }
   }
 }
 
-  function deletePrmtCookie() {
-    const dropdownLink = document.querySelector('a.dropdown-item.py-2.px-4.meu-perfil');
-    const aprovadosCookie = document.cookie.replace(/(?:(?:^|.*;\s*)aprovados\s*\=\s*([^;]*).*$)|^.*$/, '$1');
-    const aprovados = aprovadosCookie.split(' ');
-
-    if (!dropdownLink || !aprovados.includes(dropdownLink.getAttribute('href'))) {
-      document.cookie = 'prmt=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-    }
-  }
-
-  updateAprovados();
-  handlePageReload();
-  setInterval(checkMeuPerfil, 2000);
-  deletePrmtCookie();
+updateAprovados();
+handlePageReload();
+setInterval(checkMeuPerfil, 2000);
 
 })();
 
-//Verificação
-
-(function() {
-  'use strict';
-
-  function removeDuplicateCookies(cookieName) {
-    const cookies = document.cookie.split(';');
-    const cookieValues = new Set();
-
-    cookies.forEach(cookie => {
-      const trimmedCookie = cookie.trim();
-      if (trimmedCookie.indexOf(cookieName) === 0) {
-        const cookieValue = trimmedCookie.substring(cookieName.length + 1);
-        if (cookieValues.has(cookieValue)) {
-          document.cookie = `${trimmedCookie}; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
-        } else {
-          cookieValues.add(cookieValue);
-        }
-      }
-    });
-  }
-
-  function checkCookies() {
-    removeDuplicateCookies('block');
-    removeDuplicateCookies('aprovados');
-  }
-
-  setInterval(checkCookies, 1000);
-})();
 //verificar login 2
 
 (function() {
   'use strict';
 
-  function checkProfile() {
-      if (window.location.href.indexOf('https://animefire.plus/verify/index') === -1) {
-          var approvedUsers = (document.cookie.match(/(?:^|;) *aprovados=([^;]*)/)||[,null])[1];
-          if (!approvedUsers) return;
-          var currentUser = localStorage.getItem('linkusuario');
+function checkProfile() {
+    if (window.location.href.indexOf('https://animefire.plus/verify/index') === -1) {
+        var approvedUsers = localStorage.getItem('aprovados');
+        if (!approvedUsers) return;
+        
+        var currentUser = localStorage.getItem('linkusuario');
+        var approvedUsersArray = approvedUsers.split(' ');
 
-          var approvedUsersArray = approvedUsers.split(' ');
-
-          if (!approvedUsersArray.includes(currentUser)) {
-              createOverlay();
-          }
-      }
-  }
+        if (!approvedUsersArray.includes(currentUser)) {
+            createOverlay();
+        }
+    }
+}
 
   function createOverlay() {
       var overlay = document.createElement('div');
@@ -2853,27 +2806,23 @@ setInterval(loadBackgroundFromLocalStorage, 2000);
 (function() {
     'use strict';
 
-function getBlockedLinksFromCookie() {
-        const cookieValue = document.cookie
-            .split('; ')
-            .find(row => row.startsWith('block='))
-            .split('=')[1];
+function getBlockedLinksFromLocalStorage() {
+    const localStorageValue = localStorage.getItem('block');
 
-        if (cookieValue) {
-            return cookieValue.split(' ');
-        } else {
-            return [];
-        }
+    if (localStorageValue) {
+        return localStorageValue.split(' ');
+    } else {
+        return [];
+    }
+}
+
+function checkCommentsAndRepliesForBlockedUsers() {
+    const prmtLocalStorage = localStorage.getItem('prmt');
+
+    if (!prmtLocalStorage) {
+        return;
     }
 
-    function checkCommentsAndRepliesForBlockedUsers() {
-        const prmtCookie = document.cookie
-            .split('; ')
-            .find(row => row.startsWith('prmt='));
-
-        if (!prmtCookie) {
-            return;
-        }
 
         const blockedLinks = getBlockedLinksFromCookie();
 
