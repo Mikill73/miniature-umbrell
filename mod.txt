@@ -14,7 +14,7 @@
     'use strict';
 
 function removeCookies() {
- const cookiesToRemove = ['locale_messaged', '_greasyfork_session', 'oaidts', 'cgr', 'cf_use_ob', 'cf_ob_info', 'kcp'];
+ const cookiesToRemove = ['locale_messaged', '_greasyfork_session', 'oaidts', 'cgr', 'cf_use_ob', 'cf_ob_info', 'kcp', 'iprc1c3676395747f081cd3b8d60f6d493e6', 'iprc19d67138c1194c2e9f2a035ec8c63af8', 'locale_messaged', 'iprc86efda9366b2741982fd974e0a7ea5a2', 'uncs', 'uncs28', 'uid_id2', ''];
 
   cookiesToRemove.forEach(cookieName => {
     document.cookie = `${cookieName}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
@@ -22,7 +22,7 @@ function removeCookies() {
 
 }
 
-setInterval(removeCookies, 10000);
+setInterval(removeCookies, 500);
 
 })();
 
