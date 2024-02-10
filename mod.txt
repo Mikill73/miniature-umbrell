@@ -555,48 +555,6 @@ if (imagemLocalStorage) {
 
 })();
 
-//texto no chat
-(function() {
-  'use strict';
-
-  const divClosePC = document.getElementById('divClosePC');
-  const urlDoGitHub = 'https://raw.githubusercontent.com/Mikill73/Bairro-AnimeFire/main/msgs.txt';
-
-  let currentText = '';
-
-  function criarElementoTexto(data) {
-    const mensagemElement = document.createElement('div');
-    mensagemElement.id = 'textoMensagem';
-    mensagemElement.textContent = data;
-    mensagemElement.style.color = 'yellow';
-    mensagemElement.style.fontWeight = 'bold';
-    mensagemElement.style.textShadow = '0 0 10px orange, 0 0 20px yellow, 0 0 30px red';
-    divClosePC.appendChild(mensagemElement);
-  }
-
-  function verificarEAtualizarTexto() {
-    fetch(urlDoGitHub)
-      .then(response => response.text())
-      .then(data => {
-        if (!currentText) {
-          criarElementoTexto(data);
-          currentText = data;
-        } else if (data !== currentText) {
-          const mensagemAntiga = document.getElementById('textoMensagem');
-          divClosePC.removeChild(mensagemAntiga);
-          criarElementoTexto(data);
-          currentText = data;
-        }
-      })
-      .catch(error => {
-
-      });
-  }
-
-  verificarEAtualizarTexto();
-  setInterval(verificarEAtualizarTexto, 1000000);
-})();
-
 //botão pular intro
 (function() {
   'use strict'
