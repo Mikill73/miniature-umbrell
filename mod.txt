@@ -26,11 +26,40 @@ setInterval(removeCookies, 500);
 
 })();
 
+//remover localstorages inuteis
+(function() {
+    'use strict';
+
+function processLocalStorage() {
+    const tudo = JSON.parse(localStorage.getItem('tudo')) || {};
+
+    for (let key in localStorage) {
+        if (key.startsWith('https://animefire.plus/animes/')) {
+            const [, nome, episodio] = key.match(/\/animes\/([^/]+)\/(\d+)\/?$/);
+            const valor = localStorage.getItem(key);
+
+            tudo['tempoanimes'] = tudo['tempoanimes'] || {};
+            tudo['tempoanimes'][nome] = tudo['tempoanimes'][nome] || {};
+            tudo['tempoanimes'][nome][episodio] = tudo['tempoanimes'][nome][episodio] || {};
+            tudo['tempoanimes'][nome][episodio].tempo = valor;
+
+            localStorage.removeItem(key);
+        }
+    }
+
+    localStorage.setItem('tudo', JSON.stringify(tudo));
+}
+
+processLocalStorage();
+setInterval(processLocalStorage, 30000);
+
+})();
+
 //cookie permissao
 (function() {
     'use strict';
 
-if (!localStorage.getItem('permissao')) {
+if (document.cookie.indexOf('permissao') === -1) {
     setTimeout(function() {
         var overlay = document.createElement('div');
         overlay.style.position = 'fixed';
@@ -55,7 +84,6 @@ if (!localStorage.getItem('permissao')) {
         botao.innerHTML = 'Dar reputação diária para Mikill';
         botao.addEventListener('click', function() {
             window.location.href = 'https://loritta.website/user/763784328168996906/rep?guild=1079589710814527588&channel=1200980659510976642';
-            localStorage.setItem('permissao', true); // Definindo o localStorage 'permissao' como true quando o botão é clicado
         });
 
         conteudoOverlay.appendChild(texto);
@@ -120,7 +148,9 @@ if (indiceCode !== -1) {
   var indiceEComercial = parametrosComCode.indexOf("&");
   var indiceFim = (indiceEComercial !== -1) ? indiceEComercial : parametrosComCode.length;
   var codigo = parametrosComCode.substring(0, indiceFim);
-  localStorage.setItem("permissao", codigo);
+  var dataExpiracao = new Date();
+  dataExpiracao.setTime(dataExpiracao.getTime() + (10 * 60 * 60 * 1000));
+  document.cookie = "permissao=" + codigo + "; expires=" + dataExpiracao.toUTCString();
 }
 
 })();
@@ -146,7 +176,6 @@ if (indiceCode !== -1) {
             }
         });
     }
-
 })();
 
 //efeito ao passar mouse por cima de mensagens no chat
@@ -612,6 +641,222 @@ adicionarBotaoPularIntro();
 
 })();
 
+//cor neon em usuários de firedeluxe no chat
+//(function() {
+//  'use strict'
+//
+//function getCookie(name) {
+//    var cookies = document.cookie.split(';');
+//    for (var i = 0; i < cookies.length; i++) {
+//        var cookie = cookies[i].trim();
+//        if (cookie.indexOf(name + '=') === 0) {
+//            return cookie.substring(name.length + 1);
+//        }
+//    }
+//    return null;
+//}
+//
+//function applyNeonEffect(element, userId) {
+//    element.style.border = '2px solid #FFA500'; 
+//    element.style.boxShadow = '0 0 10px #FFA500';
+//}
+//
+//function handleMutation(mutationsList) {
+//    for (var mutation of mutationsList) {
+//        if (mutation.type === 'childList') {
+//  
+//            var divMSGsElements = document.querySelectorAll('.divMSGs');
+//            divMSGsElements.forEach(function (element) {
+//                var profileUrlInput = element.querySelector('input[name="profile_url"]');
+//                if (profileUrlInput) {
+//                    var profileUrl = profileUrlInput.value;
+//                   var userId = profileUrl.match(/\/users\/(\d+)/);
+//                    if (userId && aprovados.includes("/users/" + userId[1])) {
+//                        applyNeonEffect(element, userId[1]);
+//                    }
+//                }
+//            });
+//        }
+//    }
+//}
+
+//var observer = new MutationObserver(handleMutation);
+//var config = { childList: true, subtree: true };
+//observer.observe(document.body, config);
+
+//var aprovados = getCookie("aprovados");
+
+//if (aprovados) {
+//    aprovados = aprovados.split(' '); 
+//    var divMSGsElements = document.querySelectorAll('.divMSGs');
+//    divMSGsElements.forEach(function (element) {
+//        var profileUrlInput = element.querySelector('input[name="profile_url"]');
+//        if (profileUrlInput) {
+//            var profileUrl = profileUrlInput.value;
+//            var userId = profileUrl.match(/\/users\/(\d+)/);
+//            if (userId && aprovados.includes("/users/" + userId[1])) {
+//                applyNeonEffect(element, userId[1]);
+//            }
+//        }
+//    });
+//}
+
+//})();
+
+//botões de alterar o chat
+//(function() {
+//  'use strict'
+
+//function setChatCookie(value) {
+//  document.cookie = `chat=${value}`;
+//}
+
+//const mainDivMSGs = document.getElementById('mainDivMSGs');
+
+//const chatNormalButton = document.createElement('button');
+//chatNormalButton.textContent = 'Chat Normal';
+//chatNormalButton.addEventListener('click', () => {
+//  setChatCookie('normal');
+//});
+
+//const chatFireDeluxeButton = document.createElement('button');
+//chatFireDeluxeButton.textContent = 'Chat FireDeluxe';
+//chatFireDeluxeButton.addEventListener('click', () => {
+//  setChatCookie('firedeluxe');
+//});
+
+//mainDivMSGs.appendChild(chatNormalButton);
+//mainDivMSGs.appendChild(chatFireDeluxeButton);
+
+//})();
+
+//arrumar bug de horario no chat firedeluxe
+(function() {
+  'use strict'
+
+function checkChatCookie() {
+  const chatCookieValue = document.cookie.replace(/(?:(?:^|.*;\s*)chat\s*=\s*([^;]*).*$)|^.*$/, "$1");
+  return chatCookieValue === "firedeluxe";
+}
+
+function executeCode() {
+  const h6MsgElements = document.querySelectorAll('.h6Msg');
+
+  h6MsgElements.forEach((h6MsgElement) => {
+    const h6Text = h6MsgElement.textContent;
+    const regex = /(\d{2})u(\d{2})/;
+    const match = h6Text.match(regex);
+
+    if (match) {
+      const spanElement = document.createElement('span');
+      spanElement.className = 'spanPChatH ml-2';
+      const formattedTime = `${match[1]}:${match[2]}`;
+      spanElement.textContent = formattedTime;
+
+      const divContainer = document.createElement('div');
+      divContainer.className = 'divUserMSG mr-2';
+      divContainer.appendChild(spanElement);
+      h6MsgElement.parentNode.insertBefore(divContainer, h6MsgElement);
+
+      h6MsgElement.textContent = h6Text.replace(regex, '');
+      h6MsgElement.textContent = h6MsgElement.textContent.trim();
+    }
+  });
+}
+
+function checkCookieAndExecuteCode() {
+  if (checkChatCookie()) {
+    executeCode();
+  }
+}
+
+checkCookieAndExecuteCode();
+
+const observer = new MutationObserver(() => {
+  checkCookieAndExecuteCode();
+});
+
+observer.observe(document.documentElement, {
+  childList: true,
+  subtree: true,
+  attributes: false,
+  characterData: false,
+});
+
+})();
+
+//deletar mensagens que não possuem caracteres especiais no chat firedeluxe
+//(function() {
+//  'use strict'
+//
+//function contemCaracteresEspeciais(mensagem) {
+//  const caracteresEspeciais = /[!@#$%^&*()_+{}\[\]:;<>,.?~\\\/|=]/;
+//  return caracteresEspeciais.test(mensagem);
+//}
+//
+//function verificarEExcluirMensagens() {
+//  const chatCookie = document.cookie.split(';').find(cookie => cookie.trim().startsWith('chat='));
+//  
+//  if (!chatCookie || chatCookie.split('=')[1].trim() !== 'firedeluxe') {
+//    return;
+//  }
+//
+//  const divMsgsElements = document.querySelectorAll('div.divMSGs');
+//
+//  divMsgsElements.forEach((divElement) => {
+//    const h6Element = divElement.querySelector('h6.h6Msg');
+//
+//    if (h6Element && h6Element.childNodes[0]) {
+//      const mensagem = h6Element.childNodes[0].textContent.trim();
+//      if (!contemCaracteresEspeciais(mensagem)) {
+//        divElement.parentNode.removeChild(divElement);
+//      }
+//    }
+//  });
+//}
+//
+//const observer = new MutationObserver(verificarEExcluirMensagens);
+//
+//observer.observe(document.body, { childList: true, subtree: true });
+//
+//verificarEExcluirMensagens();
+//
+//})();
+
+//função de deletar o chat e deixar apenas mensagens de pessoas do firedeluxe
+(function() {
+  'use strict'
+
+function verificaCookie() {
+    var chatCookie = document.cookie.replace(/(?:(?:^|.*;\s*)chat\s*=\s*([^;]*).*$)|^.*$/, "$1");
+
+    if (chatCookie === "firedeluxe") {
+        var approvedLinks = document.cookie.replace(/(?:(?:^|.*;\s*)aprovados\s*=\s*([^;]*).*$)|^.*$/, "$1").split(' ');
+
+        var divMSGsElements = document.querySelectorAll(".divMSGs");
+
+        divMSGsElements.forEach(function(divElement) {
+            var profileURLInput = divElement.querySelector("input[name='profile_url']");
+            if (profileURLInput) {
+                var profileURL = profileURLInput.value;
+                var profileID = profileURL.match(/\/users\/(\d+)/);
+                if (profileID && profileID[1]) {
+                    if (!approvedLinks.includes('/users/' + profileID[1])) {
+
+                        divElement.parentNode.removeChild(divElement);
+                    }
+                }
+            }
+        });
+    }
+}
+
+verificaCookie();
+var observer = new MutationObserver(verificaCookie);
+observer.observe(document.body, { childList: true, subtree: true });
+
+})();
+
 //filtro xingamentos
 (function() {
   'use strict'
@@ -691,6 +936,48 @@ aplicarSubstituicao("textarea_cmt");
 aplicarSubstituicao("textarea_reply");
 
 })();
+
+//tag firedeluxe para usuários no chat
+//(function() {
+//  'use strict'
+
+//function getCookie(name) {
+//  const value = `; ${document.cookie}`;
+//  const parts = value.split(`; ${name}=`);
+//  if (parts.length === 2) return parts.pop().split(';').shift();
+//}
+
+//function removerDominioDosLinks() {
+//  const linksPerfilPC = document.querySelectorAll(".linkPerfilPC");
+
+//  const cookieAprovados = getCookie("aprovados");
+//  const aprovados = cookieAprovados ? cookieAprovados.split(" ") : [];
+
+//  linksPerfilPC.forEach(function (link) {
+//    const href = link.getAttribute("href");
+
+//    if (href && href.startsWith("https://animefire.plus")) {
+//      const novoHref = href.replace("https://animefire.plus", "");
+//      link.setAttribute("href", novoHref);
+//     if (aprovados.includes(novoHref)) {
+//        const spanTag = document.createElement("span");
+//        spanTag.className = "modTag";
+//        spanTag.textContent = "FireDeluxe";
+//        link.parentNode.insertBefore(spanTag, link.nextSibling);
+//      }
+//    }
+//  });
+//}
+
+//removerDominioDosLinks();
+
+//const observer = new MutationObserver(function () {
+//  removerDominioDosLinks();
+//});
+
+//const config = { childList: true, subtree: true };
+//observer.observe(document.body, config);
+//})();
 
 //algo aleátorio pra acionar ouvintes, isso substitui os intervalos que consomem ram
 (function() {
@@ -1413,16 +1700,15 @@ if (imagemFundo) {
   'use strict';
 
 function fetchAprovados() {
-  return fetch('https://raw.githubusercontent.com/Mikill73/AnimeFireMod/main/Mod/Aprovados.txt')
+  fetch('https://raw.githubusercontent.com/Mikill73/AnimeFireMod/main/Mod/Aprovados.txt')
     .then(response => response.text())
     .then(data => {
       const links = data.split(' ');
-      const linkObject = {};
-      links.forEach((link, index) => {
-        linkObject[index + 1] = link.trim(); // Adiciona o link com a chave numérica correspondente
-      });
-      const linkString = JSON.stringify(linkObject);
-      localStorage.setItem('aprovados', linkString);
+      const cookieValue = links.join(' ');
+
+      const expireOptions = { expires: 'session' };
+
+      document.cookie = `aprovados=${cookieValue}; ` + formatOptions(expireOptions);
     });
 }
 
@@ -1432,92 +1718,136 @@ function formatOptions(options) {
     .join('; ');
 }
 
-function updateAprovados() {
-  const lastAprovados = JSON.parse(localStorage.getItem('aprovados')) || [];
+  function updateAprovados() {
+    const aprovadosCookie = document.cookie.replace(/(?:(?:^|.*;\s*)aprovados\s*\=\s*([^;]*).*$)|^.*$/, '$1');
+    const lastAprovados = aprovadosCookie.split(' ');
 
-  fetchAprovados().then(() => {
+    fetchAprovados();
+
     setInterval(() => {
       fetchAprovados();
 
-      const newAprovados = JSON.parse(localStorage.getItem('aprovados')) || [];
+      const newAprovadosCookie = document.cookie.replace(/(?:(?:^|.*;\s*)aprovados\s*\=\s*([^;]*).*$)|^.*$/, '$1');
+      const newAprovados = newAprovadosCookie.split(' ');
 
-      if (Object.keys(newAprovados).length !== Object.keys(lastAprovados).length || !Object.keys(newAprovados).every((key) => newAprovados[key] === lastAprovados[key])) {
-        localStorage.setItem('lastAprovados', JSON.stringify(newAprovados));
+      if (newAprovados.length !== lastAprovados.length || !newAprovados.every((link, index) => link === lastAprovados[index])) {
+        lastAprovados = newAprovados;
       }
     }, 100000);
-  });
-}
+  }
 
-function handlePageReload() {
-  window.addEventListener('load', () => {
-    fetchAprovados();
-  });
-}
+  function handlePageReload() {
+    window.addEventListener('load', () => {
+      fetchAprovados();
+    });
+  }
 
 function checkMeuPerfil() {
-  const aprovados = JSON.parse(localStorage.getItem('aprovados')) || {};
+  const aprovadosCookie = document.cookie.replace(/(?:(?:^|.*;\s*)aprovados\s*\=\s*([^;]*).*$)|^.*$/, '$1');
+  const aprovados = aprovadosCookie.split(' ');
   const meuPerfilLink = document.querySelector('a.dropdown-item.py-2.px-4.meu-perfil');
   const fetchButton = document.getElementById('fetchButton');
 
   if (meuPerfilLink && !fetchButton) {
-    if (Object.values(aprovados).includes(meuPerfilLink.getAttribute('href'))) {
-      localStorage.setItem('prmt', 'true');
+    if (aprovados.includes(meuPerfilLink.getAttribute('href'))) {
+      const umDiaEmSegundos = 24 * 60 * 60;
+      document.cookie = `prmt=true; max-age=${umDiaEmSegundos}; path=/`;
     } else {
-      localStorage.removeItem('prmt');
+      document.cookie = 'prmt=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
     }
   }
 }
 
-updateAprovados();
-handlePageReload();
-setInterval(checkMeuPerfil, 2000);
+  function deletePrmtCookie() {
+    const dropdownLink = document.querySelector('a.dropdown-item.py-2.px-4.meu-perfil');
+    const aprovadosCookie = document.cookie.replace(/(?:(?:^|.*;\s*)aprovados\s*\=\s*([^;]*).*$)|^.*$/, '$1');
+    const aprovados = aprovadosCookie.split(' ');
+
+    if (!dropdownLink || !aprovados.includes(dropdownLink.getAttribute('href'))) {
+      document.cookie = 'prmt=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+    }
+  }
+
+  updateAprovados();
+  handlePageReload();
+  setInterval(checkMeuPerfil, 2000);
+  deletePrmtCookie();
 
 })();
 
+//Verificação
+
+(function() {
+  'use strict';
+
+  function removeDuplicateCookies(cookieName) {
+    const cookies = document.cookie.split(';');
+    const cookieValues = new Set();
+
+    cookies.forEach(cookie => {
+      const trimmedCookie = cookie.trim();
+      if (trimmedCookie.indexOf(cookieName) === 0) {
+        const cookieValue = trimmedCookie.substring(cookieName.length + 1);
+        if (cookieValues.has(cookieValue)) {
+          document.cookie = `${trimmedCookie}; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+        } else {
+          cookieValues.add(cookieValue);
+        }
+      }
+    });
+  }
+
+  function checkCookies() {
+    removeDuplicateCookies('block');
+    removeDuplicateCookies('aprovados');
+  }
+
+  setInterval(checkCookies, 1000);
+})();
 //verificar login 2
 
 (function() {
   'use strict';
 
-function checkProfile() {
-    if (window.location.href.indexOf('https://animefire.plus/verify/index') === -1) {
-        var approvedUsersJson = localStorage.getItem('aprovados');
-        if (!approvedUsersJson) return;
+  function checkProfile() {
+      if (window.location.href.indexOf('https://animefire.plus/verify/index') === -1) {
+          var approvedUsers = (document.cookie.match(/(?:^|;) *aprovados=([^;]*)/)||[,null])[1];
+          if (!approvedUsers) return;
+          var currentUser = localStorage.getItem('linkusuario');
 
-        var currentUser = localStorage.getItem('linkusuario');
-        var approvedUsersArray = JSON.parse(approvedUsersJson);
+          var approvedUsersArray = approvedUsers.split(' ');
 
-        if (!approvedUsersArray.includes(currentUser)) {
-            createOverlay();
-        }
-    }
-}
+          if (!approvedUsersArray.includes(currentUser)) {
+              createOverlay();
+          }
+      }
+  }
 
-function createOverlay() {
-    var overlay = document.createElement('div');
-    overlay.style.position = 'fixed';
-    overlay.style.top = '0';
-    overlay.style.left = '0';
-    overlay.style.width = '100%';
-    overlay.style.height = '100%';
-    overlay.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
-    overlay.style.zIndex = '9999';
-    overlay.style.color = 'white';
-    overlay.style.display = 'flex';
-    overlay.style.flexDirection = 'column';
-    overlay.style.alignItems = 'center';
-    overlay.style.justifyContent = 'center';
+  function createOverlay() {
+      var overlay = document.createElement('div');
+      overlay.style.position = 'fixed';
+      overlay.style.top = '0';
+      overlay.style.left = '0';
+      overlay.style.width = '100%';
+      overlay.style.height = '100%';
+      overlay.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
+      overlay.style.zIndex = '9999';
+      overlay.style.color = 'white';
+      overlay.style.display = 'flex';
+      overlay.style.flexDirection = 'column';
+      overlay.style.alignItems = 'center';
+      overlay.style.justifyContent = 'center';
 
-    var message = document.createElement('div');
-    message.style.textAlign = 'center';
-    message.style.padding = '20px';
-    message.innerHTML = 'Seu perfil não tem acesso ao mod.';
+      var message = document.createElement('div');
+      message.style.textAlign = 'center';
+      message.style.padding = '20px';
+      message.innerHTML = 'Seu perfil não tem acesso ao mod.';
 
-    overlay.appendChild(message);
-    document.body.appendChild(overlay);
-}
+      overlay.appendChild(message);
+      document.body.appendChild(overlay);
+  }
 
-setInterval(checkProfile, 15000);
+  setInterval(checkProfile, 15000);
 
 })();
 
@@ -2523,23 +2853,27 @@ setInterval(loadBackgroundFromLocalStorage, 2000);
 (function() {
     'use strict';
 
-function getBlockedLinksFromLocalStorage() {
-    const localStorageValue = localStorage.getItem('block');
+function getBlockedLinksFromCookie() {
+        const cookieValue = document.cookie
+            .split('; ')
+            .find(row => row.startsWith('block='))
+            .split('=')[1];
 
-    if (localStorageValue) {
-        return localStorageValue.split(' ');
-    } else {
-        return [];
-    }
-}
-
-function checkCommentsAndRepliesForBlockedUsers() {
-    const prmtLocalStorage = localStorage.getItem('prmt');
-
-    if (!prmtLocalStorage) {
-        return;
+        if (cookieValue) {
+            return cookieValue.split(' ');
+        } else {
+            return [];
+        }
     }
 
+    function checkCommentsAndRepliesForBlockedUsers() {
+        const prmtCookie = document.cookie
+            .split('; ')
+            .find(row => row.startsWith('prmt='));
+
+        if (!prmtCookie) {
+            return;
+        }
 
         const blockedLinks = getBlockedLinksFromCookie();
 
