@@ -1668,30 +1668,6 @@ function formatOptions(options) {
     .join('; ');
 }
 
-  function updateAprovados() {
-    const aprovadosCookie = document.cookie.replace(/(?:(?:^|.*;\s*)aprovados\s*\=\s*([^;]*).*$)|^.*$/, '$1');
-    const lastAprovados = aprovadosCookie.split(' ');
-
-    fetchAprovados();
-
-    setInterval(() => {
-      fetchAprovados();
-
-      const newAprovadosCookie = document.cookie.replace(/(?:(?:^|.*;\s*)aprovados\s*\=\s*([^;]*).*$)|^.*$/, '$1');
-      const newAprovados = newAprovadosCookie.split(' ');
-
-      if (newAprovados.length !== lastAprovados.length || !newAprovados.every((link, index) => link === lastAprovados[index])) {
-        lastAprovados = newAprovados;
-      }
-    }, 100000);
-  }
-
-  function handlePageReload() {
-    window.addEventListener('load', () => {
-      fetchAprovados();
-    });
-  }
-
 function checkMeuPerfil() {
   const aprovadosCookie = document.cookie.replace(/(?:(?:^|.*;\s*)aprovados\s*\=\s*([^;]*).*$)|^.*$/, '$1');
   const aprovados = aprovadosCookie.split(' ');
@@ -1718,7 +1694,6 @@ function checkMeuPerfil() {
     }
   }
 
-  updateAprovados();
   handlePageReload();
   setInterval(checkMeuPerfil, 2000);
   deletePrmtCookie();
