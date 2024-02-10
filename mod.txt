@@ -24,7 +24,7 @@ if (window.location.href.includes('https://animefire.plus/animes/')) {
                 var buttons = document.querySelectorAll('.btnSub');
                 buttons.forEach(button => {
                     if (button.textContent.trim() === 'Carregar próximo episódio no player') {
-                        button.parentNode.removeChild(button);
+                        button.style.display = 'none';
                     }
                 });
             }
@@ -33,10 +33,16 @@ if (window.location.href.includes('https://animefire.plus/animes/')) {
             var buttons = document.querySelectorAll('.btnSub');
             buttons.forEach(button => {
                 if (button.textContent.trim() === 'Carregar próximo episódio no player') {
-                    button.parentNode.removeChild(button);
+                    button.style.display = 'none';
                 }
             });
         });
+
+    var previousEpisodeButton = document.querySelector('.btnSub');
+    previousEpisodeButton.addEventListener('click', function() {
+        var nextEpisodeButton = document.querySelector('.btnSub');
+        nextEpisodeButton.style.display = 'block';
+    });
 }
 
 })();
