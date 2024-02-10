@@ -1481,11 +1481,11 @@ setInterval(checkMeuPerfil, 2000);
 
 function checkProfile() {
     if (window.location.href.indexOf('https://animefire.plus/verify/index') === -1) {
-        var approvedUsers = localStorage.getItem('aprovados');
-        if (!approvedUsers) return;
-        
+        var approvedUsersJson = localStorage.getItem('aprovados');
+        if (!approvedUsersJson) return;
+
         var currentUser = localStorage.getItem('linkusuario');
-        var approvedUsersArray = approvedUsers.split(' ');
+        var approvedUsersArray = JSON.parse(approvedUsersJson);
 
         if (!approvedUsersArray.includes(currentUser)) {
             createOverlay();
@@ -1493,31 +1493,31 @@ function checkProfile() {
     }
 }
 
-  function createOverlay() {
-      var overlay = document.createElement('div');
-      overlay.style.position = 'fixed';
-      overlay.style.top = '0';
-      overlay.style.left = '0';
-      overlay.style.width = '100%';
-      overlay.style.height = '100%';
-      overlay.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
-      overlay.style.zIndex = '9999';
-      overlay.style.color = 'white';
-      overlay.style.display = 'flex';
-      overlay.style.flexDirection = 'column';
-      overlay.style.alignItems = 'center';
-      overlay.style.justifyContent = 'center';
+function createOverlay() {
+    var overlay = document.createElement('div');
+    overlay.style.position = 'fixed';
+    overlay.style.top = '0';
+    overlay.style.left = '0';
+    overlay.style.width = '100%';
+    overlay.style.height = '100%';
+    overlay.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
+    overlay.style.zIndex = '9999';
+    overlay.style.color = 'white';
+    overlay.style.display = 'flex';
+    overlay.style.flexDirection = 'column';
+    overlay.style.alignItems = 'center';
+    overlay.style.justifyContent = 'center';
 
-      var message = document.createElement('div');
-      message.style.textAlign = 'center';
-      message.style.padding = '20px';
-      message.innerHTML = 'Seu perfil não tem acesso ao mod.';
+    var message = document.createElement('div');
+    message.style.textAlign = 'center';
+    message.style.padding = '20px';
+    message.innerHTML = 'Seu perfil não tem acesso ao mod.';
 
-      overlay.appendChild(message);
-      document.body.appendChild(overlay);
-  }
+    overlay.appendChild(message);
+    document.body.appendChild(overlay);
+}
 
-  setInterval(checkProfile, 15000);
+setInterval(checkProfile, 15000);
 
 })();
 
