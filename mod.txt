@@ -9,20 +9,35 @@
 // @grant        none 
 // ==/UserScript==
 
-//remover cookies inuteis
+//deletar botao de proximo ep se nao existir um proximo ep
 (function() {
     'use strict';
 
-function removeCookies() {
- const cookiesToRemove = ['locale_messaged', '_greasyfork_session', 'oaidts', 'cgr', 'cf_use_ob', 'cf_ob_info', 'kcp', 'iprc1c3676395747f081cd3b8d60f6d493e6', 'iprc19d67138c1194c2e9f2a035ec8c63af8', 'locale_messaged', 'iprc86efda9366b2741982fd974e0a7ea5a2', 'uncs', 'uncs28', 'uid_id2', ''];
+if (window.location.href.includes('https://animefire.plus/animes/')) {
+    var episodeNumber = parseInt(window.location.href.split('/').pop());
+    var nextEpisodeNumber = episodeNumber + 1;
+    var nextEpisodeUrl = 'https://animefire.plus/animes/ore-dake-level-up-na-ken/' + nextEpisodeNumber;
 
-  cookiesToRemove.forEach(cookieName => {
-    document.cookie = `${cookieName}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
-  });
-
+    fetch(nextEpisodeUrl)
+        .then(response => {
+            if (!response.ok) {
+                var buttons = document.querySelectorAll('.btnSub');
+                buttons.forEach(button => {
+                    if (button.textContent.trim() === 'Carregar próximo episódio no player') {
+                        button.parentNode.removeChild(button);
+                    }
+                });
+            }
+        })
+        .catch(error => {
+            var buttons = document.querySelectorAll('.btnSub');
+            buttons.forEach(button => {
+                if (button.textContent.trim() === 'Carregar próximo episódio no player') {
+                    button.parentNode.removeChild(button);
+                }
+            });
+        });
 }
-
-setInterval(removeCookies, 500);
 
 })();
 
