@@ -1694,7 +1694,6 @@ function checkMeuPerfil() {
     }
   }
 
-  handlePageReload();
   setInterval(checkMeuPerfil, 2000);
   deletePrmtCookie();
 
