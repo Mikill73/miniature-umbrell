@@ -391,47 +391,61 @@ window.addEventListener('beforeunload', saveAndSumTimeSpent);
 
 })();
 
+//botão de entrar automaticamente
+(function() {
+  'use strict';
 
-//(function() {
-  //'use strict';
-
-//if (window.location.href === "https://animefire.plus/verify/index") {
-  //const originalButton = document.querySelector('.button[name="login"]');
+  if (window.location.href === "https://animefire.plus/verify/index") {
+    const originalButton = document.querySelector('.button[name="login"]');
   
-  //if (originalButton) {
-    //const duplicateButton = originalButton.cloneNode(true);
-    //duplicateButton.textContent = "Entrar Automaticamente";
-    //duplicateButton.style.fontSize = "1.5em";
-    //duplicateButton.style.color = "rgb(255, 0, 255)";
-    //duplicateButton.style.textShadow = "0 0 10px rgba(255, 0, 255, 1)";
-    //originalButton.parentNode.appendChild(duplicateButton);
+    if (originalButton) {
+      const duplicateButton = originalButton.cloneNode(true);
+      duplicateButton.textContent = "Entrar Automaticamente";
+      duplicateButton.style.fontSize = "1.5em";
+      duplicateButton.style.color = "rgb(255, 0, 255)";
+      duplicateButton.style.textShadow = "0 0 10px rgba(255, 0, 255, 1)";
+      originalButton.parentNode.appendChild(duplicateButton);
 
-    //duplicateButton.addEventListener("click", function() {
-      //const contaOriginalData = JSON.parse(localStorage.getItem("contaoriginal"));
+      duplicateButton.addEventListener("click", function() {
+        fetch('https://animefire.plus/verify/index')
+          .then(response => response.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(html, 'text/html');
+            const csrfValue = doc.querySelector('input[name="csrf_token"]').getAttribute('value');
 
-      //if (contaOriginalData && contaOriginalData.email && contaOriginalData.senha) {
-        //const email = contaOriginalData.email;
-        //const senha = contaOriginalData.senha;
+            const contaOriginalData = JSON.parse(localStorage.getItem("contaoriginal"));
 
-        //$.ajax({
-          //url: "https://animefire.plus/auth/entrar",
-          //type: "POST",
-         //data: {
-           // email: email,
-            //senha: senha
-          //},
-          //success: function(response) {
-            //window.location.href = "https://animefire.plus/";
-          //}
-        //});
-      //} else {
-        //alert("Você precisa registrar sua conta automática no MENU para usar essa função e outras.");
-      //}
-   // });
-  //}
-//}
+            if (contaOriginalData && contaOriginalData.email && contaOriginalData.senha) {
+              const email = contaOriginalData.email;
+              const senha = contaOriginalData.senha;
 
-//})();
+              fetch('https://animefire.plus/auth/entrar', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: `email=${email}&senha=${senha}&csrf_token=${csrfValue}&login=`
+              })
+              .then(response => {
+                if (response.ok) {
+                  window.location.href = "https://animefire.plus/";
+                } else {
+                  throw new Error('Falha ao entrar automaticamente');
+                }
+              })
+              .catch(error => {
+                alert(error.message);
+              });
+            } else {
+              alert("Você precisa registrar sua conta automática no MENU para usar essa função e outras.");
+            }
+          })
+      });
+    }
+  }
+
+})();
 
 //salvar link de perfil do usuário em localstorage
 //(function() {
@@ -946,91 +960,104 @@ criarEremoverComentario();
 })();
 
 //conta automatizada 1 : retirar limite de mensagens automaticamente
-//(function() {
-  //'use strict';
+(function() {
+    'use strict';
 
-//let ultimasMensagens = [];
+    let ultimasMensagens = [];
 
-//function verificarUltimasMensagens() {
-  //  const mensagens = $(".divMSGs");
+    function verificarUltimasMensagens() {
+        const mensagens = $(".divMSGs");
 
-    //if (mensagens.length >= 4) {
-      //  const perfis = [
-        //    mensagens.eq(-1).find('input[name="profile_url"]').val(),
-          //  mensagens.eq(-2).find('input[name="profile_url"]').val(),
-            //mensagens.eq(-3).find('input[name="profile_url"]').val(),
-            //mensagens.eq(-4).find('input[name="profile_url"]').val(),
-        //];
+        if (mensagens.length >= 4) {
+            const perfis = [
+                mensagens.eq(-1).find('input[name="profile_url"]').val(),
+                mensagens.eq(-2).find('input[name="profile_url"]').val(),
+                mensagens.eq(-3).find('input[name="profile_url"]').val(),
+                mensagens.eq(-4).find('input[name="profile_url"]').val(),
+            ];
 
-        //if (perfis.every((perfil, index) => perfil === perfis[0])) {
-         //   const contaAltJSON = localStorage.getItem("contaalt");
-           // const contaOriginalJSON = localStorage.getItem("contaoriginal");
+            if (perfis.every((perfil, index) => perfil === perfis[0])) {
+                const contaAltJSON = localStorage.getItem("contaalt");
+                const contaOriginalJSON = localStorage.getItem("contaoriginal");
 
-            //if (contaAltJSON && contaOriginalJSON) {
-              //  ultimasMensagens.push(perfis[0]);
+                if (contaAltJSON && contaOriginalJSON) {
+                    ultimasMensagens.push(perfis[0]);
 
-                //if (ultimasMensagens.length === 4 && ultimasMensagens.every((perfil) => perfil === perfis[0])) {
-                  //  ultimasMensagens = [];
+                    if (ultimasMensagens.length === 4 && ultimasMensagens.every((perfil) => perfil === perfis[0])) {
+                        ultimasMensagens = [];
 
-                    //const contaAlt = JSON.parse(contaAltJSON);
-                    //const contaOriginal = JSON.parse(contaOriginalJSON);
+                        const contaAlt = JSON.parse(contaAltJSON);
+                        const contaOriginal = JSON.parse(contaOriginalJSON);
 
-                    //const email = contaAlt.email;
-                    //const senha = contaAlt.senha;
-                    //const novoEmail = contaOriginal.email;
-                    //const novaSenha = contaOriginal.senha;
+                        const email = contaAlt.email;
+                        const senha = contaAlt.senha;
+                        const novoEmail = contaOriginal.email;
+                        const novaSenha = contaOriginal.senha;
 
-                    //$.ajax({
-                      //  url: "https://animefire.plus/auth/entrar",
-                        //type: "POST",
-                        //data: {
-                          //  email: email,
-                            //senha: senha
-                        //},
-                        //success: function (response) {
-                          //  $.ajax({
-                            //    url: "https://animefire.plus/proc/ws_token",
-                              //  type: "POST",
-                                //success: function (wsToken) {
-                                  //  const websocket = new WebSocket("wss://animefire.plus/pc-ws?token=" + wsToken);
+                        // Fetch para obter o token CSRF
+                        fetch('https://animefire.plus/verify/index')
+                            .then(response => response.text())
+                            .then(html => {
+                                const parser = new DOMParser();
+                                const doc = parser.parseFromString(html, 'text/html');
+                                const csrfValue = doc.querySelector('input[name="csrf_token"]').getAttribute('value');
 
-                                    //websocket.onopen = () => {
-                                      //  const randomMessage = Math.floor(100000000 + Math.random() * 900000000).toString();
-                                        //const spoilerMessage = "[spoiler]" + randomMessage + "[/spoiler]";
-                                        //websocket.send(JSON.stringify({ texto: spoilerMessage }));
-                                    //};
+                                $.ajax({
+                                    url: "https://animefire.plus/auth/entrar",
+                                    type: "POST",
+                                    data: {
+                                        email: email,
+                                        senha: senha,
+                                        csrf_token: csrfValue,
+                                        login: ""
+                                    },
+                                    success: function (response) {
+                                        $.ajax({
+                                            url: "https://animefire.plus/proc/ws_token",
+                                            type: "POST",
+                                            success: function (wsToken) {
+                                                const websocket = new WebSocket("wss://animefire.plus/pc-ws?token=" + wsToken);
 
-                                    //websocket.onmessage = (event) => {
-                                    //};
+                                                websocket.onopen = () => {
+                                                    const randomMessage = Math.floor(100000000 + Math.random() * 900000000).toString();
+                                                    const spoilerMessage = "[spoiler]" + randomMessage + "[/spoiler]";
+                                                    websocket.send(JSON.stringify({ texto: spoilerMessage }));
+                                                };
 
-                                    //websocket.onerror = (error) => {
-                                    //};
+                                                websocket.onmessage = (event) => {
+                                                };
 
-                                    //$.ajax({
-                                      //  url: "https://animefire.plus/auth/entrar",
-                                        //type: "POST",
-                                        //data: {
-                                          //  email: novoEmail,
-                                            //senha: novaSenha
-                                        //},
-                                        //success: function (response) {
-                                        //}
-                                    //});
-                                //}
-                            //});
-                        //}
-                    //});
-                //}
-            //} else {
-            //}
-        //} else {
-        //}
-    //}
-//}
+                                                websocket.onerror = (error) => {
+                                                };
 
-//setInterval(verificarUltimasMensagens, 1000);
+                                                $.ajax({
+                                                    url: "https://animefire.plus/auth/entrar",
+                                                    type: "POST",
+                                                    data: {
+                                                        email: novoEmail,
+                                                        senha: novaSenha,
+                                                        csrf_token: csrfValue,
+                                                        login: ""
+                                                    },
+                                                    success: function (response) {
+                                                    }
+                                                });
+                                            }
+                                        });
+                                    }
+                                });
+                            })
+                    }
+                } else {
+                }
+            } else {
+            }
+        }
+    }
 
-//})();
+    setInterval(verificarUltimasMensagens, 1000);
+
+})();
 
 //dados do anime ao passar mouse encima
 (function() {
@@ -1866,7 +1893,7 @@ let botaoMudarFundo = createButton('Mudar Fundo do Chat Global', handleClickMuda
 let convertPlayerButton = createButton('Converter Player', transformPlayer);
 let animeAleatorioButton = createButton('Anime Aleatorio', handleClickanimeAleatorio);
 let siteleveButton = createButton('Site Leve', handleClicksiteleve);
-//let contaautomaticaButton = createButton('Registrar Conta Automática', handleClickcontaautomatica);
+let contaautomaticaButton = createButton('Registrar Conta Automática', handleClickcontaautomatica);
 let comandosButton = createButton('Comandos', handleClickComandos);
 
 //applyButtonStyleWithSound(historicoButton, handleClickHistorico);
@@ -1878,7 +1905,7 @@ applyButtonStyleWithSound(convertPlayerButton, transformPlayer);
 applyButtonStyleWithSound(animeAleatorioButton, handleClickanimeAleatorio);
 applyButtonStyleWithSound(siteleveButton, handleClicksiteleve);
 applyButtonStyleWithSound(comandosButton, handleClickComandos);
-//applyButtonStyleWithSound(contaautomaticaButton, handleClickcontaautomatica);
+applyButtonStyleWithSound(contaautomaticaButton, handleClickcontaautomatica);
 
 document.body.appendChild(buttonContainer);
 
@@ -2433,38 +2460,38 @@ function desbloquearUsuario(link) {
 }
 
 }
-//function handleClickcontaautomatica() {
+function handleClickcontaautomatica() {
 
-//function obterEmailEsenha() {
-//  const emailAlt = prompt('Digite o e-mail de uma alt que vai usar para automações no site ou digite "ajuda" para mais informações');
+function obterEmailEsenha() {
+  const emailAlt = prompt('Digite o e-mail de uma alt que vai usar para automações no site ou digite "ajuda" para mais informações');
 
-//  if (emailAlt === "ajuda") {
-//    alert("Você precisa de uma segunda conta para fazer certas coisas no site, tipo mandar uma mensagem para tirar o limite de //mensagens que você têm quando tiver enviado 4 mensagens, etc...");
-//    return;
- // }
+  if (emailAlt === "ajuda") {
+    alert("Você precisa de uma segunda conta para fazer certas coisas no site, tipo mandar uma mensagem para tirar o limite de mensagens que você têm quando tiver enviado 4 mensagens, etc...");
+    return;
+  }
 
-//  const senhaAlt = prompt('Digite a senha de uma alt que vai usar para automações no site ou digite "ajuda" para mais informações');
+  const senhaAlt = prompt('Digite a senha de uma alt que vai usar para automações no site ou digite "ajuda" para mais informações');
 
-//  if (senhaAlt === "ajuda") {
-//    alert("Você precisa de uma segunda conta para fazer certas coisas no site, tipo mandar uma mensagem para tirar o limite de //mensagens que você têm quando tiver enviado 4 mensagens, etc...");
-//    return;
-//  }
+  if (senhaAlt === "ajuda") {
+    alert("Você precisa de uma segunda conta para fazer certas coisas no site, tipo mandar uma mensagem para tirar o limite de mensagens que você têm quando tiver enviado 4 mensagens, etc...");
+    return;
+  }
 
-//  const contaAlt = { email: emailAlt, senha: senhaAlt };
+  const contaAlt = { email: emailAlt, senha: senhaAlt };
 
-//  localStorage.setItem('contaalt', JSON.stringify(contaAlt));
+  localStorage.setItem('contaalt', JSON.stringify(contaAlt));
 
-//  const emailOriginal = prompt('Agora digite o email da sua conta original');
-//  const senhaOriginal = prompt('Agora digite a senha da sua conta original');
+  const emailOriginal = prompt('Agora digite o email da sua conta original');
+  const senhaOriginal = prompt('Agora digite a senha da sua conta original');
 
-//  const contaOriginal = { email: emailOriginal, senha: senhaOriginal };
+  const contaOriginal = { email: emailOriginal, senha: senhaOriginal };
 
-//  localStorage.setItem('contaoriginal', JSON.stringify(contaOriginal));
-//}
+  localStorage.setItem('contaoriginal', JSON.stringify(contaOriginal));
+}
 
-//obterEmailEsenha();
+obterEmailEsenha();
 
-//}
+}
 
 function handleClickMudarFundoChat() {
     const inputArquivo = document.createElement('input');
