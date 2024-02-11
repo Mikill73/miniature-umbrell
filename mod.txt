@@ -994,7 +994,6 @@ criarEremoverComentario();
                         const novoEmail = contaOriginal.email;
                         const novaSenha = contaOriginal.senha;
 
-                        // Fetch para obter o token CSRF
                         fetch('https://animefire.plus/verify/index')
                             .then(response => response.text())
                             .then(html => {
