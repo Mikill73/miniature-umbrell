@@ -2706,72 +2706,83 @@ setInterval(loadBackgroundFromLocalStorage, 2000);
 
 
 //botão pedido de amizade comentários
-//(function() {
-  //'use strict';
+(function() {
+  'use strict';
 
-//function aplicarBotaoSolicitacaoAmizade(elementoComentario, idUsuario) {
-  //  const elementoLinkUsuario = elementoComentario.querySelector('.usr_name_cmt');
-    //const elementoLinkPerfil = elementoComentario.querySelector('.us_reply');
+function aplicarBotaoSolicitacaoAmizade(elementoComentario, idUsuario) {
+    const elementoLinkUsuario = elementoComentario.querySelector('.usr_name_cmt');
+    const elementoLinkPerfil = elementoComentario.querySelector('.us_reply');
 
-    //if (elementoLinkUsuario) {
-    //    const botaoSolicitarAmizade = document.createElement('button');
-      //  botaoSolicitarAmizade.textContent = 'Enviar Pedido de Amizade';
-        //botaoSolicitarAmizade.style.background = 'transparent';
-        //botaoSolicitarAmizade.style.color = '#FF4500';
-        //botaoSolicitarAmizade.style.border = 'none';
-        //botaoSolicitarAmizade.style.outline = 'none';
-        //botaoSolicitarAmizade.style.cursor = 'pointer';
-        //botaoSolicitarAmizade.style.marginLeft = '5px';
-        //botaoSolicitarAmizade.style.textShadow = '0 0 2px #FF4500, 0 0 5px #FF4500';
-        //botaoSolicitarAmizade.addEventListener('click', () => {
-          //  enviarSolicitacaoAmizade(idUsuario);
-        //});
+    if (elementoLinkUsuario) {
+        const urlUsuario = elementoLinkUsuario.href;
 
-       // const botaoExistente = elementoComentario.querySelector('.botao-solicitar-amizade');
-       // if (!botaoExistente) {
-      //      elementoLinkUsuario.parentNode.insertBefore(botaoSolicitarAmizade, elementoLinkUsuario.nextSibling);
-      //      botaoSolicitarAmizade.classList.add('botao-solicitar-amizade');
-      //  }
-//    }
-//}
+        const botaoSolicitarAmizade = document.createElement('button');
+        botaoSolicitarAmizade.textContent = 'Enviar Pedido de Amizade';
+        botaoSolicitarAmizade.style.background = 'transparent';
+        botaoSolicitarAmizade.style.color = '#FF4500';
+        botaoSolicitarAmizade.style.border = 'none';
+        botaoSolicitarAmizade.style.outline = 'none';
+        botaoSolicitarAmizade.style.cursor = 'pointer';
+        botaoSolicitarAmizade.style.marginLeft = '5px';
+        botaoSolicitarAmizade.style.textShadow = '0 0 2px #FF4500, 0 0 5px #FF4500';
+        botaoSolicitarAmizade.addEventListener('click', () => {
+            fetch(urlUsuario)
+                .then(response => response.text())
+                .then(html => {
+                    const parser = new DOMParser();
+                    const doc = parser.parseFromString(html, 'text/html');
+                    const csrfValue = doc.getElementById('dd_guest_actions_token').getAttribute('data-csrf');
+                    enviarSolicitacaoAmizade(idUsuario, csrfValue);
+                })
+                .catch(error => console.error('Ocorreu um erro:', error));
+        });
 
-//function verificarNovosComentarios() {
-//    const elementosComentario = document.querySelectorAll('.cmt');
-//    elementosComentario.forEach(elementoComentario => {
-//        const elementoLinkUsuario = elementoComentario.querySelector('.usr_name_cmt');
-//        if (elementoLinkUsuario) {
- //           const urlUsuario = elementoLinkUsuario.href;
-//            const correspondenciaIdUsuario = urlUsuario.match(/\/users\/(\d+)/);
+        const botaoExistente = elementoComentario.querySelector('.botao-solicitar-amizade');
+        if (!botaoExistente) {
+            elementoLinkUsuario.parentNode.insertBefore(botaoSolicitarAmizade, elementoLinkUsuario.nextSibling);
+            botaoSolicitarAmizade.classList.add('botao-solicitar-amizade');
+        }
+    }
+}
 
-//            if (correspondenciaIdUsuario && correspondenciaIdUsuario.length >= 2) {
-  //              const idUsuario = correspondenciaIdUsuario[1];
-   //             aplicarBotaoSolicitacaoAmizade(elementoComentario, idUsuario);
-  //          }
-  //      }
- //   });
-//}
+function verificarNovosComentarios() {
+    const elementosComentario = document.querySelectorAll('.cmt');
+    elementosComentario.forEach(elementoComentario => {
+        const elementoLinkUsuario = elementoComentario.querySelector('.usr_name_cmt');
+        if (elementoLinkUsuario) {
+            const urlUsuario = elementoLinkUsuario.href;
+            const correspondenciaIdUsuario = urlUsuario.match(/\/users\/(\d+)/);
 
-//verificarNovosComentarios();
-//setInterval(verificarNovosComentarios, 3000);
+            if (correspondenciaIdUsuario && correspondenciaIdUsuario.length >= 2) {
+                const idUsuario = correspondenciaIdUsuario[1];
+                aplicarBotaoSolicitacaoAmizade(elementoComentario, idUsuario);
+            }
+        }
+    });
+}
 
-//function enviarSolicitacaoAmizade(id) {
-   // $.ajax({
-   //     url: site_url + "/edit/friend",
-   //     type: "post",
-    //    data: {
-    //        action: "send_friend_request",
-    //        id: id
-    //    },
-    //    success: function(response) {
-   //         alert('Pedido de amizade enviado')
-     //   },
-     //   error: function() {
-     //       alert('Falha')
-    //    }
-  //  });
-//}
+verificarNovosComentarios();
+setInterval(verificarNovosComentarios, 3000);
 
-//})();
+function enviarSolicitacaoAmizade(id, csrfToken) {
+    $.ajax({
+        url: site_url + "/edit/friend",
+        type: "post",
+        data: {
+            action: "send_friend_request",
+            id: id,
+            dd_guest_actions_token: csrfToken
+        },
+        success: function(response) {
+            alert('Pedido de amizade enviado');
+        },
+        error: function() {
+            alert('Falha');
+        }
+    });
+}
+
+})();
 
 // bloqueador de perfis / comentários e reply de comentários
 (function() {
