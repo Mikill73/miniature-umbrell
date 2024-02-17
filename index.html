@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <h1>O botão de votar está no fim da página!</h1>
     <h2>Vote na pessoa que você considera mais bela, homem e mulher, um placar de top 5 pessoas mais votadas para ambos os gêneros será feito e publicado no grupo da sala, os votos são anônimos, é totalmente impossível identificar quem votou</h2>
     <style>
         .btn {
@@ -16,6 +17,9 @@
         .btn:hover {
             background-color: #FFFF000;
         }
+    .label {
+        font-size: 1.5em;
+    }
     </style>
     <script>
         function verificarVoto() {
@@ -65,168 +69,170 @@
 <body>
     <form onsubmit="event.preventDefault(); enviarVoto();">
         <fieldset>
-            <legend>Homens</legend>
-            <div>
-                <label for="homem8">Gabriel Silva</label>
-                <input type="radio" id="homem8" name="homem" value="Gabriel Silva">
-            </div>
-            <div>
-                <label for="homem18">Yuri Gomes</label>
-                <input type="radio" id="homem18" name="homem" value="Yuri Gomes">
-            </div>
-            <div>
-                <label for="homem1">Bruno Gomes</label>
-                <input type="radio" id="homem1" name="homem" value="Bruno Gomes">
-            </div>
-            <div>
-                <label for="homem2">Davi Campos</label>
-                <input type="radio" id="homem2" name="homem" value="Davi Campos">
-            </div>
-            <div>
-                <label for="homem3">Ericky Rodrigues</label>
-                <input type="radio" id="homem3" name="homem" value="Ericky Rodrigues">
-            </div>
-            <div>
-                <label for="homem4">Everton Gomes</label>
-                <input type="radio" id="homem4" name="homem" value="Everton Gomes">
-            </div>
-            <div>
-                <label for="homem5">Felipe Silva</label>
-                <input type="radio" id="homem5" name="homem" value="Felipe Silva">
-            </div>
-            <div>
-                <label for="homem6">Fillype Matheus</label>
-                <input type="radio" id="homem6" name="homem" value="Fillype Matheus">
-            </div>
-            <div>
-                <label for="homem7">Gabriel dos Santos</label>
-                <input type="radio" id="homem7" name="homem" value="Gabriel dos Santos">
-            </div>
-            <div>
-                <label for="homem9">Isaac Silva</label>
-                <input type="radio" id="homem9" name="homem" value="Isaac Silva">
-            </div>
-            <div>
-                <label for="homem10">Joao Pedro Ramos</label>
-                <input type="radio" id="homem10" name="homem" value="Joao Pedro Ramos">
-            </div>
-            <div>
-                <label for="homem11">Matheus Pereira</label>
-                <input type="radio" id="homem11" name="homem" value="Matheus Pereira">
-            </div>
-            <div>
-                <label for="homem12">Mikael Pereira</label>
-                <input type="radio" id="homem12" name="homem" value="Mikael Pereira">
-            </div>
-            <div>
-                <label for="homem13">Pedro Henrique Valter</label>
-                <input type="radio" id="homem13" name="homem" value="Pedro Henrique Valter">
-            </div>
-            <div>
-                <label for="homem14">Rafael Felipe</label>
-                <input type="radio" id="homem14" name="homem" value="Rafael Felipe">
-            </div>
-            <div>
-                <label for="homem15">Samuel Souza</label>
-                <input type="radio" id="homem15" name="homem" value="Samuel Souza">
-            </div>
-            <div>
-                <label for="homem16">Samuel Santana</label>
-                <input type="radio" id="homem16" name="homem" value="Samuel Santana">
-            </div>
-            <div>
-                <label for="homem17">Thiago Henrique</label>
-                <input type="radio" id="homem17" name="homem" value="Thiago Henrique">
-            </div>
-            <div>
-                <label for="homem19">Kauan</label>
-                <input type="radio" id="homem19" name="homem" value="Kauan">
-            </div>
-            <div>
-                <label for="homem20">Marcos</label>
-                <input type="radio" id="homem20" name="homem" value="Marcos">
-            </div>
-            <div>
-                <label for="homem21">Lucas</label>
-                <input type="radio" id="homem21" name="homem" value="Lucas">
-            </div>
-            <div>
-                <label for="homem22">Hiago</label>
-                <input type="radio" id="homem22" name="homem" value="Hiago">
-            </div>
-            <div>
-                <label for="homem23">Gustavo Neres</label>
-                <input type="radio" id="homem23" name="homem" value="Gustavo Neres">
-            </div>
-            <div>
-                <label for="homem24">Gustavo Garcia</label>
-                <input type="radio" id="homem24" name="homem" value="Gustavo Garcia">
-            </div>
-            <div>
-                <label for="homem25">Thallyson</label>
-                <input type="radio" id="homem25" name="homem" value="Thallyson">
-            </div>
-        </fieldset>
+    <legend>Homens</legend>
+
+        <div>
+        <label class="label" for="homem8">Gabriel Silva</label>
+        <input type="radio" id="homem8" name="homem" value="Gabriel Silva">
+    </div>
+        <div>
+        <label class="label" for="homem18">Yuri Gomes</label>
+        <input type="radio" id="homem18" name="homem" value="Yuri Gomes">
+    </div>
+    <div>
+        <label class="label" for="homem1">Bruno Gomes</label>
+        <input type="radio" id="homem1" name="homem" value="Bruno Gomes">
+    </div>
+    <div>
+        <label class="label" for="homem2">Davi Campos</label>
+        <input type="radio" id="homem2" name="homem" value="Davi Campos">
+    </div>
+    <div>
+        <label class="label" for="homem3">Ericky Rodrigues</label>
+        <input type="radio" id="homem3" name="homem" value="Ericky Rodrigues">
+    </div>
+    <div>
+        <label class="label" for="homem4">Everton Gomes</label>
+        <input type="radio" id="homem4" name="homem" value="Everton Gomes">
+    </div>
+    <div>
+        <label class="label" for="homem5">Felipe Silva</label>
+        <input type="radio" id="homem5" name="homem" value="Felipe Silva">
+    </div>
+    <div>
+        <label class="label" for="homem6">Fillype Matheus</label>
+        <input type="radio" id="homem6" name="homem" value="Fillype Matheus">
+    </div>
+    <div>
+        <label class="label" for="homem7">Gabriel dos Santos</label>
+        <input type="radio" id="homem7" name="homem" value="Gabriel dos Santos">
+    </div>
+    <div>
+        <label class="label" for="homem9">Isaac Silva</label>
+        <input type="radio" id="homem9" name="homem" value="Isaac Silva">
+    </div>
+    <div>
+        <label class="label" for="homem10">Joao Pedro Ramos</label>
+        <input type="radio" id="homem10" name="homem" value="Joao Pedro Ramos">
+    </div>
+    <div>
+        <label class="label" for="homem11">Matheus Pereira</label>
+        <input type="radio" id="homem11" name="homem" value="Matheus Pereira">
+    </div>
+    <div>
+        <label class="label" for="homem12">Mikael Pereira</label>
+        <input type="radio" id="homem12" name="homem" value="Mikael Pereira">
+    </div>
+    <div>
+        <label class="label" for="homem13">Pedro Henrique Valter</label>
+        <input type="radio" id="homem13" name="homem" value="Pedro Henrique Valter">
+    </div>
+    <div>
+        <label class="label" for="homem14">Rafael Felipe</label>
+        <input type="radio" id="homem14" name="homem" value="Rafael Felipe">
+    </div>
+    <div>
+        <label class="label" for="homem15">Samuel Souza</label>
+        <input type="radio" id="homem15" name="homem" value="Samuel Souza">
+    </div>
+    <div>
+        <label class="label" for="homem16">Samuel Santana</label>
+        <input type="radio" id="homem16" name="homem" value="Samuel Santana">
+    </div>
+    <div>
+        <label class="label" for="homem17">Thiago Henrique</label>
+        <input type="radio" id="homem17" name="homem" value="Thiago Henrique">
+    </div>
+    <div>
+        <label class="label" for="homem19">Kauan</label>
+        <input type="radio" id="homem19" name="homem" value="Kauan">
+    </div>
+    <div>
+        <label class="label" for="homem20">Marcos</label>
+        <input type="radio" id="homem20" name="homem" value="Marcos">
+    </div>
+    <div>
+        <label class="label" for="homem21">Lucas</label>
+        <input type="radio" id="homem21" name="homem" value="Lucas">
+    </div>
+    <div>
+        <label class="label" for="homem22">Hiago</label>
+        <input type="radio" id="homem22" name="homem" value="Hiago">
+    </div>
+    <div>
+        <label class="label" for="homem23">Gustavo Neres</label>
+        <input type="radio" id="homem23" name="homem" value="Gustavo Neres">
+    </div>
+    <div>
+        <label class="label" for="homem24">Gustavo Garcia</label>
+        <input type="radio" id="homem24" name="homem" value="Gustavo Garcia">
+    </div>
+    <div>
+        <label class="label" for="homem25">Thallyson</label>
+        <input type="radio" id="homem25" name="homem" value="Thallyson">
+    </div>
+</fieldset>
+
 
         <fieldset>
-            <legend>Mulheres</legend>
-            <div>
-                <label for="mulher1">Rebeca Rodrigues</label>
-                <input type="radio" id="mulher1" name="mulher" value="Rebeca Rodrigues">
-            </div>
-            <div>
-                <label for="mulher2">Debora Santos</label>
-                <input type="radio" id="mulher2" name="mulher" value="Debora Santos">
-            </div>
-            <div>
-                <label for="mulher3">Fernanda Rodrigues</label>
-                <input type="radio" id="mulher3" name="mulher" value="Fernanda Rodrigues">
-            </div>
-            <div>
-                <label for="mulher4">Juliana Vitoria</label>
-                <input type="radio" id="mulher4" name="mulher" value="Juliana Vitoria">
-            </div>
-            <div>
-                <label for="mulher5">Karla Rocha</label>
-                <input type="radio" id="mulher5" name="mulher" value="Karla Rocha">
-            </div>
-            <div>
-                <label for="mulher6">Leticia Beatriz</label>
-                <input type="radio" id="mulher6" name="mulher" value="Leticia Beatriz">
-            </div>
-            <div>
-                <label for="mulher7">Pablliny Vithorya</label>
-                <input type="radio" id="mulher7" name="mulher" value="Pablliny Vithorya">
-            </div>
-            <div>
-                <label for="mulher8">Giovanna Ragonesi</label>
-                <input type="radio" id="mulher8" name="mulher" value="Giovanna Ragonesi">
-            </div>
-            <div>
-                <label for="mulher9">Giovana Silva</label>
-                <input type="radio" id="mulher9" name="mulher" value="Giovana Silva">
-            </div>
-            <div>
-                <label for="mulher10">Mariana</label>
-                <input type="radio" id="mulher10" name="mulher" value="Mariana">
-            </div>
-            <div>
-                <label for="mulher11">Maria Eduarda</label>
-                <input type="radio" id="mulher11" name="mulher" value="Maria Eduarda">
-            </div>
-            <div>
-                <label for="mulher12">Gisele</label>
-                <input type="radio" id="mulher12" name="mulher" value="Gisele">
-            </div>
-            <div>
-                <label for="mulher13">Kevilin Vieira</label>
-                <input type="radio" id="mulher13" name="mulher" value="Kevilin Vieira">
-            </div>
-            <div>
-                <label for="mulher14">Michelly Carvalho</label>
-                <input type="radio" id="mulher14" name="mulher" value="Michelly Carvalho">
-            </div>
-        </fieldset>
+    <legend>Mulheres</legend>
+    <div>
+        <label class="label" for="mulher1">Rebeca Rodrigues</label>
+        <input type="radio" id="mulher1" name="mulher" value="Rebeca Rodrigues">
+    </div>
+    <div>
+        <label class="label" for="mulher2">Debora Santos</label>
+        <input type="radio" id="mulher2" name="mulher" value="Debora Santos">
+    </div>
+    <div>
+        <label class="label" for="mulher3">Fernanda Rodrigues</label>
+        <input type="radio" id="mulher3" name="mulher" value="Fernanda Rodrigues">
+    </div>
+    <div>
+        <label class="label" for="mulher4">Juliana Vitoria</label>
+        <input type="radio" id="mulher4" name="mulher" value="Juliana Vitoria">
+    </div>
+    <div>
+        <label class="label" for="mulher5">Karla Rocha</label>
+        <input type="radio" id="mulher5" name="mulher" value="Karla Rocha">
+    </div>
+    <div>
+        <label class="label" for="mulher6">Leticia Beatriz</label>
+        <input type="radio" id="mulher6" name="mulher" value="Leticia Beatriz">
+    </div>
+    <div>
+        <label class="label" for="mulher7">Pablliny Vithorya</label>
+        <input type="radio" id="mulher7" name="mulher" value="Pablliny Vithorya">
+    </div>
+    <div>
+        <label class="label" for="mulher8">Giovanna Ragonesi</label>
+        <input type="radio" id="mulher8" name="mulher" value="Giovanna Ragonesi">
+    </div>
+    <div>
+        <label class="label" for="mulher9">Giovana Silva</label>
+        <input type="radio" id="mulher9" name="mulher" value="Giovana Silva">
+    </div>
+    <div>
+        <label class="label" for="mulher10">Mariana</label>
+        <input type="radio" id="mulher10" name="mulher" value="Mariana">
+    </div>
+    <div>
+        <label class="label" for="mulher11">Maria Eduarda</label>
+        <input type="radio" id="mulher11" name="mulher" value="Maria Eduarda">
+    </div>
+    <div>
+        <label class="label" for="mulher12">Gisele</label>
+        <input type="radio" id="mulher12" name="mulher" value="Gisele">
+    </div>
+    <div>
+        <label class="label" for="mulher13">Kevilin Vieira</label>
+        <input type="radio" id="mulher13" name="mulher" value="Kevilin Vieira">
+    </div>
+    <div>
+        <label class="label" for="mulher14">Michelly Carvalho</label>
+        <input type="radio" id="mulher14" name="mulher" value="Michelly Carvalho">
+    </div>
+</fieldset>
 
         <button class="btn" type="submit" id="btnVotar">Votar</button>
     </form>
