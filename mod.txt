@@ -206,13 +206,12 @@ setInterval(function() {
                 localStorage.removeItem('linkusuario');
             }
         } else {
-            localStorage.removeItem('linkusuario');
         }
     }
 
     saveUserLink();
 
-    setInterval(saveUserLink, 2000);
+    setInterval(saveUserLink, 10000);
 })();
 
 //deletar notificações do bloqueado
