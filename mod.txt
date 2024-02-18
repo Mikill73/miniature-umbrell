@@ -1199,7 +1199,6 @@ const profileMessages = [
   { profileURL: "https://animefire.plus/users/601178026", message: "Nojento" },
   { profileURL: "https://animefire.plus/users/360939010", message: "Nojento" },
   { profileURL: "https://animefire.plus/users/403236720", message: "Larga de ser nojento hanza quantas alt tu tem em, parou de postar pornografia infantil e gore? mlk nojento" },
-  { profileURL: "https://animefire.plus/users/795475003", message: "Oii linda, fiquei sabendo que vc usa firedeluxe rs" },
   { profileURL: "https://animefire.plus/users/450952355", message: "Nojento" },
 
 ];
