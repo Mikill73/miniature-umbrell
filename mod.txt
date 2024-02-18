@@ -203,7 +203,7 @@ setInterval(function() {
                 var newHref = '/users/' + userId;
                 localStorage.setItem('linkusuario', newHref);
             } else {
-                localStorage.removeItem('linkusuario');
+
             }
         } else {
         }
@@ -211,7 +211,7 @@ setInterval(function() {
 
     saveUserLink();
 
-    setInterval(saveUserLink, 10000);
+    setInterval(saveUserLink, 2000);
 })();
 
 //deletar notificações do bloqueado
