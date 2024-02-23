@@ -44,13 +44,14 @@
                 return;
             }
 
-            const homem = document.querySelector('input[name="homem"]:checked').value;
-            const mulher = document.querySelector('input[name="mulher"]:checked').value;
             const codigo2 = localStorage.getItem("codigo2");
+            const animal = document.querySelector('input[name="homem"]:checked').value;
+            const cor = document.querySelector('input[name="cor"]:checked').value;
 
-            const payload = {
-                "content": "# Voto\n**Homem:** " + homem + "\n**Mulher:** " + mulher + "\n**Código:** " + codigo2
-            };
+const payload = {
+    "content": "# Voto\n**Animal:** " + animal + "\n**Cor:** " + cor + "\n**Código:** " + codigo2
+};
+
 
             fetch('https://discord.com/api/webhooks/1208186355994067014/JEjGPDLq-Ytp4Bk5WtijkU-dNg0FX3DMfZkfY7H39Dz-o4OKjJqVJ65kdwsbSoIY1BLB', {
                 method: 'POST',
