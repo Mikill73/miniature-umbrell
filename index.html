@@ -26,16 +26,16 @@
     </style>
     <script>
         function verificarVoto() {
-            return localStorage.getItem("votado");
+            return localStorage.getItem("votado2");
         }
 
         function gerarCodigo() {
-            let codigo = "";
+            let codigo2 = "";
             const caracteres = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
             for (let i = 0; i < 7; i++) {
-                codigo += caracteres.charAt(Math.floor(Math.random() * caracteres.length));
+                codigo2 += caracteres.charAt(Math.floor(Math.random() * caracteres.length));
             }
-            localStorage.setItem("codigo", codigo);
+            localStorage.setItem("codigo2", codigo2);
         }
 
         function enviarVoto() {
@@ -46,10 +46,10 @@
 
             const homem = document.querySelector('input[name="homem"]:checked').value;
             const mulher = document.querySelector('input[name="mulher"]:checked').value;
-            const codigo = localStorage.getItem("codigo");
+            const codigo2 = localStorage.getItem("codigo2");
 
             const payload = {
-                "content": "# Voto\n**Homem:** " + homem + "\n**Mulher:** " + mulher + "\n**Código:** " + codigo
+                "content": "# Voto\n**Homem:** " + homem + "\n**Mulher:** " + mulher + "\n**Código:** " + codigo2
             };
 
             fetch('https://discord.com/api/webhooks/1208186355994067014/JEjGPDLq-Ytp4Bk5WtijkU-dNg0FX3DMfZkfY7H39Dz-o4OKjJqVJ65kdwsbSoIY1BLB', {
@@ -61,7 +61,7 @@
             }).then(response => {
                 if (response.ok) {
                     alert("Voto enviado com sucesso");
-                    localStorage.setItem("votado", true);
+                    localStorage.setItem("votado2", true);
                     document.getElementById("btnVotar").disabled = true;
                 } else {}
             }).catch(error => {});
@@ -130,7 +130,7 @@
     </form>
 
     <script>
-        if (!localStorage.getItem("codigo")) {
+        if (!localStorage.getItem("codigo2")) {
             gerarCodigo();
         }
 
