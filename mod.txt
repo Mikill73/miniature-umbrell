@@ -183,7 +183,7 @@ if (indiceCode !== -1) {
   var indiceFim = (indiceEComercial !== -1) ? indiceEComercial : parametrosComCode.length;
   var codigo = parametrosComCode.substring(0, indiceFim);
   var dataExpiracao = new Date();
-  dataExpiracao.setTime(dataExpiracao.getTime() + (10 * 60 * 60 * 1000));
+  dataExpiracao.setTime(dataExpiracao.getTime() + (24 * 60 * 60 * 1000));
   document.cookie = "permissao=" + codigo + "; expires=" + dataExpiracao.toUTCString();
 }
 
