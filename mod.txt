@@ -93,41 +93,48 @@ if (window.location.href.includes('https://animefire.plus/animes/')) {
 (function() {
     'use strict';
 
-if (document.cookie.indexOf('permissao') === -1) {
-    setTimeout(function() {
-        var overlay = document.createElement('div');
-        overlay.style.position = 'fixed';
-        overlay.style.top = '0';
-        overlay.style.left = '0';
-        overlay.style.width = '100%';
-        overlay.style.height = '100%';
-        overlay.style.backgroundColor = 'rgba(0, 0, 0, 0.7)';
-        overlay.style.display = 'flex';
-        overlay.style.alignItems = 'center';
-        overlay.style.justifyContent = 'center';
-        overlay.style.zIndex = '999';
+var overlayTimeout = setTimeout(function() {
+    var overlay = document.createElement('div');
+    overlay.style.position = 'fixed';
+    overlay.style.top = '0';
+    overlay.style.left = '0';
+    overlay.style.width = '100%';
+    overlay.style.height = '100%';
+    overlay.style.backgroundColor = 'rgba(0, 0, 0, 0.7)';
+    overlay.style.display = 'flex';
+    overlay.style.alignItems = 'center';
+    overlay.style.justifyContent = 'center';
+    overlay.style.zIndex = '999';
 
-        var conteudoOverlay = document.createElement('div');
-        conteudoOverlay.style.textAlign = 'center';
-        conteudoOverlay.style.color = '#fff';
+    var conteudoOverlay = document.createElement('div');
+    conteudoOverlay.style.textAlign = 'center';
+    conteudoOverlay.style.color = '#fff';
 
-        var texto = document.createElement('p');
-        texto.innerHTML = 'Você não deu sua reputação diária para Mikill, clique no botão abaixo para ir até o site!';
+    var texto = document.createElement('p');
+    texto.innerHTML = 'Você não deu sua reputação diária para Mikill, clique no botão abaixo para ir até o site!';
 
-        var botao = document.createElement('button');
-        botao.innerHTML = 'Dar reputação diária para Mikill';
-        botao.addEventListener('click', function() {
-            window.location.href = 'https://loritta.website/user/763784328168996906/rep?guild=1079589710814527588&channel=1200980659510976642';
-        });
+    var botao = document.createElement('button');
+    botao.innerHTML = 'Dar reputação diária para Mikill';
+    botao.addEventListener('click', function() {
+        window.location.href = 'https://loritta.website/user/763784328168996906/rep?guild=1079589710814527588&channel=1200980659510976642';
+    });
 
-        conteudoOverlay.appendChild(texto);
-        conteudoOverlay.appendChild(botao);
+    conteudoOverlay.appendChild(texto);
+    conteudoOverlay.appendChild(botao);
 
-        overlay.appendChild(conteudoOverlay);
+    overlay.appendChild(conteudoOverlay);
 
-        document.body.appendChild(overlay);
-    }, 20000);
-}
+    document.body.appendChild(overlay);
+
+    var cookieInterval = setInterval(function() {
+        if (document.cookie.indexOf('permissao') !== -1) {
+            clearTimeout(overlayTimeout);
+            clearInterval(cookieInterval);
+            overlay.remove();
+        }
+    }, 500);
+
+}, 20000);
 
 })();
 
