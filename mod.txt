@@ -13,6 +13,10 @@
     'use strict';
 
 function verificarEpisodios() {
+    if (window.location.href.includes("home")) {
+        return;
+    }
+
     fetch('https://animefire.plus/')
         .then(response => response.text())
         .then(data => {
