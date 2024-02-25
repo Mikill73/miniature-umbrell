@@ -9,6 +9,44 @@
 // @grant        none 
 // ==/UserScript==
 
+(function() {
+    'use strict';
+
+function verificarEpisodios() {
+    fetch('https://animefire.plus/')
+        .then(response => response.text())
+        .then(data => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(data, 'text/html');
+            const novosEpisodios = htmlDoc.querySelectorAll('.divCardUltimosEpsHome');
+            
+            novosEpisodios.forEach(episodio => {
+                const titulo = episodio.getAttribute('title');
+                const encontrado = document.querySelector(`[title="${titulo}"]`);
+                if (!encontrado) {
+                    const novoEpisodioHTML = episodio.outerHTML;
+                    
+                    const cardGroup = document.querySelector('.card-group.col-lg-12');
+                    if (cardGroup) {
+                        const rowDiv = cardGroup.querySelector('.row.ml-1.mr-1.mr-md-2');
+                        if (rowDiv) {
+                            rowDiv.insertAdjacentHTML('afterbegin', novoEpisodioHTML);
+                            
+                            const novoEpisodioDiv = rowDiv.querySelector('.divCardUltimosEpsHome');
+                            if (novoEpisodioDiv) {
+                                novoEpisodioDiv.innerHTML += '<div style="background-color: yellow; color: black; padding: 5px;">Novo episódio acima</div>';
+                                alert('Novo episodio adicionado na pagina inicial!');
+                            }
+                        }
+                    }
+                }
+            });
+        })
+}
+
+setInterval(verificarEpisodios, 60000);
+
+})();
 //deletar botao de proximo ep se nao existir um proximo ep
 (function() {
     'use strict';
