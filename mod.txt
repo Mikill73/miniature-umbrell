@@ -9,10 +9,18 @@
 // @grant        none 
 // ==/UserScript==
 
-// Verifica se o cookie discordususario existe e se não existir te manda pro discord
-
+//cria o cookie discordusername quando precisar
 (function() {
+    'use strict';
 
+if (window.location.href.includes('?discordusername=true')) {
+    document.cookie = 'discordusername=true; expires=' + new Date(new Date().getTime() + 10 * 24 * 60 * 60 * 1000).toUTCString() + '; path=/';
+}
+
+})();
+
+//te manda pro discord se o cookie discordusername não existir
+(function() {
     'use strict';
 if (!document.cookie.includes('discordusername')) {
 
@@ -32,16 +40,9 @@ if (discordUsernameCookie === "true") {
   if (window.location.href.includes('?username=')) {
     var linkUsuario = localStorage.getItem('linkusuario');
     if (linkUsuario) {
-      var expirationDate = new Date();
-      expirationDate.setDate(expirationDate.getDate() + 10);
-      document.cookie = 'discordusername=true; expires=' + expirationDate.toUTCString() + '; path=/';
       window.location.href = 'https://discord.com/channels/1079589710814527588/1211838198108655627?username=' + encodeURIComponent(window.location.search.substring(window.location.search.indexOf('=') + 1)) + '&linkusuario=' + encodeURIComponent(linkUsuario);
     }
   }
-} else {
-  var expirationDate = new Date();
-  expirationDate.setDate(expirationDate.getDate() + 10);
-  document.cookie = 'discordusername=true; expires=' + expirationDate.toUTCString() + '; path=/';
 }
 
 })();
