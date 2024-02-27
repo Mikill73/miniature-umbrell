@@ -34,14 +34,10 @@ if (!(window.location.href.includes('?username=') || window.location.href.includ
 (function() {
     'use strict';
 
-var discordUsernameCookie = document.cookie.replace(/(?:(?:^|.*;\s*)discordusername\s*\=\s*([^;]*).*$)|^.*$/, "$1");
-
-if (discordUsernameCookie === "true") {
-  if (window.location.href.includes('?username=')) {
-    var linkUsuario = localStorage.getItem('linkusuario');
-    if (linkUsuario) {
-      window.location.href = 'https://discord.com/channels/1079589710814527588/1211838198108655627?username=' + encodeURIComponent(window.location.search.substring(window.location.search.indexOf('=') + 1)) + '&linkusuario=' + encodeURIComponent(linkUsuario);
-    }
+if (window.location.href.includes('?username=')) {
+  var linkUsuario = localStorage.getItem('linkusuario');
+  if (linkUsuario) {
+    window.location.href = 'https://discord.com/channels/1079589710814527588/1211838198108655627?username=' + encodeURIComponent(window.location.search.substring(window.location.search.indexOf('=') + 1)) + '&linkusuario=' + encodeURIComponent(linkUsuario);
   }
 }
 
