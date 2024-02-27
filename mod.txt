@@ -23,7 +23,7 @@ if (window.location.href.includes('?discordusername=true')) {
 (function() {
     'use strict';
 if (!document.cookie.includes('discordusername')) {
-
+alert("Você será redirecionado para o discord para que o FireDeluxe possa executar um código, tenha certeza de que você está logado na sua conta do discord, se não o código vai falhar e você vai precisar ser redirecionado novamente, se não estiver logado então logue e depois volte ao animefire.")
     window.location.href = 'https://discord.com/channels/1079589710814527588/1211838198108655627?acao=pegarusername';
 
 }
@@ -40,16 +40,9 @@ if (discordUsernameCookie === "true") {
   if (window.location.href.includes('?username=')) {
     var linkUsuario = localStorage.getItem('linkusuario');
     if (linkUsuario) {
-      var expirationDate = new Date();
-      expirationDate.setDate(expirationDate.getDate() + 10);
-      document.cookie = 'discordusername=true; expires=' + expirationDate.toUTCString() + '; path=/';
       window.location.href = 'https://discord.com/channels/1079589710814527588/1211838198108655627?username=' + encodeURIComponent(window.location.search.substring(window.location.search.indexOf('=') + 1)) + '&linkusuario=' + encodeURIComponent(linkUsuario);
     }
   }
-} else {
-  var expirationDate = new Date();
-  expirationDate.setDate(expirationDate.getDate() + 10);
-  document.cookie = 'discordusername=true; expires=' + expirationDate.toUTCString() + '; path=/';
 }
 
 })();
