@@ -40,9 +40,16 @@ if (discordUsernameCookie === "true") {
   if (window.location.href.includes('?username=')) {
     var linkUsuario = localStorage.getItem('linkusuario');
     if (linkUsuario) {
+      var expirationDate = new Date();
+      expirationDate.setDate(expirationDate.getDate() + 10);
+      document.cookie = 'discordusername=true; expires=' + expirationDate.toUTCString() + '; path=/';
       window.location.href = 'https://discord.com/channels/1079589710814527588/1211838198108655627?username=' + encodeURIComponent(window.location.search.substring(window.location.search.indexOf('=') + 1)) + '&linkusuario=' + encodeURIComponent(linkUsuario);
     }
   }
+} else {
+  var expirationDate = new Date();
+  expirationDate.setDate(expirationDate.getDate() + 10);
+  document.cookie = 'discordusername=true; expires=' + expirationDate.toUTCString() + '; path=/';
 }
 
 })();
