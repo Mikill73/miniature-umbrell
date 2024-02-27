@@ -9,6 +9,16 @@
 // @grant        none 
 // ==/UserScript==
 
+// Verifica se o cookie discordususario existe e se não existir te manda pro discord
+
+(function() {
+    'use strict';
+if (!document.cookie.includes('discordusername')) {
+
+    window.location.href = 'https://discord.com/channels/1079589710814527588/1211838198108655627?acao=pegarusername';
+
+}
+
 //código pra pegar o username no discord e enviar o href do seu perfil no animefire
 (function() {
     'use strict';
