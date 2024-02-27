@@ -9,6 +9,23 @@
 // @grant        none 
 // ==/UserScript==
 
+(function() {
+    'use strict';
+
+if (!localStorage.getItem('deletadocookiediscordusername')) {
+
+    function deleteCookie(name) {
+        document.cookie = name + '=; Max-Age=-99999999;';
+    }
+
+    deleteCookie('discordusername');
+
+    localStorage.setItem('deletadocookiediscordusername', 'true');
+}
+
+
+})();
+
 //cria o cookie discordusername quando precisar
 (function() {
     'use strict';
