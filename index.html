@@ -1,145 +1,89 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Votação Camisetas Interclasse</title>
-    <h1>Votação para definir características da camisa da sala no interclasse </h1>
-    <h2>Obs : Se você não estiver no grupo você não tem direito a receber a camisa, o botão de votar está no fim da página</h2>
-    <style>
-        .btn {
-            padding: 15px 32px;
-            margin: 4px 2px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        .btn:hover {
-            background-color: #FFFF000;
-        }
-    .label {
-        font-size: 1.5em;
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Formulário</title>
+<style>
+    body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
     }
-    .label2 {
-        font-size: 2.5em;
+    form {
+        text-align: center;
+        background-color: #f0f0f0;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     }
-    </style>
-    <script>
-        function verificarVoto() {
-            return localStorage.getItem("votado2");
-        }
-
-        function gerarCodigo() {
-            let codigo2 = "";
-            const caracteres = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-            for (let i = 0; i < 7; i++) {
-                codigo2 += caracteres.charAt(Math.floor(Math.random() * caracteres.length));
-            }
-            localStorage.setItem("codigo2", codigo2);
-        }
-
-        function enviarVoto() {
-            if (verificarVoto()) {
-                alert("Você já votou");
-                return;
-            }
-
-            const codigo2 = localStorage.getItem("codigo2");
-            const animal = document.querySelector('input[name="homem"]:checked').value;
-            const cor = document.querySelector('input[name="cor"]:checked').value;
-
-const payload = {
-    "content": "# Voto\n**Animal:** " + animal + "\n**Cor:** " + cor + "\n**Código:** " + codigo2
-};
-
-
-            fetch('https://discord.com/api/webhooks/1208186355994067014/JEjGPDLq-Ytp4Bk5WtijkU-dNg0FX3DMfZkfY7H39Dz-o4OKjJqVJ65kdwsbSoIY1BLB', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(payload)
-            }).then(response => {
-                if (response.ok) {
-                    alert("Voto enviado com sucesso");
-                    localStorage.setItem("votado2", true);
-                    document.getElementById("btnVotar").disabled = true;
-                } else {}
-            }).catch(error => {});
-        }
-    </script>
+    textarea, button {
+        display: block;
+        margin: 10px auto;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        width: 80%;
+        box-sizing: border-box;
+    }
+    button {
+        background-color: #28a745;
+        color: white;
+        cursor: pointer;
+    }
+</style>
 </head>
-
 <body>
-    <form onsubmit="event.preventDefault(); enviarVoto();">
-        <fieldset>
-    <legend class="label2">Animais</legend>
+<form id="myForm">
+    <textarea id="fullName" placeholder="Nome completo"></textarea>
+    <textarea id="shirtNumber" placeholder="Número da camisa"></textarea>
+    <button type="button" onclick="enviarResposta()" id="submitButton">Enviar</button>
+</form>
 
-    <div>
-        <label class="label" for="homem1">Dragão de Jade</label>
-        <input type="radio" id="homem1" name="homem" value="Dragão de Jade">
-    </div>
-    <div>
-        <label class="label" for="homem1">Lobo</label>
-        <input type="radio" id="homem1" name="homem" value="Lobo">
-    </div>
-    </div>
-        <div>
-        <label class="label" for="homem1">Peixe com espada</label>
-        <input type="radio" id="homem1" name="homem" value="Peixe com espada">
-    </div>
-    <div>
-        <label class="label" for="homem1">Leão</label>
-        <input type="radio" id="homem1" name="homem" value="Leão">
-    </div>
-    <div>
-        <label class="label" for="homem1">Cobra</label>
-        <input type="radio" id="homem1" name="homem" value="Cobra">
-    </div>
-</fieldset>
+<script>
+    var enviado = localStorage.getItem('enviado5');
+    if (enviado) {
+        document.getElementById('submitButton').disabled = true;
+    }
 
+    function enviarResposta() {
+        var nome = document.getElementById("fullName").value;
+        var numero = document.getElementById("shirtNumber").value;
+        var codigo = generateCode();
 
-        <fieldset>
-    <legend class="label2">Cores</legend>
-    <div>
-        <label class="label" for="cor1">Vermelho e preto</label>
-        <input type="radio" id="cor1" name="cor" value="Vermelho e preto">
-    </div>
-        <div>
-        <label class="label" for="cor2">Azul escuro e preto</label>
-        <input type="radio" id="cor2" name="cor" value="Azul escuro e preto">
-    </div>
-        <div>
-        <label class="label" for="cor3">Preto e branco </label>
-        <input type="radio" id="cor3" name="cor" value="Preto e branco">
-    </div>
-        <div>
-        <label class="label" for="cor4">Rosa e preto</label>
-        <input type="radio" id="cor4" name="cor" value="Rosa e preto">
-    </div>
-        <div>
-        <label class="label" for="cor5">Roxo e preto</label>
-        <input type="radio" id="cor5" name="cor" value="Roxo e preto">
-    </div>
-            <div>
-        <label class="label" for="cor5">Ciano e preto</label>
-        <input type="radio" id="cor5" name="cor" value="Ciano e preto">
-    </div>
-</fieldset>
+        var mensagem = `**Nome:** ${nome}\n**Número:** ${numero}\n**Código:** ${codigo}`;
 
-        <button class="btn" type="submit" id="btnVotar">Votar</button>
-    </form>
+        fetch('https://discord.com/api/webhooks/1213223287568736346/qMVLAg0QEKaVFNhrenidCTSMkaDWNgPvUcPmGI4r3_Eqy6bMTbacsR2p3s5vuNN9AJ9E', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ content: mensagem })
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('');
+            }
+            alert('Resposta enviada com sucesso!');
+            localStorage.setItem('enviado5', true);
+            document.getElementById('submitButton').disabled = true;
+        })
+        .catch(error => {
+            console.error('Erro:', error);
+            alert('Erro');
+        });
+    }
 
-    <script>
-        if (!localStorage.getItem("codigo2")) {
-            gerarCodigo();
+    function generateCode() {
+        var codigo = '';
+        var caracteres = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        for (var i = 0; i < 9; i++) {
+            codigo += caracteres.charAt(Math.floor(Math.random() * caracteres.length));
         }
-
-        if (verificarVoto()) {
-            document.getElementById("btnVotar").disabled = true; // 
-        }
-    </script>
+        return codigo;
+    }
+</script>
 </body>
-
 </html>
