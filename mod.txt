@@ -9,6 +9,34 @@
 // @grant        none 
 // ==/UserScript==
 
+//ocultar imagem de perfil e banner de perfis bloqueados pelo usuário
+(function() {
+    'use strict';
+
+function verificarBloqueio() {
+    const blockPersonalizado = JSON.parse(localStorage.getItem('blockpersonalizado')) || [];
+    const currentUrl = window.location.href;
+    
+    if (blockPersonalizado.some((block) => currentUrl.includes(block.link))) {
+        // Substitui as imagens por texto
+        const imgDivElements = document.querySelectorAll('.divPimg');
+        imgDivElements.forEach((imgDiv) => {
+            imgDiv.style.backgroundImage = 'none';
+            imgDiv.textContent = "Você bloqueou esse usuário, o banner e a foto de perfil dele também estão ocultados para caso sejam de conteúdo obsceno";
+        });
+
+        const imgElements = document.querySelectorAll('.imgP');
+        imgElements.forEach((img) => {
+            img.remove();
+        });
+    }
+}
+
+verificarBloqueio();
+setInterval(verificarBloqueio, 1000);
+
+})();
+
 (function() {
     'use strict';
 
