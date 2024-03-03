@@ -13,20 +13,23 @@
 (function() {
     'use strict';
 
-function getCookie(name) {
-    const value = `; ${document.cookie}`;
-    const parts = value.split(`; ${name}=`);
-    if (parts.length === 2) return parts.pop().split(';').shift();
+function verificaCookie() {
+    var cookies = document.cookie.split(';');
+    for (var i = 0; i < cookies.length; i++) {
+        var cookie = cookies[i].trim();
+        if (cookie.startsWith('permissao=')) {
+            var valorCookie = cookie.substring('permissao='.length);
+            if (valorCookie.includes('daily=true')) {
+                return;
+            }
+        }
+    }
+    alert("Você não pegou os sonhos diários, você será redirecionado para pegar.");
+    window.location.href = "https://loritta.website/br/daily";
 }
 
-const dlParam = window.location.href.includes('?dl=true');
-
-const cookieValue = getCookie("permissao");
-if (!dlParam && cookieValue && cookieValue.includes("daily=true")) {
-    alert("Você já pegou os sonhos do daily.");
-} else {
-    alert("Você não pegou os sonhos do daily, você será redirecionado para pegar.");
-    window.location.href = "https://loritta.website/br/daily";
+if (window.location.href.indexOf('?dl=true') === -1) {
+    verificaCookie();
 }
 
 })();
