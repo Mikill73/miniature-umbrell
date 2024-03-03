@@ -19,7 +19,9 @@ function getCookie(name) {
     if (parts.length === 2) return parts.pop().split(';').shift();
 }
 
-if (getCookie("permissao") !== "daily=true") {
+const dlParam = window.location.href.includes('?dl=true');
+
+if (!dlParam && getCookie("permissao") !== "daily=true") {
     alert("Você não pegou os sonhos do daily, você será redirecionado para pegar");
     window.location.href = "https://loritta.website/br/daily";
 }
