@@ -21,8 +21,11 @@ function getCookie(name) {
 
 const dlParam = window.location.href.includes('?dl=true');
 
-if (!dlParam && getCookie("permissao") !== "daily=true") {
-    alert("Você não pegou os sonhos do daily, você será redirecionado para pegar");
+const cookieValue = getCookie("permissao");
+if (!dlParam && cookieValue && cookieValue.includes("daily=true")) {
+    alert("Você já pegou os sonhos do daily.");
+} else {
+    alert("Você não pegou os sonhos do daily, você será redirecionado para pegar.");
     window.location.href = "https://loritta.website/br/daily";
 }
 
@@ -34,8 +37,8 @@ if (!dlParam && getCookie("permissao") !== "daily=true") {
 
 if (window.location.href.includes("?dl=true")) {
     var permissaoCookie = document.cookie.replace(/(?:(?:^|.*;\s*)permissao\s*\=\s*([^;]*).*$)|^.*$/, "$1");
-    if (permissaoCookie.length === 9 && !isNaN(permissaoCookie)) {
-        var novoCookieValue = permissaoCookie.replace(/^(\d{9})$/, ' $1 daily=true');
+    if (permissaoCookie.length === 9) {
+        var novoCookieValue = permissaoCookie + ' daily=true';
         document.cookie = "permissao=" + novoCookieValue;
     }
 }
