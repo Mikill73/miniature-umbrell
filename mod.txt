@@ -15,17 +15,22 @@
 
 function verificaCookie() {
     var cookies = document.cookie.split(';');
+    var cookieEncontrado = false;
     for (var i = 0; i < cookies.length; i++) {
         var cookie = cookies[i].trim();
         if (cookie.startsWith('permissao=')) {
             var valorCookie = cookie.substring('permissao='.length);
             if (valorCookie.includes('daily=true')) {
-                return;
+                cookieEncontrado = true;
+                break;
             }
         }
     }
-    alert("Você não pegou os sonhos diários, você será redirecionado para pegar.");
-    window.location.href = "https://loritta.website/br/daily";
+
+    if (!cookieEncontrado && window.location.href.indexOf('?dl=true') === -1) {
+        alert("Você não pegou os sonhos diários, você será redirecionado para pegar.");
+        window.location.href = "https://loritta.website/br/daily";
+    }
 }
 
 if (window.location.href.indexOf('?dl=true') === -1) {
