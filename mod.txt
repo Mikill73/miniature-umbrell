@@ -9,6 +9,37 @@
 // @grant        none 
 // ==/UserScript==
 
+//verifica se vc já pegou o daily, se não te manda pro site da loritta pra pegar
+(function() {
+    'use strict';
+
+function getCookie(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
+}
+
+if (getCookie("permissao") !== "daily=true") {
+    alert("Você não pegou os sonhos do daily, você será redirecionado para pegar");
+    window.location.href = "https://loritta.website/br/daily";
+}
+
+})();
+
+//código pra definir que você já pegou o daily
+(function() {
+    'use strict';
+
+if (window.location.href.includes("?dl=true")) {
+    var permissaoCookie = document.cookie.replace(/(?:(?:^|.*;\s*)permissao\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+    if (permissaoCookie.length === 9 && !isNaN(permissaoCookie)) {
+        var novoCookieValue = permissaoCookie.replace(/^(\d{9})$/, ' $1 daily=true');
+        document.cookie = "permissao=" + novoCookieValue;
+    }
+}
+
+})();
+
 //ocultar imagem de perfil e banner de perfis bloqueados pelo usuário
 (function() {
     'use strict';
