@@ -9,50 +9,6 @@
 // @grant        none 
 // ==/UserScript==
 
-//verifica se vc já pegou o daily, se não te manda pro site da loritta pra pegar
-(function() {
-    'use strict';
-
-function verificaCookie() {
-    var cookies = document.cookie.split(';');
-    var cookieEncontrado = false;
-    var vsCookieValue = null;
-
-    for (var i = 0; i < cookies.length; i++) {
-        var cookie = cookies[i].trim();
-        if (cookie.startsWith('permissao=')) {
-            var valorCookie = cookie.substring('permissao='.length);
-            if (valorCookie.includes('daily=true')) {
-                cookieEncontrado = true;
-            }
-        } else if (cookie.startsWith('vs=')) {
-            vsCookieValue = parseInt(cookie.substring('vs='.length));
-        }
-    }
-
-    if (vsCookieValue !== null && window.location.href.indexOf('?dl=true') === -1) {
-        fetch('https://greasyfork.org/pt-BR/scripts/470618-firedeluxe')
-            .then(response => response.text())
-            .then(data => {
-                var parser = new DOMParser();
-                var htmlDoc = parser.parseFromString(data, 'text/html');
-                var scriptVersion = parseInt(htmlDoc.querySelector('.script-show-version span').innerText);
-                if (scriptVersion < vsCookieValue) {
-                    return;
-                } else {
-                    alert("Você não pegou os sonhos diários, você será redirecionado para pegar.");
-                    window.location.href = "https://loritta.website/br/daily";
-                }
-            })
-    }
-}
-
-if (window.location.href.indexOf('?dl=true') === -1) {
-    verificaCookie();
-}
-
-})();
-
 //código pra definir que você já pegou o daily
 (function() {
     'use strict';
