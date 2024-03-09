@@ -9,6 +9,38 @@
 // @grant        none 
 // ==/UserScript==
 
+(function() {
+    'use strict';
+
+function cookieContemSubString(nome, subString) {
+    return document.cookie.split(';').some((cookie) => {
+        return cookie.trim().startsWith(nome) && cookie.includes(subString);
+    });
+}
+
+function paginaRestrita() {
+    var url = window.location.href;
+    var parametros = ['?username=', '?linkperfil=', '?dl=true'];
+
+    if (url.includes("https://animefire.plus/verify/index")) {
+        return true;
+    }
+
+    for (var i = 0; i < parametros.length; i++) {
+        if (url.includes(parametros[i])) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+if (!paginaRestrita() && !cookieContemSubString("permissao", "daily=true")) {
+    alert("Você precisa pegar os sonhos de hoje, você será redirecionado");
+    window.location.href = "https://loritta.website/br/daily";
+}
+
+})();
 //código pra definir que você já pegou o daily
 (function() {
     'use strict';
