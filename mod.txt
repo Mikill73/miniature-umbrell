@@ -42,16 +42,20 @@ if (!paginaRestrita() && !cookieContemSubString("permissao", "daily=true")) {
 }
 
 })();
+
 //código pra definir que você já pegou o daily
 (function() {
     'use strict';
 
-if (window.location.href.includes("?dl=true")) {
-    var permissaoCookie = document.cookie.replace(/(?:(?:^|.*;\s*)permissao\s*\=\s*([^;]*).*$)|^.*$/, "$1");
-    if (permissaoCookie.length === 9) {
-        var novoCookieValue = permissaoCookie + ' daily=true';
-        document.cookie = "permissao=" + novoCookieValue;
+if (document.cookie.split(';').some((item) => item.trim().startsWith('permissao='))) {
+    if (window.location.href.includes("?dl=true")) {
+        var permissaoCookie = document.cookie.replace(/(?:(?:^|.*;\s*)permissao\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+        if (permissaoCookie.length === 9) {
+            var novoCookieValue = permissaoCookie + ' daily=true';
+            document.cookie = "permissao=" + novoCookieValue;
+        }
     }
+} else {
 }
 
 })();
