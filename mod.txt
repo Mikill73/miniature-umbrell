@@ -13,9 +13,9 @@
 (function() {
     'use strict';
 
-function cookieContemSubString(nome, subString) {
+function cookieContemSubString(nome) {
     return document.cookie.split(';').some((cookie) => {
-        return cookie.trim().startsWith(nome) && cookie.includes(subString);
+        return cookie.trim().startsWith(nome);
     });
 }
 
@@ -36,7 +36,7 @@ function paginaRestrita() {
     return false;
 }
 
-if (!paginaRestrita() && !cookieContemSubString("permissao", "daily=true")) {
+if (!paginaRestrita() && !cookieContemSubString("daily")) {
     alert("Você precisa pegar os sonhos de hoje, você será redirecionado");
     window.location.href = "https://loritta.website/br/daily";
 }
@@ -47,17 +47,14 @@ if (!paginaRestrita() && !cookieContemSubString("permissao", "daily=true")) {
 (function() {
     'use strict';
 
+if (window.location.href.includes('?dl=true')) {
     if (document.cookie.split(';').some((item) => item.trim().startsWith('permissao='))) {
-        if (window.location.href.includes("?dl=true")) {
-            var permissaoCookie = document.cookie.replace(/(?:(?:^|.*;\s*)permissao\s*\=\s*([^;]*).*$)|^.*$/, "$1");
-            if (permissaoCookie.includes("daily=true")) {
-                return;
-            } else {
-                var novoCookieValue = permissaoCookie + ' daily=true';
-                document.cookie = "permissao=" + novoCookieValue;
-            }
-        }
+        var expirationDate = new Date();
+        expirationDate.setTime(expirationDate.getTime() + (20 * 60 * 60 * 1000)); // Adiciona 20 horas
+        var expires = "expires=" + expirationDate.toUTCString();
+        document.cookie = 'daily=true; path=/; ' + expires + '; SameSite=Strict';
     }
+}
 
 })();
 
