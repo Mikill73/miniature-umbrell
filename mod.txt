@@ -587,12 +587,13 @@ window.addEventListener('beforeunload', saveAndSumTimeSpent);
     const originalButton = document.querySelector('.button[name="login"]');
   
     if (originalButton) {
-      const duplicateButton = originalButton.cloneNode(true);
-      duplicateButton.textContent = "Entrar Automaticamente";
-      duplicateButton.style.fontSize = "1.5em";
-      duplicateButton.style.color = "rgb(255, 0, 255)";
-      duplicateButton.style.textShadow = "0 0 10px rgba(255, 0, 255, 1)";
-      originalButton.parentNode.appendChild(duplicateButton);
+const duplicateButton = originalButton.cloneNode(true);
+duplicateButton.textContent = "Entrar Automaticamente";
+duplicateButton.style.fontSize = "1.5em";
+duplicateButton.style.color = "#FFFFFF";
+duplicateButton.style.textShadow = "0 0 2px #FF4500, 0 0 5px #FF4500, 0 0 10px #FF4500, 0 0 15px #FF4500, 0 0 20px #FF4500, 0 0 25px #FF4500"; // Sombra de texto
+originalButton.parentNode.appendChild(duplicateButton);
+
 
       duplicateButton.addEventListener("click", function() {
         fetch('https://animefire.plus/verify/index')
