@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Camisas</title>
+<title>Cargos de Eletiva</title>
 <style>
     body {
         display: flex;
@@ -19,7 +19,7 @@
         border-radius: 10px;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     }
-    textarea, button {
+    select, textarea, button {
         display: block;
         margin: 10px auto;
         padding: 10px;
@@ -37,23 +37,28 @@
 </head>
 <body>
 <form id="myForm">
+    <h4>Para melhor organização e eficiência da eletiva é vantajoso distribuir os cargos por capacidade ou características físicas, para isso precisamos saber quais são os interessados em participar, caso seja o seu caso, selecione a sua função abaixo e insira o seu nome, então pressione o botão de enviar.</h4>
+    <select id="eletivaCargo">
+        <option value="Gravador">Gravador</option>
+        <option value="Entrevistador">Entrevistador</option>
+        <option value="Apresentador">Apresentador</option>
+    </select>
     <textarea id="fullName" placeholder="Nome completo"></textarea>
-    <textarea id="shirtNumber" placeholder="Número da camisa"></textarea>
     <button type="button" onclick="enviarResposta()" id="submitButton">Enviar</button>
 </form>
 
 <script>
-    var enviado = localStorage.getItem('enviado6');
+    var enviado = localStorage.getItem('enviado7');
     if (enviado) {
         document.getElementById('submitButton').disabled = true;
     }
 
     function enviarResposta() {
         var nome = document.getElementById("fullName").value;
-        var numero = document.getElementById("shirtNumber").value;
+        var cargoSelecionado = document.getElementById("eletivaCargo").value;
         var codigo = generateCode();
 
-        var mensagem = `**Nome:** ${nome}\n**Número:** ${numero}\n**Código:** ${codigo}`;
+        var mensagem = `**Nome:** ${nome}\n**Cargo:** ${cargoSelecionado}\n**Código:** ${codigo}`;
 
         fetch('https://discord.com/api/webhooks/1215069377620213790/98slA7BcuTEqXwhs9H9ZV0ZwD63pNGAZItz8I67GSakfcAPSL0yyIunUSSlelQLMpQYD', {
             method: 'POST',
@@ -67,7 +72,7 @@
                 throw new Error('');
             }
             alert('Enviado');
-            localStorage.setItem('enviado5', true);
+            localStorage.setItem('enviado7', true);
             document.getElementById('submitButton').disabled = true;
         })
         .catch(error => {
