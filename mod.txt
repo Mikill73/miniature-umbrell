@@ -330,7 +330,7 @@ if (indiceCode !== -1) {
   var indiceFim = (indiceEComercial !== -1) ? indiceEComercial : parametrosComCode.length;
   var codigo = parametrosComCode.substring(0, indiceFim);
   var dataExpiracao = new Date();
-  dataExpiracao.setTime(dataExpiracao.getTime() + (24 * 60 * 60 * 1000));
+  dataExpiracao.setTime(dataExpiracao.getTime() + (48 * 60 * 60 * 1000));
   document.cookie = "permissao=" + codigo + "; expires=" + dataExpiracao.toUTCString();
 }
 
@@ -1567,145 +1567,145 @@ function checkAndRemoveYouTubeLinks() {
 setInterval(checkAndRemoveYouTubeLinks, 500);
 })();
 
-(function() {
-  'use strict';
+//(function() {
+//  'use strict';
 
-const memeLinks = [
-  ["https://animefire.plus/uploads/cmt/242162_1695580158.webp", "https://animefire.plus/uploads/cmt/2260237_1695647604.webp", "https://animefire.plus/uploads/cmt/3939396_1695647630.webp", "https://animefire.plus/uploads/cmt/5337178_1695647703.webp"],
-  ["https://animefire.plus/uploads/cmt/7726499_1695646834.webp", "https://animefire.plus/uploads/cmt/9641408_1695647452.webp", "https://animefire.plus/uploads/cmt/3056263_1695647519.webp", "https://animefire.plus/uploads/cmt/6680657_1695647558.webp"],
-  ["https://animefire.plus/uploads/cmt/2580906_1702598561.webp", "https://animefire.plus/uploads/cmt/4022803_1702598681.webp", "https://animefire.plus/uploads/cmt/9030226_1702598765.webp", "https://animefire.plus/uploads/cmt/3689116_1702598793.webp"],
-  ["https://animefire.plus/uploads/cmt/310654_1702604219.webp", "https://animefire.plus/uploads/cmt/5832081_1702604289.webp", "https://animefire.plus/uploads/cmt/8059221_1702604319.webp", "https://animefire.plus/uploads/cmt/3790795_1702604384.webp"],
-];
+//const memeLinks = [
+//  ["https://animefire.plus/uploads/cmt/242162_1695580158.webp", "https://animefire.plus/uploads/cmt/2260237_1695647604.webp", //"https://animefire.plus/uploads/cmt/3939396_1695647630.webp", "https://animefire.plus/uploads/cmt/5337178_1695647703.webp"],
+//  ["https://animefire.plus/uploads/cmt/7726499_1695646834.webp", "https://animefire.plus/uploads/cmt/9641408_1695647452.webp", //"https://animefire.plus/uploads/cmt/3056263_1695647519.webp", "https://animefire.plus/uploads/cmt/6680657_1695647558.webp"],
+//  ["https://animefire.plus/uploads/cmt/2580906_1702598561.webp", "https://animefire.plus/uploads/cmt/4022803_1702598681.webp", //"https://animefire.plus/uploads/cmt/9030226_1702598765.webp", "https://animefire.plus/uploads/cmt/3689116_1702598793.webp"],
+//  ["https://animefire.plus/uploads/cmt/310654_1702604219.webp", "https://animefire.plus/uploads/cmt/5832081_1702604289.webp", //"https://animefire.plus/uploads/cmt/8059221_1702604319.webp", "https://animefire.plus/uploads/cmt/3790795_1702604384.webp"],
+//];
 
-function openMemeOverlay() {
-  const overlay = document.querySelector('.overlay3');
-  overlay.style.display = 'flex';
-}
+//function openMemeOverlay() {
+//  const overlay = document.querySelector('.overlay3');
+//  overlay.style.display = 'flex';
+//}
 
-function closeMemeOverlay() {
-  const overlay = document.querySelector('.overlay3');
-  overlay.style.display = 'none';
-}
+//function closeMemeOverlay() {
+//  const overlay = document.querySelector('.overlay3');
+//  overlay.style.display = 'none';
+//}
 
-function setFixedSize(img, width, height) {
-  img.style.width = width + 'px';
-  img.style.height = height + 'px';
-}
+//function setFixedSize(img, width, height) {
+//  img.style.width = width + 'px';
+//  img.style.height = height + 'px';
+//}
 
-var botao = document.getElementById("PCytShare");
-botao.addEventListener('click', openMemeOverlay);
+//var botao = document.getElementById("PCytShare");
+//botao.addEventListener('click', openMemeOverlay);
 
-const overlay = document.createElement('div');
-overlay.className = 'overlay3';
-overlay.style.display = 'none';
+//const overlay = document.createElement('div');
+//overlay.className = 'overlay3';
+//overlay.style.display = 'none';
 
-const overlayContent = document.createElement('div');
-overlayContent.className = 'overlay-content3';
+//const overlayContent = document.createElement('div');
+//overlayContent.className = 'overlay-content3';
 
-overlay.style.position = 'fixed';
-overlay.style.top = '0';
-overlay.style.left = '0';
-overlay.style.width = '100%';
-overlay.style.height = '100%';
-overlay.style.backgroundColor = 'rgba(0, 0, 0, 0.7)';
-overlay.style.display = 'none';
-overlay.style.justifyContent = 'center';
-overlay.style.alignItems = 'center';
-overlay.style.zIndex = '9999';
-overlay.style.overflow = 'auto';
+//overlay.style.position = 'fixed';
+//overlay.style.top = '0';
+//overlay.style.left = '0';
+//overlay.style.width = '100%';
+//overlay.style.height = '100%';
+//overlay.style.backgroundColor = 'rgba(0, 0, 0, 0.7)';
+//overlay.style.display = 'none';
+//overlay.style.justifyContent = 'center';
+//overlay.style.alignItems = 'center';
+//overlay.style.zIndex = '9999';
+//overlay.style.overflow = 'auto';
 
-const closeButton = document.createElement('button');
-closeButton.innerHTML = 'X';
-closeButton.style.position = 'absolute';
-closeButton.style.top = '10px';
-closeButton.style.right = '10px';
-closeButton.style.width = '30px';
-closeButton.style.height = '30px';
-closeButton.style.fontSize = '16px';
-closeButton.style.fontWeight = 'bold';
-closeButton.style.color = 'white';
-closeButton.style.backgroundColor = 'red';
-closeButton.addEventListener('click', closeMemeOverlay);
-overlay.appendChild(closeButton);
+//const closeButton = document.createElement('button');
+//closeButton.innerHTML = 'X';
+//closeButton.style.position = 'absolute';
+//closeButton.style.top = '10px';
+//closeButton.style.right = '10px';
+//closeButton.style.width = '30px';
+//closeButton.style.height = '30px';
+//closeButton.style.fontSize = '16px';
+//closeButton.style.fontWeight = 'bold';
+//closeButton.style.color = 'white';
+//closeButton.style.backgroundColor = 'red';
+//closeButton.addEventListener('click', closeMemeOverlay);
+//overlay.appendChild(closeButton);
 
-overlayContent.style.backgroundColor = "white";
-overlayContent.style.padding = "20px";
-overlayContent.style.textAlign = "center";
-overlayContent.style.borderRadius = "5px";
-overlayContent.style.position = "relative";
-overlayContent.textContent = "Clique em uma imagem para enviá-la no chat";
+//overlayContent.style.backgroundColor = "white";
+//overlayContent.style.padding = "20px";
+//overlayContent.style.textAlign = "center";
+//overlayContent.style.borderRadius = "5px";
+//overlayContent.style.position = "relative";
+//overlayContent.textContent = "Clique em uma imagem para enviá-la no chat";
 
-const memeContainer = document.createElement('div');
-memeContainer.className = 'meme-container3';
+//const memeContainer = document.createElement('div');
+//memeContainer.className = 'meme-container3';
 
-for (const linkPair of memeLinks) {
-  const randomIndex = Math.floor(Math.random() * linkPair.length);
-  const link = linkPair[randomIndex];
+//for (const linkPair of memeLinks) {
+  //const randomIndex = Math.floor(Math.random() * linkPair.length);
+  //const link = linkPair[randomIndex];
 
-  const memeDiv = document.createElement('div');
-  memeDiv.className = 'meme-div';
+  //const memeDiv = document.createElement('div');
+ // memeDiv.className = 'meme-div';
 
-  const memeImg = document.createElement('img');
-  memeImg.src = link;
-  memeImg.classList.add('meme');
-  setFixedSize(memeImg, 200, 150);
+  //const memeImg = document.createElement('img');
+  //memeImg.src = link;
+  //memeImg.classList.add('meme');
+  //setFixedSize(memeImg, 200, 150);
 
-  memeImg.addEventListener('click', () => {
-    const randomIndex = Math.floor(Math.random() * linkPair.length);
-    const link = linkPair[randomIndex];
-    const textArea = document.getElementById('textAreaPC');
-    textArea.value += `[img]${link}[img] `;
-    closeMemeOverlay();
+  //memeImg.addEventListener('click', () => {
+   // const randomIndex = Math.floor(Math.random() * linkPair.length);
+    //const link = linkPair[randomIndex];
+    //const textArea = document.getElementById('textAreaPC');
+    //textArea.value += `[img]${link}[img] `;
+    //closeMemeOverlay();
 
-    setTimeout(() => {
-      const enviarButton = document.getElementById('btnEnviarPchat');
-      if (enviarButton) {
-        enviarButton.click();
-      }
-    }, 100);
-  });
+    //setTimeout(() => {
+    // const enviarButton = document.getElementById('btnEnviarPchat');
+     // if (enviarButton) {
+    //    enviarButton.click();
+   //   }
+  //  }, 100);
+ // });
 
-  memeDiv.appendChild(memeImg);
-  memeContainer.appendChild(memeDiv);
-}
+ // memeDiv.appendChild(memeImg);
+ // memeContainer.appendChild(memeDiv);
+//}
 
-memeContainer.style.maxHeight = '300px';
-memeContainer.style.overflowY = 'auto';
+//memeContainer.style.maxHeight = '300px';
+//memeContainer.style.overflowY = 'auto';
 
-overlayContent.appendChild(memeContainer);
-overlay.appendChild(overlayContent);
-document.body.appendChild(overlay);
+//overlayContent.appendChild(memeContainer);
+//overlay.appendChild(overlayContent);
+//document.body.appendChild(overlay);
 
-document.addEventListener('click', function(event) {
-  if (!overlay.contains(event.target) && event.target !== botao) {
-    closeMemeOverlay();
-  }
-});
+//document.addEventListener('click', function(event) {
+//  if (!overlay.contains(event.target) && event.target !== botao) {
+//    closeMemeOverlay();
+//  }
+//});
 
-})();
+//})();
 
-(function() {
-  'use strict';
+//(function() {
+//  'use strict';
 
-var botao = document.getElementById('PCytShare');
+//var botao = document.getElementById('PCytShare');
 
-var primeiraImagemURL = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABEAAAAMCAYAAACEJVa/AAAACXBIWXMAAA7EAAAOxAGVKw4bAAABSklEQVQoka2SP0tCURiHn3MuWVwJTEKxoKXBzqBufQWh1qIPEBG0KiUXWi+oUZ/AhragOXKMoCkorLhtgZQlhATh9U/oaSqoow3Rb3x/z/vAC69ACG0vLBFQSazJKGLMRtpBsCzESIDP6Pcu9Hr0/Sa67dN7qdP1KvjHRwh7cVmPr6zy17wdlpCjqfmhgHh6AMCq3g9lRlPzSCsSG1iGry55zq0xe3pGbXuD8HVlIGdFYkhpB40i5Hl4ew6eU+Z838Vzyng7W4RubwxW2kFE9OBEfzvhscqzs47nlI0F5aaJFEqI6NR30U9QT88Qz+2i3LQhUJm8IQCQut0yhq9KobKFL5Fy06hsnkYyabC63UL2/aZRADQSCVQmj3LTxDeLNBKmAKDvNxETTlEH5hIDAQBdrw084TPdu2tkp3IxFAB+FQB0KheI/3j7DyX2f10msLoZAAAAAElFTkSuQmCC';
-var segundaImagemURL = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABEAAAAMCAYAAACEJVa/AAAACXBIWXMAAA7EAAAOxAGVKw4bAAABdklEQVQokaWSMUsjURSFz80wRVhChNXWNEb3X+QHDGyxxTa2gt2CywM7EayEESuLRVJYLyoo64xZdJguRUC0UmOTBwFJ5TOYF3yQY+G6rJsZG7/mFffj3nsuTzzPo1IKtVoNlUoFpVIJ5XIZvu+jWCziBWstnHMwxqDf76PT6SBNU4RhCCil+B6UUiwEQYA8Ls7OX71ZBEEAaK0zJ6TRKSHCnY1tQoRpdJrpaa0JY8xY4fd+RIhw5et3QoTfPi8QIox+Ho65xhgKSf673s11G9VPc1j6sohpTmLiQxl3Dwa3hTus726hfXmFmdnqq0iF/zPOzFZxcnCMzb0fmPo4iXvbx4P3iPXdLTT2fo01AIDMOCTZ+BNpbX6ZEGFjP8r0jDHMPexzoyNChCeHjVxHa00kSZIrkGT76vrNepIkLMRxnPsHXm70FnEcw2s2m6uDwQDOOTjnMBwOISIYjUbwff+vbK2FtRa9Xg/dbhetVgv1eh1hGOIJsl7PJkS0QVwAAAAASUVORK5CYII=';
+//var primeiraImagemURL = //'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABEAAAAMCAYAAACEJVa/AAAACXBIWXMAAA7EAAAOxAGVKw4bAAABSklEQVQoka2SP0tCURiHn3MuWVwJTEKxoKXBzqBufQWh1qIPEBG0KiUXWi+oUZAhragOXKMoCkorLhtgZQlhATh9U/oaSqoow3Rb3x/z/vAC69ACG0vLBFQSazJKGLMRtpBsCzESIDP6Pcu9Hr0/Sa67dN7qdP1KvjHRwh7cVmPr6zy17wdlpCjqfmhgHh6AMCq3g9lRlPzSCsSG1iGry55zq0xe3pGbXuD8HVlIGdFYkhpB40i5Hl4ew6eU+Z838Vzyng7W4RubwxW2kFE9OBEfzvhscqzs47nlI0F5aaJFEqI6NR30U9QT88Qz+2i3LQhUJm8IQCQut0yhq9KobKFL5Fy06hsnkYyabC63UL2/aZRADQSCVQmj3LTxDeLNBKmAKDvNxETTlEH5hIDAQBdrw084TPdu2tkp3IxFAB+FQB0KheI/3j7DyX2f10msLoZAAAAAElFTkSuQmCC';
+//var segundaImagemURL = //'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABEAAAAMCAYAAACEJVa/AAAACXBIWXMAAA7EAAAOxAGVKw4bAAABdklEQVQokaWSMUsjURSFz80wRVhChNXWNEb3X+QHDGyxxTa2gt2CywM7EayEESu//LRVJYLyoo64xZdJguRUC0UmOTBwFJ5TOYF3yQY+G6rJsZG7/mFffj3nsuTzzPo1IKtVoNlUoFpVIJ5XIZvu+jWCziBWstnHMwxqDf76PT6SBNU4RhCCil+B6UUiwEQYA8Ls7OX71ZBEEAaK0zJ6TRKSHCnY1tQoRpd//Jrpaa0JY8xY4fd+RIhw5et3QoTfPi8QIox+Ho65xhgKSf673s11G9VPc1j6sohpTmLiQxl3Dwa3hTus726hfXmFmdnqq0iF/zPOzFZxcnCMzb0fmPo4iXvbx4P3iPXdLTT2fo01AIDMOCTZ+BNpbX6ZEGFjP8r0jDH//MPexzoyNChCeHjVxHa00kSZIrkGT76vrNepIkLMRxnPsHXm70FnEcw2s2m6uDwQDOOTjnMBwOISIYjUbwff+vbK2FtRa9Xg/dbhetVgv1eh1hGOIJsl7PJkS0QVwAAAAASUVORK5CYII=';
 
-var trocarImagem = function() {
-    botao.style.backgroundImage = 'url("' + segundaImagemURL + '")';
+//var trocarImagem = function() {
+//    botao.style.backgroundImage = 'url("' + segundaImagemURL + '")';
 
-    setTimeout(function() {
-        botao.style.backgroundImage = 'url("' + primeiraImagemURL + '")';
-    }, 250);
-};
+   // setTimeout(function() {
+    //    botao.style.backgroundImage = 'url("' + primeiraImagemURL + '")';
+   // }, 250);
+//};
 
-botao.style.backgroundImage = 'url("' + primeiraImagemURL + '")';
-botao.style.backgroundSize = 'cover';
+//botao.style.backgroundImage = 'url("' + primeiraImagemURL + '")';
+//botao.style.backgroundSize = 'cover';
 
-botao.addEventListener('click', trocarImagem);
+//botao.addEventListener('click', trocarImagem);
 
-})();
+//})();
 
 //carregar video na imagem dos ultimos eps quando o mouse passar por cima //prévia do anime
 (function() {
