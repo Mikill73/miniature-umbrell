@@ -3151,7 +3151,8 @@ document.title = "FireDeluxe";
 
 const nomesCores = {
   "Mikill": "dourado",
-  "Ayumi": "vermelho"
+  "Ayumi": "vermelho",
+  "LEANDRO-SAN": "rosa"
 };
 
 const coresRGB = {
