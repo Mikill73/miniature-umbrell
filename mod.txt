@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name         Fire Deluxe  
+// @name         Fire Deluxe
 // @namespace    http://tampermonkey.net/  
 // @version      6  
 // @description  FIREMOD, criado por Mikill para modificar o site animefire.plus  
