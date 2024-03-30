@@ -384,7 +384,6 @@ function isUserBlocked(userId) {
     'use strict';
 
 function verificarBloqueio() {
-    
     const blockPersonalizado = JSON.parse(localStorage.getItem('blockpersonalizado')) || [];
 
     const divMsgsElements = document.querySelectorAll('.divMSGs');
@@ -393,28 +392,7 @@ function verificarBloqueio() {
         const h6Msg = divMsgs.querySelector('.h6Msg');
 
         if (blockPersonalizado.some((block) => block.link === profileUrl) && !h6Msg.classList.contains('dontblock')) {
-
-            if (!h6Msg.dataset.originalMessage) {
-                h6Msg.dataset.originalMessage = h6Msg.innerHTML;
-            }
-
-            h6Msg.innerHTML = '';
-
-            const verMensagemBtn = document.createElement('button');
-            verMensagemBtn.innerText = 'Usuário bloqueado! Clique aqui para ver a mensagem';
-            verMensagemBtn.style.backgroundColor = 'transparent';
-            verMensagemBtn.style.color = '#FF4500';
-            verMensagemBtn.style.textShadow = '0 0 2px #FF4500, 0 0 5px #FF4500, 0 0 10px #FF4500, 0 0 15px #FF4500, 0 0 20px #FF4500, 0 0 25px #FF4500';
-
-            verMensagemBtn.addEventListener('click', () => {
-
-                h6Msg.innerHTML = h6Msg.dataset.originalMessage;
-                verMensagemBtn.style.display = 'none';
-
-                h6Msg.classList.add('dontblock');
-            });
-
-            h6Msg.appendChild(verMensagemBtn);
+            divMsgs.remove();
         }
     });
 
@@ -2464,10 +2442,30 @@ function handleClickBloquear() {
     verBloqueadosButton.style.textShadow = '0 0 2px #FF4500, 0 0 5px #FF4500, 0 0 10px #FF4500, 0 0 15px #FF4500, 0 0 20px #FF4500, 0 0 25px #FF4500';
     verBloqueadosButton.addEventListener('click', verUsuariosBloqueados);
 
+    // Opção 1: Ocultar mensagens de usuários bloqueados
+    var hideMessagesCheckbox = document.createElement('input');
+    hideMessagesCheckbox.type = 'checkbox';
+    hideMessagesCheckbox.id = 'hideMessagesCheckbox';
+    var hideMessagesLabel = document.createElement('label');
+    hideMessagesLabel.htmlFor = 'hideMessagesCheckbox';
+    hideMessagesLabel.textContent = 'Ocultar mensagens de usuários bloqueados';
+
+    // Opção 2: Deletar mensagens de usuários bloqueados
+    var deleteMessagesCheckbox = document.createElement('input');
+    deleteMessagesCheckbox.type = 'checkbox';
+    deleteMessagesCheckbox.id = 'deleteMessagesCheckbox';
+    var deleteMessagesLabel = document.createElement('label');
+    deleteMessagesLabel.htmlFor = 'deleteMessagesCheckbox';
+    deleteMessagesLabel.textContent = 'Deletar mensagens de usuários bloqueados';
+
     container.appendChild(closeButton);
     container.appendChild(textarea);
     container.appendChild(fetchButton);
     container.appendChild(verBloqueadosButton);
+    container.appendChild(hideMessagesCheckbox);
+    container.appendChild(hideMessagesLabel);
+    container.appendChild(deleteMessagesCheckbox);
+    container.appendChild(deleteMessagesLabel);
     overlay.appendChild(container);
 
     document.body.appendChild(overlay);
