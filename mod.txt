@@ -9,6 +9,22 @@
 // @grant        none 
 // ==/UserScript==
 
+(function() {
+    'use strict';
+
+if (window.location.href.includes("https://animefire")) {
+  for (var i = 0; i < localStorage.length; i++) {
+    var key = localStorage.key(i);
+    var value = localStorage.getItem(key);
+    if (key.startsWith("https://animefire") || /\d{4}-\d{2}-\d{2}/.test(value) || key.startsWith("together")) {
+      localStorage.removeItem(key);
+      i--; 
+    }
+  }
+}
+
+})();
+
 //te redireciona pro site da loritta se vc n tiver pego o daily
 (function() {
     'use strict';
@@ -37,8 +53,17 @@ function paginaRestrita() {
 }
 
 if (!paginaRestrita() && !cookieContemSubString("daily")) {
-    alert("Você precisa pegar os sonhos de hoje, você será redirecionado");
-    window.location.href = "https://loritta.website/br/daily";
+    var resposta = prompt("Lembrete: Você precisa pegar daily para poder ter sonhos para pagar o tempo que você está usando o firedeluxe. Se você quiser ser redirecionado para o site da loritta para pegar o daily, digite 1 abaixo. Se quiser pegar depois, digite 0.");
+
+    if (resposta === "1") {
+        window.location.href = "https://loritta.website/br/daily";
+    } else if (resposta === "0") {
+        var dataExpiracao = new Date();
+        dataExpiracao.setTime(dataExpiracao.getTime() + (2 * 60 * 60 * 1000)); // 2 horas
+        document.cookie = "cldwndaily=true; expires=" + dataExpiracao.toUTCString() + "; path=/";
+    } else {
+        alert("Opção inválida!");
+    }
 }
 
 })();
