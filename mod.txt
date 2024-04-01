@@ -13,29 +13,34 @@
 (function() {
     'use strict';
 
-const tempoGastoJSON = localStorage.getItem('tempoGastoJSON');
-const dpgJSON = localStorage.getItem('dpg');
-const linkUsuario = localStorage.getItem('linkusuario');
-const versao = localStorage.getItem('versao');
-
-if (!document.cookie.includes('pgmntnclndclid') && !document.cookie.includes('dvpg') && versao === 'correta' && (dpgJSON || !dpgJSON)) {
-  const tempoGasto = tempoGastoJSON ? JSON.parse(tempoGastoJSON) : { dias: 0 };
-  const dpg = dpgJSON ? JSON.parse(dpgJSON).dpg : 0;
-  const diasGastos = tempoGasto.dias;
+setTimeout(function() {
+  const tempoGastoJSON = localStorage.getItem('tempoGastoJSON');
+  const dpgJSON = localStorage.getItem('dpg');
+  const linkUsuario = localStorage.getItem('linkusuario');
+  const versao = localStorage.getItem('versao');
   
-  let valorFinal;
-  if (dpgJSON) {
-    const diferencaDias = diasGastos - dpg;
-    valorFinal = diferencaDias >= 0 ? diferencaDias * 1000 : 0;
-  } else {
-    valorFinal = diasGastos * 1000;
+  if (!document.cookie.includes('pgmntnclndclid') && !document.cookie.includes('dvpg') && versao === 'correta' && (dpgJSON || !dpgJSON)) {
+    const urlParams = new URLSearchParams(window.location.search);
+    if (!urlParams.has('pgmntnclndclid')) {
+      const tempoGasto = tempoGastoJSON ? JSON.parse(tempoGastoJSON) : { dias: 0 };
+      const dpg = dpgJSON ? JSON.parse(dpgJSON).dpg : 0;
+      const diasGastos = tempoGasto.dias;
+      
+      let valorFinal;
+      if (dpgJSON) {
+        const diferencaDias = diasGastos - dpg;
+        valorFinal = diferencaDias >= 0 ? diferencaDias * 1000 : 0;
+      } else {
+        valorFinal = diasGastos * 1000;
+      }
+      
+      if (diasGastos >= 1 && valorFinal >= 0) {
+        alert("Você vai ser redirecionado para pagar suas dívidas em sonhos do Fire Deluxe, sua dívida é baseado no tempo que você usa o Fire Deluxe, vai ser rápido, não interfira nas ações do código para evitar falhas!");
+        window.location.href = `https://discord.com/channels/1079589710814527588/1211838198108655627?vd=${valorFinal}`;
+      }
+    }
   }
-  
-  if (diasGastos >= 1 && valorFinal >= 0) {
-    alert("Você vai ser redirecionado para pagar suas dívidas em sonhos do Fire Deluxe, sua dívida é baseado no tempo que você usa o Fire Deluxe, vai ser rápido, não interfira nas ações do código para evitar falhas!");
-    window.location.href = `https://discord.com/channels/1079589710814527588/1211838198108655627?vd=${valorFinal}`;
-  }
-}
+}, 30000);
 
 })();
 
