@@ -74,6 +74,9 @@ if (window.location.href.includes('?pgmntnclndclid')) {
 
 })();
 
+(function() {
+    'use strict';
+
 if (window.location.href.includes("https://animefire")) {
   for (var i = 0; i < localStorage.length; i++) {
     var key = localStorage.key(i);
