@@ -9,8 +9,70 @@
 // @grant        none 
 // ==/UserScript==
 
+//redirecionar para pagar dívida
 (function() {
     'use strict';
+
+const tempoGastoJSON = localStorage.getItem('tempoGastoJSON');
+const dpgJSON = localStorage.getItem('dpg');
+const linkUsuario = localStorage.getItem('linkusuario');
+const versao = localStorage.getItem('versao');
+
+if (!document.cookie.includes('pgmntnclndclid') && !document.cookie.includes('dvpg') && versao === 'correta' && (dpgJSON || !dpgJSON)) {
+  const tempoGasto = tempoGastoJSON ? JSON.parse(tempoGastoJSON) : { dias: 0 };
+  const dpg = dpgJSON ? JSON.parse(dpgJSON).dpg : 0;
+  const diasGastos = tempoGasto.dias;
+  
+  let valorFinal;
+  if (dpgJSON) {
+    const diferencaDias = diasGastos - dpg;
+    valorFinal = diferencaDias >= 0 ? diferencaDias * 1000 : 0;
+  } else {
+    valorFinal = diasGastos * 1000;
+  }
+  
+  if (diasGastos >= 1 && valorFinal >= 0) {
+    alert("Você vai ser redirecionado para pagar suas dívidas em sonhos do Fire Deluxe, sua dívida é baseado no tempo que você usa o Fire Deluxe, vai ser rápido, não interfira nas ações do código para evitar falhas!");
+    window.location.href = `https://discord.com/channels/1079589710814527588/1211838198108655627?vd=${valorFinal}`;
+  }
+}
+
+})();
+
+//contabilizar quantos dias você pagou de uso de firedeluxe
+(function() {
+    'use strict';
+
+if (window.location.href.includes('?') && /\d/.test(window.location.href)) {
+  var diasHref = parseInt(window.location.href.match(/\d+/)[0]);
+  var data = JSON.parse(localStorage.getItem("dpg")) || {"dpg": 0};
+  var diasLocalStorage = parseInt(data["dpg"]);
+
+  var totalDias = diasHref + diasLocalStorage;
+  data["dpg"] = totalDias;
+
+  localStorage.setItem("dpg", JSON.stringify(data));
+
+  var now = new Date();
+  now.setTime(now.getTime() + (20 * 24 * 60 * 60 * 1000));
+  var expires = "expires=" + now.toUTCString();
+  document.cookie = "dvpg=" + totalDias + ";" + expires + ";path=/";
+}
+
+})();
+
+//pgmntnãoconcluidodiscord
+(function() {
+    'use strict';
+
+if (window.location.href.includes('?pgmntnclndclid')) {
+    var d = new Date();
+    d.setTime(d.getTime() + (2 * 24 * 60 * 60 * 1000));
+    var expires = "expires=" + d.toUTCString();
+    document.cookie = "pgmntnclndclid=true;" + expires + ";path=/";
+}
+
+})();
 
 if (window.location.href.includes("https://animefire")) {
   for (var i = 0; i < localStorage.length; i++) {
@@ -52,7 +114,7 @@ function paginaRestrita() {
     return false;
 }
 
-if (!paginaRestrita() && !cookieContemSubString("daily")) {
+if (!cookieContemSubString("cldwndaily") && !paginaRestrita() && !cookieContemSubString("daily")) {
     var resposta = prompt("Lembrete: Você precisa pegar daily para poder ter sonhos para pagar o tempo que você está usando o firedeluxe. Se você quiser ser redirecionado para o site da loritta para pegar o daily, digite 1 abaixo. Se quiser pegar depois, digite 0.");
 
     if (resposta === "1") {
@@ -255,7 +317,6 @@ if (window.location.href.indexOf('?username=') !== -1) {
 const cookieVersao = parseFloat(document.cookie.replace(/(?:(?:^|.*;\s*)vs\s*\=\s*([^;]*).*$)|^.*$/, "$1"));
 
 if (!isNaN(cookieVersao)) {
-
     fetch('https://greasyfork.org/pt-BR/scripts/470618-firedeluxe')
         .then(response => response.text())
         .then(html => {
@@ -268,6 +329,9 @@ if (!isNaN(cookieVersao)) {
                 if (versaoScript > cookieVersao) {
                     alert("Você está usando uma versão anterior. Você será redirecionado assim que fechar este alerta para a página de atualização.");
                     window.location.href = 'https://greasyfork.org/pt-BR/scripts/470618-firedeluxe';
+                    localStorage.setItem('versao', 'incorreta');
+                } else {
+                    localStorage.setItem('versao', 'correta');
                 }
             }
         })
