@@ -9,75 +9,73 @@
 // @grant        none 
 // ==/UserScript==
 
-//redirecionar para pagar dívida
-(function() {
-    'use strict';
+// Redirecionar para pagar dívida
+// (function() {
+//     'use strict';
 
-setTimeout(function() {
-  const tempoGastoJSON = localStorage.getItem('tempoGastoJSON');
-  const dpgJSON = localStorage.getItem('dpg');
-  const linkUsuario = localStorage.getItem('linkusuario');
-  const versao = localStorage.getItem('versao');
-  
-  if (!document.cookie.includes('pgmntnclndclid') && !document.cookie.includes('dvpg') && versao === 'correta' && (dpgJSON || !dpgJSON)) {
-    const urlParams = new URLSearchParams(window.location.search);
-    if (!urlParams.has('pgmntnclndclid')) {
-      const tempoGasto = tempoGastoJSON ? JSON.parse(tempoGastoJSON) : { dias: 0 };
-      const dpg = dpgJSON ? JSON.parse(dpgJSON).dpg : 0;
-      const diasGastos = tempoGasto.dias;
-      
-      let valorFinal;
-      if (dpgJSON) {
-        const diferencaDias = diasGastos - dpg;
-        valorFinal = diferencaDias >= 0 ? diferencaDias * 1000 : 0;
-      } else {
-        valorFinal = diasGastos * 1000;
-      }
-      
-      if (diasGastos >= 1 && valorFinal >= 0) {
-        alert("Você vai ser redirecionado para pagar suas dívidas em sonhos do Fire Deluxe, sua dívida é baseado no tempo que você usa o Fire Deluxe, vai ser rápido, não interfira nas ações do código para evitar falhas!");
-        window.location.href = `https://discord.com/channels/1079589710814527588/1211838198108655627?vd=${valorFinal}`;
-      }
-    }
-  }
-}, 30000);
+//     setTimeout(function() {
+//         const tempoGastoJSON = localStorage.getItem('tempoGastoJSON');
+//         const dpgJSON = localStorage.getItem('dpg');
+//         const linkUsuario = localStorage.getItem('linkusuario');
+//         const versao = localStorage.getItem('versao');
 
-})();
+//         if (!document.cookie.includes('pgmntnclndclid') && !document.cookie.includes('dvpg') && versao === 'correta' && (dpgJSON || !dpgJSON)) {
+//             const urlParams = new URLSearchParams(window.location.search);
+//             if (!urlParams.has('pgmntnclndclid')) {
+//                 const tempoGasto = tempoGastoJSON ? JSON.parse(tempoGastoJSON) : { dias: 0 };
+//                 const dpg = dpgJSON ? JSON.parse(dpgJSON).dpg : 0;
+//                 const diasGastos = tempoGasto.dias;
 
-//contabilizar quantos dias você pagou de uso de firedeluxe
-(function() {
-    'use strict';
+//                 let valorFinal;
+//                 if (dpgJSON) {
+//                     const diferencaDias = diasGastos - dpg;
+//                     valorFinal = diferencaDias >= 0 ? diferencaDias * 1000 : 0;
+//                 } else {
+//                     valorFinal = diasGastos * 1000;
+//                 }
 
-if (window.location.href.includes('?') && /\d/.test(window.location.href)) {
-  var diasHref = parseInt(window.location.href.match(/\d+/)[0]);
-  var data = JSON.parse(localStorage.getItem("dpg")) || {"dpg": 0};
-  var diasLocalStorage = parseInt(data["dpg"]);
+//                 if (diasGastos >= 1 && valorFinal >= 0) {
+//                     alert("Você vai ser redirecionado para pagar suas dívidas em sonhos do Fire Deluxe, sua dívida é baseado no tempo que você usa o Fire Deluxe, vai ser rápido, não interfira nas ações do código para evitar falhas!");
+//                     window.location.href = `https://discord.com/channels/1079589710814527588/1211838198108655627?vd=${valorFinal}`;
+//                 }
+//             }
+//         }
+//     }, 30000);
 
-  var totalDias = diasHref + diasLocalStorage;
-  data["dpg"] = totalDias;
+// })();
 
-  localStorage.setItem("dpg", JSON.stringify(data));
+// Contabilizar quantos dias você pagou de uso de FireDeluxe
+// (function() {
+//     'use strict';
 
-  var now = new Date();
-  now.setTime(now.getTime() + (20 * 24 * 60 * 60 * 1000));
-  var expires = "expires=" + now.toUTCString();
-  document.cookie = "dvpg=" + totalDias + ";" + expires + ";path=/";
-}
+//     if (window.location.href.includes('?') && /\d/.test(window.location.href)) {
+//         var diasHref = parseInt(window.location.href.match(/\d+/)[0]);
+//         var data = JSON.parse(localStorage.getItem("dpg")) || { "dpg": 0 };
+//         var diasLocalStorage = parseInt(data["dpg"]);
 
-})();
+//         var totalDias = diasHref + diasLocalStorage;
+//         data["dpg"] = totalDias;
 
-//pgmntnãoconcluidodiscord
-(function() {
-    'use strict';
+//         localStorage.setItem("dpg", JSON.stringify(data));
 
-if (window.location.href.includes('?pgmntnclndclid')) {
-    var d = new Date();
-    d.setTime(d.getTime() + (2 * 24 * 60 * 60 * 1000));
-    var expires = "expires=" + d.toUTCString();
-    document.cookie = "pgmntnclndclid=true;" + expires + ";path=/";
-}
+//         var now = new Date();
+//         now.setTime(now.getTime() + (20 * 24 * 60 * 60 * 1000));
+//         var expires = "expires=" + now.toUTCString();
+//         document.cookie = "dvpg=" + totalDias + ";" + expires + ";path=/";
+//     }
+// })();
 
-})();
+// Pgmntnãoconcluídodiscord
+// (function() {
+//     'use strict';
+
+//     if (window.location.href.includes('?pgmntnclndclid')) {
+//         var d = new Date();
+//         d.setTime(d.getTime() + (2 * 24 * 60 * 60 * 1000));
+//         var expires = "expires=" + d.toUTCString();
+//         document.cookie = "pgmntnclndclid=true;" + expires + ";path=/";
+//     }
+// })();
 
 (function() {
     'use strict';
