@@ -1031,7 +1031,7 @@ observer.observe(document.body, { childList: true, subtree: true });
 (function() {
   'use strict'
 
-const xingamentos = ["fodase", "pica", "caralho", "merda", "porra", "puta", "foda", "cu", "buceta", "viado", "arrombado", "filho da puta", "cacete", "cuzão", "babaca", "retardado", "chupa", "chup", "pinto", "chup", "penis", "pênis", "desgraçado", "desgracado", "imbecil", "hentai", "porn", "pornografia", "discord", "corno", "x0t4", "xota", "xereca", "pau", "ku", "vsfd", "tmnc"];
+const xingamentos = ["fodase", "pica", "caralho", "merda", "porra", "puta", "foda", "cu", "buceta", "viado", "arrombado", "filho da puta", "cacete", "cuzão", "babaca", "retardado", "chupa", "chup", "pinto", "chup", "penis", "pênis", "desgraçado", "desgracado", "imbecil", "hentai", "porn", "pornografia", "discord", "corno", "x0t4", "xota", "xereca", "pau", "ku", "vsfd", "tmnc", "bct", "corno"];
 
 const alfabetoCustomizado = {
   'a': '𝖠',
