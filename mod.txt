@@ -127,10 +127,9 @@ if (!cookieContemSubString("cldwndaily") && !paginaRestrita() && !cookieContemSu
         window.location.href = "https://loritta.website/br/daily";
     } else if (resposta === "0") {
         var dataExpiracao = new Date();
-        dataExpiracao.setTime(dataExpiracao.getTime() + (2 * 60 * 60 * 1000)); // 2 horas
+        dataExpiracao.setTime(dataExpiracao.getTime() + (2 * 60 * 60 * 1000));
         document.cookie = "cldwndaily=true; expires=" + dataExpiracao.toUTCString() + "; path=/";
     } else {
-        alert("Opção inválida!");
     }
 }
 
@@ -143,7 +142,7 @@ if (!cookieContemSubString("cldwndaily") && !paginaRestrita() && !cookieContemSu
 if (window.location.href.includes('?dl=true')) {
     if (document.cookie.split(';').some((item) => item.trim().startsWith('permissao='))) {
         var expirationDate = new Date();
-        expirationDate.setTime(expirationDate.getTime() + (20 * 60 * 60 * 1000)); // Adiciona 20 horas
+        expirationDate.setTime(expirationDate.getTime() + (20 * 60 * 60 * 1000));
         var expires = "expires=" + expirationDate.toUTCString();
         document.cookie = 'daily=true; path=/; ' + expires + '; SameSite=Strict';
     }
