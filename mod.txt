@@ -3225,9 +3225,9 @@ document.title = "FireDeluxe";
   'use strict';
 
 const nomesCores = {
-  "Mikill": "dourado",
-  "Ayumi": "vermelho",
-  "LEANDRO-SAN": "rosa"
+  "https://animefire.plus/users/795475003": "branco",
+  "https://animefire.plus/users/318073853": "vermelho",
+  "https://animefire.plus/users/343684740": "rosa"
 };
 
 const coresRGB = {
@@ -3253,42 +3253,45 @@ const coresRGB = {
   "azul-escuro": "rgb(0, 0, 139)"
 };
 
-const nomes = Object.keys(nomesCores);
-let currentIndex = 0;
-
 function aplicarEfeitoNeon(elemento, cor) {
   elemento.style.color = cor;
   elemento.style.fontWeight = "bold";
   elemento.style.textShadow = `0 0 10px ${cor}, 0 0 20px ${cor}, 0 0 30px ${cor}`;
 }
 
-function aplicarEfeitoNeonEmNomes() {
-  const elementosLinks = document.querySelectorAll(".usr_name_cmt, .us_reply, .usernameIMG, .linkPerfilPC");
+function aplicarEfeitoNeonEmLinks() {
+  const elementosLinks = document.querySelectorAll('a');
 
   elementosLinks.forEach(link => {
-    const texto = link.textContent.trim();
-    for (const nome in nomesCores) {
-      if (texto.includes(nome)) {
-        const corNome = nomesCores[nome];
-        const corRGB = coresRGB[corNome];
-        aplicarEfeitoNeon(link, corRGB);
-        break;
-      }
+    const href = link.getAttribute("href");
+    if (nomesCores[href]) {
+      aplicarEfeitoNeon(link, coresRGB[nomesCores[href]]);
     }
   });
 }
 
-function changeNameColor() {
-  const currentNome = nomes[currentIndex];
-  const corNome = nomesCores[currentNome];
-  const corRGB = coresRGB[corNome];
-
-  aplicarEfeitoNeonEmNomes();
-
-  currentIndex = (currentIndex + 1) % nomes.length;
+function aplicarEfeitoNeonNoElemento() {
+  const elemento = document.getElementById("checkUserName");
+  if (elemento) {
+    const texto = elemento.textContent.trim();
+    for (const nome in nomesCores) {
+      if (texto.includes(nome)) {
+        const corNome = nomesCores[nome];
+        const corRGB = coresRGB[corNome];
+        aplicarEfeitoNeon(elemento, corRGB);
+        break;
+      }
+    }
+  }
 }
 
-setInterval(changeNameColor, 200);
+function changeColors() {
+  aplicarEfeitoNeonEmLinks();
+  aplicarEfeitoNeonNoElemento();
+}
+
+setInterval(changeColors, 200);
+
 })();
 
 //botões de anterior e proximo ep
