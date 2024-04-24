@@ -1819,24 +1819,23 @@ async function fetchVideo(cardElement) {
       imgElement.parentNode.replaceChild(videoElement, imgElement);
 
       videoElements.set(cardElement, videoElement);
+      
+      videoElement.addEventListener('mouseover', () => {
+        videoElement.play();
+      });
+      
+      videoElement.addEventListener('mouseout', () => {
+        videoElement.pause();
+      });
     }
   } catch (error) {
     console.error(error);
   }
 }
 
-function pauseVideo(event) {
-  const cardElement = event.currentTarget;
-  const videoElement = videoElements.get(cardElement);
-  if (videoElement) {
-    videoElement.pause();
-  }
-}
-
 const cardElements = document.querySelectorAll('.divCardUltimosEpsHome');
 cardElements.forEach((cardElement) => {
   cardElement.addEventListener('mouseover', loadVideoOnHover);
-  cardElement.addEventListener('mouseout', pauseVideo);
   cardElement.addEventListener('mouseout', cancelLoadVideo);
 });
 
