@@ -9,6 +9,45 @@
 // @grant        none 
 // ==/UserScript==
 
+(function() {
+    'use strict';
+
+function addRemoveBackgroundButton() {
+    if (localStorage.getItem('imagemchat')) {
+        createButton();
+    } else {
+        setTimeout(function() {
+            if (localStorage.getItem('imagemchat')) {
+                createButton();
+            }
+        }, 5000);
+    }
+}
+
+function createButton() {
+    var divClosePC = document.getElementById('divClosePC');
+    var button = document.createElement('button');
+    button.textContent = 'Remover Fundo';
+    button.style.color = 'white';
+    button.style.backgroundColor = 'transparent';
+    button.style.border = 'none';
+    button.style.outline = 'none';
+    button.style.cursor = 'pointer';
+    button.style.padding = '10px 20px';
+    button.style.borderRadius = '5px';
+    button.style.textShadow = '0 0 5px #FF4500, 0 0 10px #FF4500, 0 0 15px #FF4500, 0 0 20px #FF4500, 0 0 25px #FF4500';
+    button.addEventListener('click', function() {
+        localStorage.removeItem('imagemchat');
+        document.getElementById('mainDivMSGs').style.backgroundImage = 'none';
+        divClosePC.removeChild(button);
+    });
+    divClosePC.appendChild(button);
+}
+
+addRemoveBackgroundButton();
+
+})();
+
 // Redirecionar para pagar dívida
 // (function() {
 //     'use strict';
