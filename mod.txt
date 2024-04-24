@@ -864,21 +864,23 @@ function pularIntro() {
   var video = document.getElementById('my-video_html5_api');
   if (video) {
     var tempoAtual = video.currentTime;
-    video.currentTime = tempoAtual + 90;
+    video.currentTime = tempoAtual + 85;
   }
 }
 
 function adicionarBotaoPularIntro() {
-  var h1Element = document.querySelector('h1.sectionVideoEpTitle');
-  if (h1Element) {
+  var barraDeControle = document.querySelector('.vjs-control-bar');
+  if (barraDeControle) {
     var botaoPularIntro = document.createElement('button');
-    botaoPularIntro.className = 'btnSub'; 
+    botaoPularIntro.className = 'vjs-control vjs-button'; 
     botaoPularIntro.innerText = 'Pular Intro';
+    botaoPularIntro.style.zIndex = '999';
+    botaoPularIntro.style.fontSize = 'larger';
     botaoPularIntro.addEventListener('click', function() {
       pularIntro();
     });
 
-    h1Element.parentNode.insertBefore(botaoPularIntro, h1Element.nextSibling);
+    barraDeControle.appendChild(botaoPularIntro);
   }
 
   var barraDeProgresso = document.querySelector('.ytp-progress-bar');
