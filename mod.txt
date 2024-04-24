@@ -3268,7 +3268,7 @@ document.title = "FireDeluxe";
   'use strict';
 
 const nomesCores = {
-  "https://animefire.plus/users/976778853": "dourado",
+  "https://animefire.plus/users/795475003": "branco",
   "https://animefire.plus/users/318073853": "vermelho",
   "https://animefire.plus/users/343684740": "rosa",
 };
