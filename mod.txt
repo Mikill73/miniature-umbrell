@@ -121,16 +121,55 @@ function paginaRestrita() {
 }
 
 if (!cookieContemSubString("cldwndaily") && !paginaRestrita() && !cookieContemSubString("daily")) {
-    var resposta = prompt("Lembrete: Você precisa pegar daily para poder ter sonhos para pagar o tempo que você está usando o firedeluxe. Se você quiser ser redirecionado para o site da loritta para pegar o daily, digite 1 abaixo. Se quiser pegar depois, digite 0.");
+    var overlay = document.createElement('div');
+    overlay.style.position = 'fixed';
+    overlay.style.top = '0';
+    overlay.style.left = '0';
+    overlay.style.width = '100%';
+    overlay.style.height = '100%';
+    overlay.style.backgroundColor = 'rgba(0, 0, 0, 0.7)';
+    overlay.style.display = 'flex';
+    overlay.style.alignItems = 'center';
+    overlay.style.justifyContent = 'center';
+    overlay.style.zIndex = '999';
 
-    if (resposta === "1") {
+    var button1 = document.createElement('button');
+    button1.textContent = 'Pegar daily';
+    button1.style.backgroundColor = 'transparent';
+    button1.style.color = 'white';
+    button1.style.border = 'none';
+    button1.style.textDecoration = 'none';
+    button1.style.outline = 'none';
+    button1.style.cursor = 'pointer';
+    button1.style.fontWeight = 'bold';
+    button1.style.padding = '10px 20px';
+    button1.style.textShadow = '0 0 5px #FF4500, 0 0 10px #FF4500, 0 0 15px #FF4500, 0 0 20px #FF4500, 0 0 25px #FF4500';
+    button1.addEventListener('click', function() {
         window.location.href = "https://loritta.website/br/daily";
-    } else if (resposta === "0") {
+        overlay.remove();
+    });
+
+    var button2 = document.createElement('button');
+    button2.textContent = 'Pegar depois';
+    button2.style.backgroundColor = 'transparent';
+    button2.style.color = 'white';
+    button2.style.border = 'none';
+    button2.style.textDecoration = 'none';
+    button2.style.outline = 'none';
+    button2.style.cursor = 'pointer';
+    button2.style.fontWeight = 'bold';
+    button2.style.padding = '10px 20px';
+    button2.style.textShadow = '0 0 5px #FF4500, 0 0 10px #FF4500, 0 0 15px #FF4500, 0 0 20px #FF4500, 0 0 25px #FF4500';
+    button2.addEventListener('click', function() {
         var dataExpiracao = new Date();
         dataExpiracao.setTime(dataExpiracao.getTime() + (2 * 60 * 60 * 1000));
         document.cookie = "cldwndaily=true; expires=" + dataExpiracao.toUTCString() + "; path=/";
-    } else {
-    }
+        overlay.remove();
+    });
+
+    overlay.appendChild(button1);
+    overlay.appendChild(button2);
+    document.body.appendChild(overlay);
 }
 
 })();
