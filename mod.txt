@@ -13,54 +13,57 @@
 (function() {
     'use strict';
 
-const imagens = document.querySelectorAll('.card-img-top.imgAnimesUltimosEps.transitioning_src');
+if (window.location.href === 'https://animefire.plus/') {
+} else {
+  const imagens = document.querySelectorAll('.card-img-top.imgAnimesUltimosEps.transitioning_src');
 
-imagens.forEach(imagem => {
-  const eyeIcon = document.createElement('img');
-  eyeIcon.src = 'https://animefire.plus/img/icons/eye.png';
+  imagens.forEach(imagem => {
+    const eyeIcon = document.createElement('img');
+    eyeIcon.src = 'https://animefire.plus/img/icons/eye.png';
 
-  const texto = document.createElement('div');
-  texto.textContent = 'Clique para revelar';
-  texto.style.color = '#ffffff';
-  texto.style.fontFamily = 'Arial, sans-serif';
-  texto.style.fontSize = '14px';
-  texto.style.marginTop = '5px';
+    const texto = document.createElement('div');
+    texto.textContent = 'Clique para revelar';
+    texto.style.color = '#ffffff';
+    texto.style.fontFamily = 'Arial, sans-serif';
+    texto.style.fontSize = '14px';
+    texto.style.marginTop = '5px';
 
-  const overlay = document.createElement('div');
-  overlay.style.position = 'absolute';
-  overlay.style.top = '0';
-  overlay.style.left = '0';
-  overlay.style.width = '100%';
-  overlay.style.height = '100%';
-  overlay.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
-  overlay.style.display = 'flex';
-  overlay.style.flexDirection = 'column';
-  overlay.style.justifyContent = 'center';
-  overlay.style.alignItems = 'center';
-  overlay.style.zIndex = '9999';
-  overlay.appendChild(eyeIcon);
-  overlay.appendChild(texto);
+    const overlay = document.createElement('div');
+    overlay.style.position = 'absolute';
+    overlay.style.top = '0';
+    overlay.style.left = '0';
+    overlay.style.width = '100%';
+    overlay.style.height = '100%';
+    overlay.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+    overlay.style.display = 'flex';
+    overlay.style.flexDirection = 'column';
+    overlay.style.justifyContent = 'center';
+    overlay.style.alignItems = 'center';
+    overlay.style.zIndex = '9999';
+    overlay.appendChild(eyeIcon);
+    overlay.appendChild(texto);
 
-  imagem.parentNode.appendChild(overlay);
+    imagem.parentNode.appendChild(overlay);
 
-  if (imagem.parentNode.tagName === 'A') {
-    overlay.addEventListener('click', (event) => {
-      event.preventDefault();
-    });
-  }
-
-  overlay.addEventListener('click', () => {
-    overlay.remove();
-    imagem.style.visibility = 'visible';
     if (imagem.parentNode.tagName === 'A') {
-      overlay.removeEventListener('click');
+      overlay.addEventListener('click', (event) => {
+        event.preventDefault();
+      });
     }
-  });
 
-  imagem.style.visibility = 'hidden';
-  eyeIcon.style.zIndex = '9999';
-  texto.style.zIndex = '9999';
-});
+    overlay.addEventListener('click', () => {
+      overlay.remove();
+      imagem.style.visibility = 'visible';
+      if (imagem.parentNode.tagName === 'A') {
+        overlay.removeEventListener('click');
+      }
+    });
+
+    imagem.style.visibility = 'hidden';
+    eyeIcon.style.zIndex = '9999';
+    texto.style.zIndex = '9999';
+  });
+}
 
 })();
 
