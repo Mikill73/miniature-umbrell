@@ -9,6 +9,7 @@
 // @grant        none 
 // ==/UserScript==
 
+//CONFIGURAÇÃO!!
 (function() {
     'use strict';
 
@@ -2276,6 +2277,7 @@ function applyButtonStyleWithSound(button, clickFunction) {
   buttonContainer.appendChild(button);
 }
 
+let bloquearButton = createButton('Configuração', handleClickConfigurar);
 //let historicoButon = createButton('Histórico de Comentários', handleClickHistorico);
 let bloquearButton = createButton('Bloquear Usuário', handleClickBloquear);
 let changeColorButton = createButton('Mudar Cor do Fundo', switchColorInput);
@@ -2287,6 +2289,7 @@ let siteleveButton = createButton('Site Leve', handleClicksiteleve);
 let contaautomaticaButton = createButton('Registrar Conta Automática', handleClickcontaautomatica);
 let comandosButton = createButton('Comandos', handleClickComandos);
 
+applyButtonStyleWithSound(configButton, handleClickConfigurar);
 //applyButtonStyleWithSound(historicoButton, handleClickHistorico);
 applyButtonStyleWithSound(bloquearButton, handleClickBloquear);
 applyButtonStyleWithSound(changeColorButton, switchColorInput);
@@ -2337,115 +2340,6 @@ function audiobotao(button) {
     button.addEventListener('click', onClick);
     return button;
   }
-
-//function handleClickHistorico() {
-
-//var historicocomentarios = localStorage.getItem('historicocomentarios');
-
-//if (historicocomentarios) {
-//    var comentarios = JSON.parse(historicocomentarios);
-
-//    var overlay = document.createElement('div');
-//    overlay.id = 'overlay';
-//    overlay.style.position = 'fixed';
-//    overlay.style.top = '0';
-//    overlay.style.left = '0';
-//    overlay.style.width = '100%';
-//    overlay.style.height = '100%';
-//    overlay.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
-//    overlay.style.display = 'flex';
-//    overlay.style.justifyContent = 'center';
-//    overlay.style.alignItems = 'center';
- ///   overlay.style.zIndex = '999';
-
-   // var container = document.createElement('div');
- //   container.style.backgroundColor = 'white';
- //   container.style.padding = '20px';
- //   container.style.overflowY = 'auto';
-  //  container.style.maxHeight = '80vh';
-
- //   var closeButton = document.createElement('button');
- //   closeButton.innerHTML = 'X';
- //   closeButton.style.position = 'absolute';
- //   closeButton.style.top = '10px';
-   // closeButton.style.right = '10px';
- //   closeButton.style.width = '30px';
-  //  closeButton.style.height = '30px';
-   // closeButton.style.fontSize = '16px';
- //   closeButton.style.fontWeight = 'bold';
-  //  closeButton.style.color = 'white';
-  //  closeButton.style.backgroundColor = 'red';
-  //  closeButton.addEventListener('click', closeOverlay);
-  //  container.appendChild(closeButton);
-
-  //  for (var i = 0; i < comentarios.length; i++) {
-     //   var comentarioDiv = document.createElement('div');
-     //   comentarioDiv.innerHTML = comentarios[i].comentario;
-     //   container.appendChild(comentarioDiv);
-
-      //  var deleteButton = document.createElement('button');
-    //    deleteButton.innerHTML = 'Apagar Comentário';
-     //   deleteButton.addEventListener('click', function (index) {
-  //          return function () {
-   //             deleteComment(index, comentarios[index].iddocomentario);
-    //        };
-    //    }(i));
- //       container.appendChild(deleteButton);
-
-     //   if (isImageLink(comentarios[i].comentario)) {
-     //       var imagem = document.createElement('img');
-    //        imagem.src = comentarios[i].comentario;
-       //     imagem.style.maxWidth = '100%';
-     //       container.appendChild(imagem);
-      //      comentarioDiv.style.display = 'none';
-      //  }
-
-      //  var linkDiv = document.createElement('div');
-      //  linkDiv.innerHTML = 'Link: <a href="' + comentarios[i].link + '" style="color: red;">' + comentarios[i].link + '</a>';
-      //  container.appendChild(linkDiv);
-
-     //   var hr = document.createElement('hr');
-     //   hr.style.borderTop = '1px solid black';
-     //   container.appendChild(hr);
- //   }
-
-  //  overlay.appendChild(container);
-  //  document.body.appendChild(overlay);
-//}
-
-//function closeOverlay() {
- //   var overlay = document.getElementById('overlay');
- //   if (overlay) {
- //       overlay.parentNode.removeChild(overlay);
- //   }
-//}
-
-//function isImageLink(link) {
-  //  return /\.(jpeg|jpg|gif|png|webp)$/.test(link);
-//}
-
-//function deleteComment(index, commentId) {
- //   var xhr = new XMLHttpRequest();
-  //  xhr.open('POST', 'https://animefire.plus/proc/cmt', true);
-   // xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
- //   xhr.onreadystatechange = function () {
-   //     if (xhr.readyState == 4 && xhr.status == 200) {
-      //      comentarios.splice(index, 1);
-      //      localStorage.setItem('historicocomentarios', JSON.stringify(comentarios));
-      //      alert('Comentário apagado com sucesso.');
-         //   updateInterface();
-      //  }
-   // };
- //   xhr.send('cmt_ct=' + commentId + '&type=cmt&action=delete');
-//}
-
-//function updateInterface() {
-  //  var overlay = document.getElementById('overlay');
-  //  if (overlay) {
- //   }
-//}
-
-//}
 
 function handleClicksiteleve() {
 
@@ -2662,6 +2556,13 @@ chatMessage.innerHTML =
 document.open();
 document.write(newHTML);
 document.close();
+
+}
+
+function handleClickConfigurar() {
+
+alert("Uma nova guia será aberta");
+window.open("https://animefire.plus/?configuracao", "_blank");
 
 }
 
