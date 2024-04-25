@@ -85,7 +85,7 @@ function adicionarBotaoSair() {
 if (window.location.href === "https://animefire.plus/?configuracao") {
     document.documentElement.innerHTML = '';
 
-    adicionarConfiguracaoBolinha("Tema", ["Clássico", "Azul"]);
+    adicionarConfiguracaoBolinha("Em atualização!!!", ["teste", "teste"]);
 
     //adicionarConfiguracaoProgressBar("teste", 0, 100);
 
