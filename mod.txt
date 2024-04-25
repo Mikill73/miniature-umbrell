@@ -9,6 +9,90 @@
 // @grant        none 
 // ==/UserScript==
 
+(function() {
+    'use strict';
+
+function adicionarConfiguracaoBolinha(nomeConfiguracao, opcoes) {
+    var container = document.createElement("div");
+
+    var label = document.createElement("h1");
+    label.innerHTML = nomeConfiguracao + ":";
+    container.appendChild(label);
+
+    for (var i = 0; i < opcoes.length; i++) {
+        var input = document.createElement("input");
+        input.setAttribute("type", "radio");
+        input.setAttribute("name", nomeConfiguracao);
+        input.setAttribute("value", opcoes[i]);
+        input.addEventListener("click", function() {
+            var configuracoes = JSON.parse(localStorage.getItem("configuracoes")) || {};
+            configuracoes[nomeConfiguracao] = this.value;
+            localStorage.setItem("configuracoes", JSON.stringify(configuracoes));
+        });
+        container.appendChild(input);
+
+        var span = document.createElement("span");
+        span.innerHTML = opcoes[i];
+        container.appendChild(span);
+
+        var configuracoesSalvas = JSON.parse(localStorage.getItem("configuracoes")) || {};
+        if (configuracoesSalvas[nomeConfiguracao] === opcoes[i]) {
+            input.checked = true;
+        }
+    }
+
+    document.body.appendChild(container);
+}
+
+function adicionarConfiguracaoProgressBar(nomeConfiguracao, valorInicial, valorMaximo) {
+    var container = document.createElement("div");
+
+    var label = document.createElement("h1");
+    label.innerHTML = nomeConfiguracao + ":";
+    container.appendChild(label);
+
+    var input = document.createElement("input");
+    input.setAttribute("type", "range");
+    input.setAttribute("name", nomeConfiguracao);
+    input.setAttribute("min", 0);
+    input.setAttribute("max", valorMaximo);
+    input.setAttribute("value", valorInicial);
+    input.addEventListener("input", function() {
+        var configuracoes = JSON.parse(localStorage.getItem("configuracoes")) || {};
+        configuracoes[nomeConfiguracao] = parseInt(this.value);
+        localStorage.setItem("configuracoes", JSON.stringify(configuracoes));
+    });
+    container.appendChild(input);
+
+    var configuracoesSalvas = JSON.parse(localStorage.getItem("configuracoes")) || {};
+    if (configuracoesSalvas[nomeConfiguracao] !== undefined) {
+        input.value = configuracoesSalvas[nomeConfiguracao];
+    }
+
+    document.body.appendChild(container);
+}
+
+function adicionarBotaoSair() {
+    var botao = document.createElement("button");
+    botao.innerHTML = "Sair das configurações";
+    botao.addEventListener("click", function() {
+        window.location.href = "https://animefire.plus/";
+    });
+    document.body.appendChild(botao);
+}
+
+if (window.location.href === "https://animefire.plus/?configuracao") {
+    document.documentElement.innerHTML = '';
+
+    adicionarConfiguracaoBolinha("Tema", ["Laranja", "Clássico"]);
+
+    //adicionarConfiguracaoProgressBar("teste", 0, 100);
+
+    adicionarBotaoSair();
+}
+
+})();
+
 //botão de bloquear no firedeluxe dentro do perfil de usuários
 (function() {
     'use strict';
