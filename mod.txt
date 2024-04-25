@@ -2277,7 +2277,7 @@ function applyButtonStyleWithSound(button, clickFunction) {
   buttonContainer.appendChild(button);
 }
 
-let bloquearButton = createButton('Configuração', handleClickConfigurar);
+let configButton = createButton('Configuração', handleClickConfigurar);
 //let historicoButon = createButton('Histórico de Comentários', handleClickHistorico);
 let bloquearButton = createButton('Bloquear Usuário', handleClickBloquear);
 let changeColorButton = createButton('Mudar Cor do Fundo', switchColorInput);
