@@ -9,33 +9,36 @@
 // @grant        none 
 // ==/UserScript==
 
+//botão de bloquear no firedeluxe dentro do perfil de usuários
 (function() {
     'use strict';
 
-var newButton = document.createElement('button');
-newButton.setAttribute('class', 'dropdown-item py-2');
-newButton.setAttribute('style', 'cursor:pointer;height:40px;');
-newButton.setAttribute('type', 'button');
-newButton.setAttribute('id', 'blockUserButton');
-newButton.addEventListener('click', function() {
-    var userData = {
-        "link": window.location.href,
-        "tipo": "bloqueadopeloautor",
-        "imagem": document.querySelector('.imgP').src,
-        "username": document.getElementById('checkUserName').innerText
-    };
-    var existingData = JSON.parse(localStorage.getItem('blockpersonalizado')) || [];
-    existingData.push(userData);
-    localStorage.setItem('blockpersonalizado', JSON.stringify(existingData));
-    alert('Usuário bloqueado no FireDeluxe, você não vai ver nada do usuário, comentários, mensagens e nem mesmo o perfil, para desbloquear acesse o MENU');
-});
+if (window.location.href.includes("/users/")) {
+    var newButton = document.createElement('button');
+    newButton.setAttribute('class', 'dropdown-item py-2');
+    newButton.setAttribute('style', 'cursor:pointer;height:40px;');
+    newButton.setAttribute('type', 'button');
+    newButton.setAttribute('id', 'blockUserButton');
+    newButton.addEventListener('click', function() {
+        var userData = {
+            "link": window.location.href,
+            "tipo": "bloqueadopeloautor",
+            "imagem": document.querySelector('.imgP').src,
+            "username": document.getElementById('checkUserName').innerText
+        };
+        var existingData = JSON.parse(localStorage.getItem('blockpersonalizado')) || [];
+        existingData.push(userData);
+        localStorage.setItem('blockpersonalizado', JSON.stringify(existingData));
+        alert('Usuário bloqueado no FireDeluxe, você não vai ver nada do usuário, comentários, mensagens e nem mesmo o perfil, para desbloquear acesse o MENU');
+    });
 
-var buttonText = document.createTextNode('Bloquear no FireDeluxe');
-var neonEffect = 'text-shadow: 0 0 2px #FF4500, 0 0 5px #FF4500, 0 0 10px #FF4500, 0 0 15px #FF4500, 0 0 20px #FF4500, 0 0 25px #FF4500;';
-newButton.innerHTML = '<span style="' + neonEffect + '">' + buttonText.nodeValue + '</span>';
+    var buttonText = document.createTextNode('Bloquear no FireDeluxe');
+    var neonEffect = 'text-shadow: 0 0 2px #FF4500, 0 0 5px #FF4500, 0 0 10px #FF4500, 0 0 15px #FF4500, 0 0 20px #FF4500, 0 0 25px #FF4500;';
+    newButton.innerHTML = '<span style="' + neonEffect + '">' + buttonText.nodeValue + '</span>';
 
-var dropdownMenu = document.getElementById('dd_guest_actions_token');
-dropdownMenu.appendChild(newButton);
+    var dropdownMenu = document.getElementById('dd_guest_actions_token');
+    dropdownMenu.appendChild(newButton);
+}
 
 })();
 
