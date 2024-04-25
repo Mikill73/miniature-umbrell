@@ -3051,7 +3051,7 @@ function aplicarBotaoSolicitacaoAmizade(elementoComentario, idUsuario) {
         const urlUsuario = elementoLinkUsuario.href;
 
         const botaoSolicitarAmizade = document.createElement('button');
-        botaoSolicitarAmizade.textContent = 'Enviar Pedido de Amizade';
+        botaoSolicitarAmizade.innerHTML = '<img src="https://animefire.plus/img/icons/profile_icon.png" alt="Enviar Pedido de Amizade">';
         botaoSolicitarAmizade.style.background = 'transparent';
         botaoSolicitarAmizade.style.color = '#FF4500';
         botaoSolicitarAmizade.style.border = 'none';
@@ -3073,8 +3073,11 @@ function aplicarBotaoSolicitacaoAmizade(elementoComentario, idUsuario) {
 
         const botaoExistente = elementoComentario.querySelector('.botao-solicitar-amizade');
         if (!botaoExistente) {
-            elementoLinkUsuario.parentNode.insertBefore(botaoSolicitarAmizade, elementoLinkUsuario.nextSibling);
-            botaoSolicitarAmizade.classList.add('botao-solicitar-amizade');
+            const divDflex = elementoComentario.querySelector('.d-flex');
+            if (divDflex) {
+                divDflex.appendChild(botaoSolicitarAmizade);
+                botaoSolicitarAmizade.classList.add('botao-solicitar-amizade');
+            }
         }
     }
 }
