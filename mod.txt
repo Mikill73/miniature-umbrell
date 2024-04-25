@@ -1961,22 +1961,26 @@ async function fetchVideo(cardElement) {
       const videoElement = document.createElement('video');
       videoElement.className = 'card-img-top imgAnimesUltimosEps transitioning_src';
       videoElement.src = firstSrc;
-      videoElement.controls = true;
+      videoElement.controls = false;
       videoElement.autoplay = true;
       videoElement.muted = true;
+      videoElement.controlsList = 'nodownload';
 
       const imgElement = cardElement.querySelector('img');
       imgElement.parentNode.replaceChild(videoElement, imgElement);
 
       videoElements.set(cardElement, videoElement);
       
+videoElement.addEventListener('loadedmetadata', () => {
+  setTimeout(() => {
+    videoElement.pause();
+  }, 60000);
+});
+
       videoElement.addEventListener('mouseover', () => {
         videoElement.play();
       });
-      
-      videoElement.addEventListener('mouseout', () => {
-        videoElement.pause();
-      });
+
     }
   } catch (error) {
     console.error(error);
@@ -1986,7 +1990,6 @@ async function fetchVideo(cardElement) {
 const cardElements = document.querySelectorAll('.divCardUltimosEpsHome');
 cardElements.forEach((cardElement) => {
   cardElement.addEventListener('mouseover', loadVideoOnHover);
-  cardElement.addEventListener('mouseout', cancelLoadVideo);
 });
 
 })();
