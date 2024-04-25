@@ -72,7 +72,7 @@ if (window.location.href === 'https://animefire.plus/') {
     overlay.style.flexDirection = 'column';
     overlay.style.justifyContent = 'center';
     overlay.style.alignItems = 'center';
-    overlay.style.zIndex = '9999';
+    overlay.style.zIndex = '99';
     overlay.appendChild(eyeIcon);
     overlay.appendChild(texto);
 
@@ -93,8 +93,8 @@ if (window.location.href === 'https://animefire.plus/') {
     });
 
     imagem.style.visibility = 'hidden';
-    eyeIcon.style.zIndex = '9999';
-    texto.style.zIndex = '9999';
+    eyeIcon.style.zIndex = '99';
+    texto.style.zIndex = '99';
   });
 }
 
