@@ -46,53 +46,52 @@ if (window.location.href.includes("/users/")) {
 (function() {
     'use strict';
 
-if (window.location.href === 'https://animefire.plus/') {
-} else {
-  const imagens = document.querySelectorAll('.card-img-top.imgAnimesUltimosEps.transitioning_src');
+if (window.location.href.startsWith('https://animefire.plus/') && !window.location.href.includes('?')) {
+    const imagens = document.querySelectorAll('.card-img-top.imgAnimesUltimosEps.transitioning_src');
 
-  imagens.forEach(imagem => {
-    const eyeIcon = document.createElement('img');
-    eyeIcon.src = 'https://animefire.plus/img/icons/eye.png';
+    imagens.forEach(imagem => {
+        const eyeIcon = document.createElement('img');
+        eyeIcon.src = 'https://animefire.plus/img/icons/eye.png';
 
-    const texto = document.createElement('div');
-    texto.textContent = 'Clique para revelar';
-    texto.style.color = '#ffffff';
-    texto.style.fontFamily = 'Arial, sans-serif';
-    texto.style.fontSize = '14px';
-    texto.style.marginTop = '5px';
+        const texto = document.createElement('div');
+        texto.textContent = 'Clique para revelar';
+        texto.style.color = '#ffffff';
+        texto.style.fontFamily = 'Arial, sans-serif';
+        texto.style.fontSize = '14px';
+        texto.style.marginTop = '5px';
 
-    const overlay = document.createElement('div');
-    overlay.style.position = 'absolute';
-    overlay.style.top = '0';
-    overlay.style.left = '0';
-    overlay.style.width = '100%';
-    overlay.style.height = '100%';
-    overlay.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
-    overlay.style.display = 'flex';
-    overlay.style.flexDirection = 'column';
-    overlay.style.justifyContent = 'center';
-    overlay.style.alignItems = 'center';
-    overlay.appendChild(eyeIcon);
-    overlay.appendChild(texto);
+        const overlay = document.createElement('div');
+        overlay.style.position = 'absolute';
+        overlay.style.top = '0';
+        overlay.style.left = '0';
+        overlay.style.width = '100%';
+        overlay.style.height = '100%';
+        overlay.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+        overlay.style.display = 'flex';
+        overlay.style.flexDirection = 'column';
+        overlay.style.justifyContent = 'center';
+        overlay.style.alignItems = 'center';
+        overlay.appendChild(eyeIcon);
+        overlay.appendChild(texto);
 
-    imagem.parentNode.appendChild(overlay);
+        imagem.parentNode.appendChild(overlay);
 
-    if (imagem.parentNode.tagName === 'A') {
-      overlay.addEventListener('click', (event) => {
-        event.preventDefault();
-      });
-    }
+        if (imagem.parentNode.tagName === 'A') {
+            overlay.addEventListener('click', (event) => {
+                event.preventDefault();
+            });
+        }
 
-    overlay.addEventListener('click', () => {
-      overlay.remove();
-      imagem.style.visibility = 'visible';
-      if (imagem.parentNode.tagName === 'A') {
-        overlay.removeEventListener('click');
-      }
+        overlay.addEventListener('click', () => {
+            overlay.remove();
+            imagem.style.visibility = 'visible';
+            if (imagem.parentNode.tagName === 'A') {
+                overlay.removeEventListener('click');
+            }
+        });
+
+        imagem.style.visibility = 'hidden';
     });
-
-    imagem.style.visibility = 'hidden';
-  });
 }
 
 })();
@@ -3285,7 +3284,9 @@ function formatOptions(options) {
 document.querySelector('link[rel="shortcut icon"]').href = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADgAAAA5CAYAAABj2ui7AAAACXBIWXMAAA7EAAAOxAGVKw4bAAAFZElEQVRogdVawW7cNhAdSWvHWNuxI9qpm9BJgbB1T+2hpx567A/0A3rRscd+QNCP6JGXfk5btGh8CAIwh0VYZFubtB2vndhe7vZgUtZqqZVIUQv0AQbWK3EeH4cazowWYEkQmJwITN4ui88gXiLXKgDEApOTJXKGFygw+bniUj/NkodplmwLTKZdcNsQhGT6/OBQYPK9wOQ7xNkPdfenWQICExWCuw69FmPj6fODcwAYSaqOEWe/uBoQmEwRZ1GLOdTCS6DA5CjNkp6kaog4e+ZjI80SkLR7JzoJjDa20smPe28A4F3006vdtuRploCg3XqxsUCByes0S55Iqn5HnH0deB4xAEwC28wN10Jg8jLNkk+6ENd1wKkVKDD5K80SIqn6tQPPdY6FAgUmf6ZZ8rmk6sX/URzAAoECk9/SLPlMe+6rNiQCk2maJW1MeMMqUGBykWbJF5Iqjjj7putJdCneGkXTLOl3xrhkzHlQ54kgqbpGnB20JTD2DJZxuBcxI7D4rCDO7oUiKW/BssguRVufwWWvcpfIBZYi3XEI4+XoKamC3YvTb0PYboo5D0qqAHG2MM8UmAx8CScnx3/4jvVBDDAfCBrgSd2YyutR1EnOWYX8mPA4iy7rbihvT8RZZNu2XVYTMcyfhf82GZhmSV9gcmG75ihi1ITPBQKTN+ZzLDC5MZPRE/nIwdZcQuBy7mm+TQe+RkCc7Zt5tOrJ6FJnrhVYXDBNGAHMerbro8jwtOnJGOwBQE9gclM0XBZnQ9f9GIBAXbUm4sreqxMnMHkZYm7OHiwHkKo0LIB3HgpMBoizp22MdNJ8LYvzrAc/AMCawOQfaDHPoAIlVeM6zzU99xBnj/XHfpuejZPARdmLFrfiO5EK9NMs2fAdLDA5d/agbatJqi4BYFhB4poGFrFhOH3sIM42Q23REeJsv+qiZVG8eH1EzhDplTq03Rit9Vdt30uq3jlmP17w7dvYVnLPduPxzqOrCpJGuasr2nTiip62CdxpakhSdYk4+9RrFs058s96h9W+QC0uTNtn8Np1QKFVv6gnO13w9mnbhW+ORE/gfd1AfZ49cCErcahy0BCYvA/VJJZUjQAAeoizFUHvSiaNtdYMdxiBDvdFGD5B70SGEGYWzZRhMQCMK24M8osIxNmmpKqyTZFmSf5XhN4hX7ryle3kW7T8MENFNPWEU9VemMsLl3GFpnX+XQxQnfm3zEJyIM62JFXWTKcM32qk1LTO3VgZycquRsPBSpsqHHH2saRKVtmQVOWJuIe4k1Itmj8SeT2IOIsEna/1BCUniLMHML6xPqsuQJwhAABByRHc/jDofuFaAqXX2AKTtw0DT350lBfH2vgtDxaYXJnB5npVP6YJEGe7iLMt4y09KVsgqo0DdX2eGYG2raEHr5puNhoO7hUMhQxEM2hyHjZpg8x5sOglA23kkcDkCMY3YzQcrJt7jHcDIq4KblpEonkb9Xgqg4xFZA8AdgQmZzC+mSDO1vUla5XhC1O9V3ovilZd2o+V0cqsYkWBCzunR+vT0VkMUTQRj58d+v7iKUdvJRZ7T9WibVl8/ov/L4q6da27hSIBANBwgGB8MwKPxLvAcwG37QmncZKqSfHMs6H2vBGYnAPARhV5cYvot8LNhPZWemLv6Uw/tSnMWVcnDqCBQAAwNdh23UQKYj8AgER/v96H6XQCt4HjCkp9WJ/k2jXTaZwx6BJqzWVSlvy2FSRVpwCw7ZLpOHefFz2XXUEvlFdb0rmi16t3vawfKkiqxprXq+fa6v1B8UAO6dFS4Go1xyCvrwQmZ/rj/TZCQwozCP5+TkfcCdy2KVyynEZh3xX/AUHkvasq54YNAAAAAElFTkSuQmCC";
 document.querySelector('link[rel="apple-touch-icon"]').href = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADgAAAA5CAYAAABj2ui7AAAACXBIWXMAAA7EAAAOxAGVKw4bAAAFZElEQVRogdVawW7cNhAdSWvHWNuxI9qpm9BJgbB1T+2hpx567A/0A3rRscd+QNCP6JGXfk5btGh8CAIwh0VYZFubtB2vndhe7vZgUtZqqZVIUQv0AQbWK3EeH4cazowWYEkQmJwITN4ui88gXiLXKgDEApOTJXKGFygw+bniUj/NkodplmwLTKZdcNsQhGT6/OBQYPK9wOQ7xNkPdfenWQICExWCuw69FmPj6fODcwAYSaqOEWe/uBoQmEwRZ1GLOdTCS6DA5CjNkp6kaog4e+ZjI80SkLR7JzoJjDa20smPe28A4F3006vdtuRploCg3XqxsUCByes0S55Iqn5HnH0deB4xAEwC28wN10Jg8jLNkk+6ENd1wKkVKDD5K80SIqn6tQPPdY6FAgUmf6ZZ8rmk6sX/URzAAoECk9/SLPlMe+6rNiQCk2maJW1MeMMqUGBykWbJF5Iqjjj7putJdCneGkXTLOl3xrhkzHlQ54kgqbpGnB20JTD2DJZxuBcxI7D4rCDO7oUiKW/BssguRVufwWWvcpfIBZYi3XEI4+XoKamC3YvTb0PYboo5D0qqAHG2MM8UmAx8CScnx3/4jvVBDDAfCBrgSd2YyutR1EnOWYX8mPA4iy7rbihvT8RZZNu2XVYTMcyfhf82GZhmSV9gcmG75ihi1ITPBQKTN+ZzLDC5MZPRE/nIwdZcQuBy7mm+TQe+RkCc7Zt5tOrJ6FJnrhVYXDBNGAHMerbro8jwtOnJGOwBQE9gclM0XBZnQ9f9GIBAXbUm4sreqxMnMHkZYm7OHiwHkKo0LIB3HgpMBoizp22MdNJ8LYvzrAc/AMCawOQfaDHPoAIlVeM6zzU99xBnj/XHfpuejZPARdmLFrfiO5EK9NMs2fAdLDA5d/agbatJqi4BYFhB4poGFrFhOH3sIM42Q23REeJsv+qiZVG8eH1EzhDplTq03Rit9Vdt30uq3jlmP17w7dvYVnLPduPxzqOrCpJGuasr2nTiip62CdxpakhSdYk4+9RrFs058s96h9W+QC0uTNtn8Np1QKFVv6gnO13w9mnbhW+ORE/gfd1AfZ49cCErcahy0BCYvA/VJJZUjQAAeoizFUHvSiaNtdYMdxiBDvdFGD5B70SGEGYWzZRhMQCMK24M8osIxNmmpKqyTZFmSf5XhN4hX7ryle3kW7T8MENFNPWEU9VemMsLl3GFpnX+XQxQnfm3zEJyIM62JFXWTKcM32qk1LTO3VgZycquRsPBSpsqHHH2saRKVtmQVOWJuIe4k1Itmj8SeT2IOIsEna/1BCUniLMHML6xPqsuQJwhAABByRHc/jDofuFaAqXX2AKTtw0DT350lBfH2vgtDxaYXJnB5npVP6YJEGe7iLMt4y09KVsgqo0DdX2eGYG2raEHr5puNhoO7hUMhQxEM2hyHjZpg8x5sOglA23kkcDkCMY3YzQcrJt7jHcDIq4KblpEonkb9Xgqg4xFZA8AdgQmZzC+mSDO1vUla5XhC1O9V3ovilZd2o+V0cqsYkWBCzunR+vT0VkMUTQRj58d+v7iKUdvJRZ7T9WibVl8/ov/L4q6da27hSIBANBwgGB8MwKPxLvAcwG37QmncZKqSfHMs6H2vBGYnAPARhV5cYvot8LNhPZWemLv6Uw/tSnMWVcnDqCBQAAwNdh23UQKYj8AgER/v96H6XQCt4HjCkp9WJ/k2jXTaZwx6BJqzWVSlvy2FSRVpwCw7ZLpOHefFz2XXUEvlFdb0rmi16t3vawfKkiqxprXq+fa6v1B8UAO6dFS4Go1xyCvrwQmZ/rj/TZCQwozCP5+TkfcCdy2KVyynEZh3xX/AUHkvasq54YNAAAAAElFTkSuQmCC";
 
-document.title = "FireDeluxe";
+var pageTitle = document.title;
+
+document.title = "FireDeluxe - " + pageTitle;
 
 })();
 
@@ -3294,7 +3295,7 @@ document.title = "FireDeluxe";
   'use strict';
 
 const nomesCores = {
-  "https://animefire.plus/users/795475003": "branco",
+  "https://animefire.plus/users/795475003": "magenta",
   "https://animefire.plus/users/318073853": "vermelho",
   "https://animefire.plus/users/343684740": "rosa",
 };
@@ -3364,7 +3365,6 @@ setInterval(changeColors, 200);
 })();
 
 //botões de anterior e proximo ep
-
 (function() {
   'use strict';
 
