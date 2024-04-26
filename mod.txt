@@ -3133,56 +3133,42 @@ function enviarSolicitacaoAmizade(id, csrfToken) {
 (function() {
     'use strict';
 
-function getBlockedLinksFromCookie() {
-        const cookieValue = document.cookie
-            .split('; ')
-            .find(row => row.startsWith('block='))
-            .split('=')[1];
+let blockedCommentsCount = 0;
 
-        if (cookieValue) {
-            return cookieValue.split(' ');
-        } else {
-            return [];
+setInterval(() => {
+    const blockedProfiles = JSON.parse(localStorage.getItem("block")) || [];
+    const replyDivs = document.querySelectorAll(".cmt_reply_div");
+    const commentDivs = document.querySelectorAll(".cmt.d-flex.mb-3");
+
+    replyDivs.forEach(div => {
+        const link = div.querySelector("a").href;
+        if (blockedProfiles.includes(link)) {
+            div.remove();
+            blockedCommentsCount++;
         }
-    }
+    });
 
-    function checkCommentsAndRepliesForBlockedUsers() {
-        const prmtCookie = document.cookie
-            .split('; ')
-            .find(row => row.startsWith('prmt='));
-
-        if (!prmtCookie) {
-            return;
+    commentDivs.forEach(div => {
+        const link = div.querySelector("a").href;
+        if (blockedProfiles.includes(link)) {
+            div.remove();
+            blockedCommentsCount++;
         }
+    });
 
-        const blockedLinks = getBlockedLinksFromCookie();
-
-        const elementsToCheck = document.querySelectorAll('.cmt, .cmt_reply_div');
-
-        elementsToCheck.forEach(element => {
-            const userLink = element.querySelector('.us_reply, .usr_name_cmt').getAttribute('href');
-            const userImage = element.querySelector('.avatar_reply, .pic_cmt');
-            const userName = element.querySelector('.us_reply, .usr_name_cmt');
-            const commentTextElement = element.querySelector('.p_reply, .p_tag_cmt');
-
-            if (blockedLinks.includes(userLink)) {
-                if (userImage) {
-                    userImage.parentNode.removeChild(userImage);
-                }
-
-                userName.textContent = 'Perfil Bloqueado';
-                userName.style.color = 'red';
-
-                const commentText = commentTextElement.textContent;
-                commentTextElement.textContent = 'Mensagem Bloqueada! Esse perfil postou alguma coisa errada no site e por isso está na lista de bloqueados, reporte usuários no discord do fire deluxe';
-                commentTextElement.style.color = 'red';
-            }
-        });
+    const blockedCommentsText = document.querySelector("#blocked_comments_text");
+    if (blockedCommentsText) {
+        blockedCommentsText.textContent = `${blockedCommentsCount} comentários bloqueados pelo FireDeluxe`;
+    } else {
+        const cmtCountElement = document.querySelector("#cmt_count");
+        const blockedCommentsText = document.createElement("h6");
+        blockedCommentsText.id = "blocked_comments_text";
+        blockedCommentsText.className = "quicksand400 text-white";
+        blockedCommentsText.style.color = "red";
+        blockedCommentsText.textContent = `${blockedCommentsCount} comentários bloqueados pelo FireDeluxe`;
+        cmtCountElement.parentNode.appendChild(blockedCommentsText);
     }
-
-    checkCommentsAndRepliesForBlockedUsers();
-
-    setInterval(checkCommentsAndRepliesForBlockedUsers, 250);
+}, 500);
 
 })();
 
