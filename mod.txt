@@ -2641,7 +2641,6 @@ function handleClickBloquear() {
     verBloqueadosButton.style.textShadow = '0 0 2px #FF4500, 0 0 5px #FF4500, 0 0 10px #FF4500, 0 0 15px #FF4500, 0 0 20px #FF4500, 0 0 25px #FF4500';
     verBloqueadosButton.addEventListener('click', verUsuariosBloqueados);
 
-    // Opção 1: Ocultar mensagens de usuários bloqueados
     var hideMessagesCheckbox = document.createElement('input');
     hideMessagesCheckbox.type = 'checkbox';
     hideMessagesCheckbox.id = 'hideMessagesCheckbox';
@@ -2649,7 +2648,6 @@ function handleClickBloquear() {
     hideMessagesLabel.htmlFor = 'hideMessagesCheckbox';
     hideMessagesLabel.textContent = 'Ocultar mensagens de usuários bloqueados';
 
-    // Opção 2: Deletar mensagens de usuários bloqueados
     var deleteMessagesCheckbox = document.createElement('input');
     deleteMessagesCheckbox.type = 'checkbox';
     deleteMessagesCheckbox.id = 'deleteMessagesCheckbox';
@@ -3172,7 +3170,7 @@ setInterval(() => {
 
     const blockedCommentsText = document.querySelector("#blocked_comments_text");
     if (blockedCommentsText) {
-        blockedCommentsText.textContent = `${blockedCommentsCount} comentários bloqueados pelo FireDeluxe`;
+        blockedCommentsText.textContent = `${blockedCommentsCount} Comentários bloqueados pelo FireDeluxe`;
     } else {
         const cmtCountElement = document.querySelector("#cmt_count");
         const blockedCommentsText = document.createElement("h6");
