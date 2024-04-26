@@ -9,6 +9,20 @@
 // @grant        none 
 // ==/UserScript==
 
+//lista global de bloqueados
+(function() {
+    'use strict';
+
+fetch('https://raw.githubusercontent.com/Mikill73/AnimeFireMod/main/Mod/Lista%20Bloqueados.txt')
+  .then(response => response.text())
+  .then(data => {
+    const blockedProfiles = data.split(' ').filter(profile => profile.trim() !== '');
+
+    localStorage.setItem('block', JSON.stringify(blockedProfiles));
+  });
+
+})();
+
 //CONFIGURAÇÃO!!
 (function() {
     'use strict';
