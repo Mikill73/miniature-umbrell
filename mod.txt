@@ -9,6 +9,27 @@
 // @grant        none 
 // ==/UserScript==
 
+//block chat global
+(function() {
+    'use strict';
+
+setInterval(function() {
+    var blockedLinks = JSON.parse(localStorage.getItem("block")) || [];
+    var divs = document.querySelectorAll('.divMSGs');
+
+    divs.forEach(function(div) {
+        var links = div.querySelectorAll('a');
+        
+        links.forEach(function(link) {
+            if (blockedLinks.includes(link.href)) {
+                div.remove();
+            }
+        });
+    });
+}, 500);
+
+})();
+
 //lista global de bloqueados
 (function() {
     'use strict';
