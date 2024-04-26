@@ -131,7 +131,7 @@ if (window.location.href.includes("/users/")) {
 (function() {
     'use strict';
 
-if (window.location.href.startsWith('https://animefire.plus/') && !window.location.href.includes('?')) {
+if (!document.querySelector('h1.section2.text-white.mx-2')) {
     const imagens = document.querySelectorAll('.card-img-top.imgAnimesUltimosEps.transitioning_src');
 
     imagens.forEach(imagem => {
@@ -1925,7 +1925,7 @@ function loadVideoOnHover(event) {
   if (!videoElements.has(cardElement)) {
     const timerId = setTimeout(() => {
       fetchVideo(cardElement);
-    }, 3000);
+    }, 6000);
     timerIds.set(cardElement, timerId);
   }
 }
