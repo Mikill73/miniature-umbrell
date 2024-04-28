@@ -3187,17 +3187,19 @@ setInterval(() => {
         }
     });
 
-    const blockedCommentsText = document.querySelector("#blocked_comments_text");
-    if (blockedCommentsText) {
-        blockedCommentsText.textContent = `${blockedCommentsCount} Comentários bloqueados pelo FireDeluxe`;
-    } else {
-        const cmtCountElement = document.querySelector("#cmt_count");
-        const blockedCommentsText = document.createElement("h6");
-        blockedCommentsText.id = "blocked_comments_text";
-        blockedCommentsText.className = "quicksand400 text-white";
-        blockedCommentsText.style.color = "red";
-        blockedCommentsText.textContent = `${blockedCommentsCount} comentários bloqueados pelo FireDeluxe`;
-        cmtCountElement.parentNode.appendChild(blockedCommentsText);
+    const cmtCountElement = document.querySelector("#cmt_count");
+    if (cmtCountElement) {
+        const blockedCommentsText = document.querySelector("#blocked_comments_text");
+        if (blockedCommentsText) {
+            blockedCommentsText.textContent = `${blockedCommentsCount} Comentários bloqueados pelo FireDeluxe`;
+        } else {
+            const blockedCommentsText = document.createElement("h6");
+            blockedCommentsText.id = "blocked_comments_text";
+            blockedCommentsText.className = "quicksand400 text-white";
+            blockedCommentsText.style.color = "red";
+            blockedCommentsText.textContent = `${blockedCommentsCount} comentários bloqueados pelo FireDeluxe`;
+            cmtCountElement.parentNode.appendChild(blockedCommentsText);
+        }
     }
 }, 500);
 
