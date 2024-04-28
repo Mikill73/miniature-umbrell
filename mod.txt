@@ -916,54 +916,52 @@ originalButton.parentNode.appendChild(duplicateButton);
 (function() {
   'use strict';
 
-  var divMsgsPc = document.getElementById('div_msgs_pc');
+var divMsgsPc = document.getElementById('div_msgs_pc');
 
-  divMsgsPc.addEventListener('dragover', function (e) {
-    e.preventDefault();
-    divMsgsPc.style.border = '10px dashed #ccc';
-    divMsgsPc.style.zIndex = '9999';
-  });
+divMsgsPc.addEventListener('dragover', function (e) {
+  e.preventDefault();
+  divMsgsPc.style.border = '10px dashed #ccc';
+  divMsgsPc.style.zIndex = '9999';
+});
 
-  divMsgsPc.addEventListener('dragleave', function () {
-    divMsgsPc.style.border = 'none';
+divMsgsPc.addEventListener('dragleave', function () {
+  divMsgsPc.style.border = 'none';
+});
+
+divMsgsPc.addEventListener('drop', function (e) {
+  e.preventDefault();
+  divMsgsPc.style.border = 'none';
+
+  var files = e.dataTransfer.files;
+  if (files.length > 0) {
+    var file = files[0];
+
+    var formData = new FormData();
+    formData.append('cmt_share_img', file);
+
+    fetch('https://animefire.plus/proc/cmt', {
+      method: 'POST',
+      body: formData,
+    })
+    .then(response => response.json())
+    .then(data => {
+      var imageUrl = data.url.replace(/\\/g, '');
+
+      document.getElementById('textAreaPC').value = '[img]' + imageUrl + '[img]';
+      document.getElementById('btnEnviarPchat').click();
+    })
+  }
+});
+
+divMsgsPc.addEventListener('mouseenter', function () {
+  divMsgsPc.style.zIndex = '9999';
+});
+
+divMsgsPc.addEventListener('mouseleave', function (e) {
+  if (!divMsgsPc.classList.contains('dragging') && !e.relatedTarget.classList.contains('dragging')) {
     divMsgsPc.style.zIndex = 'initial';
-  });
-
-  divMsgsPc.addEventListener('mouseenter', function () {
-    divMsgsPc.style.zIndex = '9999';
-  });
-
-  divMsgsPc.addEventListener('mouseleave', function () {
-    if (!divMsgsPc.classList.contains('dragging')) {
-      divMsgsPc.style.zIndex = 'initial';
-    }
-  });
-
-  divMsgsPc.addEventListener('drop', function (e) {
-    e.preventDefault();
-    divMsgsPc.style.border = 'none';
-    divMsgsPc.style.zIndex = '9999';
-
-    var files = e.dataTransfer.files;
-    if (files.length > 0) {
-      var file = files[0];
-
-      var formData = new FormData();
-      formData.append('cmt_share_img', file);
-
-      fetch('https://animefire.plus/proc/cmt', {
-        method: 'POST',
-        body: formData,
-      })
-      .then(response => response.json())
-      .then(data => {
-        var imageUrl = data.url.replace(/\\/g, '');
-
-        document.getElementById('textAreaPC').value = '[img]' + imageUrl + '[img]';
-        document.getElementById('btnEnviarPchat').click();
-      })
-    }
-  });
+  }
+});
 
 })();
 
