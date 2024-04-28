@@ -18,7 +18,7 @@ if(localStorage.getItem('linkstemaazul') && localStorage.getItem('linkusuario'))
     var linkUsuario = localStorage.getItem('linkusuario');
 
     if (temaAzul.some(link => link === linkUsuario)) {
-        document.querySelector('.navbar-brand img').src = 'https://animefire.plus/uploads/cmt/1827836_1714324760.webp';
+        document.querySelector('.navbar-brand img').src = 'https://animefire.plus/uploads/cmt/8129245_1714325438.webp';
     }
 }
 
