@@ -9,6 +9,42 @@
 // @grant        none 
 // ==/UserScript==
 
+//mudar tema
+(function() {
+    'use strict';
+
+const links = ['/users/795475003'];
+
+function changeTextShadowColor() {
+    var elements = document.querySelectorAll('*');
+    var tema = localStorage.getItem('configuracoes');
+
+    if (tema && JSON.parse(tema).Tema === 'Azul') {
+        var linksValidos = links.some(function(link) {
+            return localStorage.getItem('linkusuario') === link;
+        });
+
+        if (!linksValidos) {
+            localStorage.setItem('configuracoes', JSON.stringify({ "Tema": "Clássico" }));
+            alert("Você precisa pagar 25000 sonhos para usar esse tema, contate Mikill no discord para comprar, você pode conseguir sonhos de graça pegando o daily! Os sonhos não são uma moeda real");
+        }
+    }
+
+    elements.forEach(function(element) {
+        var style = window.getComputedStyle(element);
+        var textShadow = style.getPropertyValue('text-shadow');
+        if (textShadow && (textShadow.includes('#ff4500') || textShadow.includes('rgb(255, 69, 0)')) && localStorage.getItem('configuracoes').includes('Azul')) {
+            var newTextShadow = textShadow.replace(/#ff4500|rgb\(255,\s*69,\s*0\)/gi, '#21d3ff');
+            element.style.textShadow = newTextShadow;
+        }
+    });
+}
+
+setInterval(changeTextShadowColor, 500);
+
+})();
+
+
 //block chat global
 (function() {
     'use strict';
@@ -120,7 +156,7 @@ function adicionarBotaoSair() {
 if (window.location.href === "https://animefire.plus/?configuracao") {
     document.documentElement.innerHTML = '';
 
-    adicionarConfiguracaoBolinha("Em atualização!!!", ["teste", "teste"]);
+    adicionarConfiguracaoBolinha("Tema", ["Clássico", "Azul"]);
 
     //adicionarConfiguracaoProgressBar("teste", 0, 100);
 
