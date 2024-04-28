@@ -3074,7 +3074,9 @@ if (divMSGsList.length > 0) {
 }`,
 
       "lanternaoff": `localStorage.setItem('lanterna', 'off');
-                                        location.reload();`
+                                        location.reload();`,
+
+"kalango": `for(var allElements=document.getElementsByTagName("*"),i=0;i<allElements.length;i++){var e=allElements[i];"IMG"===e.tagName&&(e.src="https://animefire.plus/uploads/avatar/213855670/large_6527001_7461332_1712143406.webp")}`
 
   };
 
