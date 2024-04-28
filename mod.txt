@@ -3355,7 +3355,7 @@ const nomesCores = {
   "https://animefire.plus/users/795475003": "magenta",
   "https://animefire.plus/users/318073853": "vermelho",
   "https://animefire.plus/users/343684740": "rosa",
-  "https://animefire.plus/sers/356975860": "branco",
+  "https://animefire.plus/users/356975860": "branco",
 };
 
 const coresRGB = {
