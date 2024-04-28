@@ -9,18 +9,45 @@
 // @grant        none 
 // ==/UserScript==
 
-//mudar tema
+//mudar logo do site para o tema azul
 (function() {
     'use strict';
 
-const links = ['/users/795475003'];
+if(localStorage.getItem('linkstemaazul') && localStorage.getItem('linkusuario')) {
+    var temaAzul = JSON.parse(localStorage.getItem('linkstemaazul'));
+    var linkUsuario = localStorage.getItem('linkusuario');
+
+    if (temaAzul.some(link => link === linkUsuario)) {
+        document.querySelector('.navbar-brand img').src = 'https://animefire.plus/uploads/cmt/1827836_1714324760.webp';
+    }
+}
+
+})();
+
+//lista tema azul
+(function() {
+    'use strict';
+
+const links = [
+  "/users/795475003",
+];
+
+const localStorageKey = "linkstemaazul";
+localStorage.setItem(localStorageKey, JSON.stringify(links));
+
+})();
+
+//mudar tema
+(function() {
+    'use strict';
 
 function changeTextShadowColor() {
     var elements = document.querySelectorAll('*');
     var tema = localStorage.getItem('configuracoes');
 
     if (tema && JSON.parse(tema).Tema === 'Azul') {
-        var linksValidos = links.some(function(link) {
+        var linksAzul = JSON.parse(localStorage.getItem('linkstemaazul')) || [];
+        var linksValidos = linksAzul.some(function(link) {
             return localStorage.getItem('linkusuario') === link;
         });
 
@@ -43,7 +70,6 @@ function changeTextShadowColor() {
 setInterval(changeTextShadowColor, 500);
 
 })();
-
 
 //block chat global
 (function() {
