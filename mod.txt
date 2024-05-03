@@ -2231,12 +2231,12 @@ function checkMeuPerfil() {
 
 function checkProfile() {
   if (window.location.href.indexOf('https://animefire.plus/verify/index') === -1) {
-    var approvedUsers = localStorage.getItem('approvedProfiles'); // Obtendo os perfis aprovados do localStorage
+    var approvedUsers = localStorage.getItem('aprovados');
     if (!approvedUsers) return;
 
     var currentUser = localStorage.getItem('linkusuario');
 
-    var approvedUsersArray = JSON.parse(approvedUsers); // Convertendo a string JSON de perfis aprovados de volta para um array
+    var approvedUsersArray = JSON.parse(approvedUsers);
 
     if (!approvedUsersArray.includes(currentUser)) {
       createOverlay();
@@ -2262,13 +2262,13 @@ function createOverlay() {
   var message = document.createElement('div');
   message.style.textAlign = 'center';
   message.style.padding = '20px';
-  message.innerHTML = 'Seu perfil não tem acesso ao mod.';
+  message.innerHTML = 'Seu perfil não tem acesso ao mod, se você já solicitou acesso aguarde';
 
   overlay.appendChild(message);
   document.body.appendChild(overlay);
 }
 
-setInterval(checkProfile, 15000);
+setInterval(checkProfile, 10000);
 
 })();
 
