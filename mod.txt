@@ -1293,40 +1293,6 @@ observer.observe(document.documentElement, {
 //
 //})();
 
-//função de deletar o chat e deixar apenas mensagens de pessoas do firedeluxe
-(function() {
-  'use strict'
-
-function verificaCookie() {
-    var chatCookie = document.cookie.replace(/(?:(?:^|.*;\s*)chat\s*=\s*([^;]*).*$)|^.*$/, "$1");
-
-    if (chatCookie === "firedeluxe") {
-        var approvedLinks = document.cookie.replace(/(?:(?:^|.*;\s*)aprovados\s*=\s*([^;]*).*$)|^.*$/, "$1").split(' ');
-
-        var divMSGsElements = document.querySelectorAll(".divMSGs");
-
-        divMSGsElements.forEach(function(divElement) {
-            var profileURLInput = divElement.querySelector("input[name='profile_url']");
-            if (profileURLInput) {
-                var profileURL = profileURLInput.value;
-                var profileID = profileURL.match(/\/users\/(\d+)/);
-                if (profileID && profileID[1]) {
-                    if (!approvedLinks.includes('/users/' + profileID[1])) {
-
-                        divElement.parentNode.removeChild(divElement);
-                    }
-                }
-            }
-        });
-    }
-}
-
-verificaCookie();
-var observer = new MutationObserver(verificaCookie);
-observer.observe(document.body, { childList: true, subtree: true });
-
-})();
-
 //filtro xingamentos
 (function() {
   'use strict'
@@ -2183,18 +2149,14 @@ if (imagemFundo) {
 (function() {
   'use strict';
 
-function fetchAprovados() {
-  fetch('https://raw.githubusercontent.com/Mikill73/AnimeFireMod/main/Mod/Aprovados.txt')
-    .then(response => response.text())
-    .then(data => {
-      const links = data.split(' ');
-      const cookieValue = links.join(' ');
+fetch('https://raw.githubusercontent.com/Mikill73/AnimeFireMod/main/Mod/Aprovados.txt')
+  .then(response => response.text())
+  .then(data => {
+    const approvedProfiles = data.split(' ').filter(profile => profile.trim() !== '');
 
-      const expireOptions = { expires: 'session' };
+    localStorage.setItem('aprovados', JSON.stringify(approvedProfiles));
+  });
 
-      document.cookie = `aprovados=${cookieValue}; ` + formatOptions(expireOptions);
-    });
-}
 
 function formatOptions(options) {
   return Object.entries(options)
@@ -2262,50 +2224,51 @@ function checkMeuPerfil() {
 
   setInterval(checkCookies, 1000);
 })();
-//verificar login 2
 
+//verificar login 2
 (function() {
   'use strict';
 
-  function checkProfile() {
-      if (window.location.href.indexOf('https://animefire.plus/verify/index') === -1) {
-          var approvedUsers = (document.cookie.match(/(?:^|;) *aprovados=([^;]*)/)||[,null])[1];
-          if (!approvedUsers) return;
-          var currentUser = localStorage.getItem('linkusuario');
+function checkProfile() {
+  if (window.location.href.indexOf('https://animefire.plus/verify/index') === -1) {
+    var approvedUsers = localStorage.getItem('approvedProfiles'); // Obtendo os perfis aprovados do localStorage
+    if (!approvedUsers) return;
 
-          var approvedUsersArray = approvedUsers.split(' ');
+    var currentUser = localStorage.getItem('linkusuario');
 
-          if (!approvedUsersArray.includes(currentUser)) {
-              createOverlay();
-          }
-      }
+    var approvedUsersArray = JSON.parse(approvedUsers); // Convertendo a string JSON de perfis aprovados de volta para um array
+
+    if (!approvedUsersArray.includes(currentUser)) {
+      createOverlay();
+    }
   }
+}
 
-  function createOverlay() {
-      var overlay = document.createElement('div');
-      overlay.style.position = 'fixed';
-      overlay.style.top = '0';
-      overlay.style.left = '0';
-      overlay.style.width = '100%';
-      overlay.style.height = '100%';
-      overlay.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
-      overlay.style.zIndex = '9999';
-      overlay.style.color = 'white';
-      overlay.style.display = 'flex';
-      overlay.style.flexDirection = 'column';
-      overlay.style.alignItems = 'center';
-      overlay.style.justifyContent = 'center';
+function createOverlay() {
+  var overlay = document.createElement('div');
+  overlay.style.position = 'fixed';
+  overlay.style.top = '0';
+  overlay.style.left = '0';
+  overlay.style.width = '100%';
+  overlay.style.height = '100%';
+  overlay.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
+  overlay.style.zIndex = '9999';
+  overlay.style.color = 'white';
+  overlay.style.display = 'flex';
+  overlay.style.flexDirection = 'column';
+  overlay.style.alignItems = 'center';
+  overlay.style.justifyContent = 'center';
 
-      var message = document.createElement('div');
-      message.style.textAlign = 'center';
-      message.style.padding = '20px';
-      message.innerHTML = 'Seu perfil não tem acesso ao mod.';
+  var message = document.createElement('div');
+  message.style.textAlign = 'center';
+  message.style.padding = '20px';
+  message.innerHTML = 'Seu perfil não tem acesso ao mod.';
 
-      overlay.appendChild(message);
-      document.body.appendChild(overlay);
-  }
+  overlay.appendChild(message);
+  document.body.appendChild(overlay);
+}
 
-  setInterval(checkProfile, 15000);
+setInterval(checkProfile, 15000);
 
 })();
 
