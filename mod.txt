@@ -1106,6 +1106,17 @@ function adicionarBotaoPularIntro() {
   }
 }
 
+function verificarBotaoExistente() {
+  var botaoExistente = document.querySelector('.vjs-control-bar .vjs-button');
+  if (!botaoExistente) {
+    adicionarBotaoPularIntro();
+  } else {
+    clearInterval(verificarInterval);
+  }
+}
+
+var verificarInterval = setInterval(verificarBotaoExistente, 5000);
+
 adicionarBotaoPularIntro();
 
 })();
