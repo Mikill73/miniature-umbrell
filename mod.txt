@@ -1083,7 +1083,7 @@ function adicionarBotaoPularIntro() {
     });
 
     barraDeControle.appendChild(botaoPularIntro);
-    botaoAdicionado = true; // Mudando o valor da variável para true depois de adicionar o botão
+    botaoAdicionado = true;
   }
 
   var barraDeProgresso = document.querySelector('.ytp-progress-bar');
@@ -1100,7 +1100,7 @@ function verificarBotaoExistente() {
     adicionarBotaoPularIntro();
   } else {
     clearInterval(verificarInterval);
-    botaoAdicionado = true; // Se o botão já existe, definimos a variável como true
+    botaoAdicionado = true;
   }
 }
 
