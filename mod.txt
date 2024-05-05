@@ -1108,7 +1108,7 @@ function adicionarBotaoPularIntro() {
 
 function verificarBotaoExistente() {
   var botaoExistente = document.querySelector('.vjs-control-bar .vjs-button');
-  if (!botaoExistente) {
+  if (!botaoExistente || botaoExistente.innerText !== 'Pular Intro') {
     adicionarBotaoPularIntro();
   } else {
     clearInterval(verificarInterval);
