@@ -1069,24 +1069,11 @@ if (imagemLocalStorage) {
 (function() {
   'use strict'
 
-function obterNomeDoAnime() {
-  var url = window.location.href;
-  var partesDaURL = url.split('/');
-  var nomeDoAnime = partesDaURL[partesDaURL.length - 2];
-  return nomeDoAnime;
-}
-
-function pularIntro() {
-  var video = document.getElementById('my-video_html5_api');
-  if (video) {
-    var tempoAtual = video.currentTime;
-    video.currentTime = tempoAtual + 85;
-  }
-}
+var botaoAdicionado = false;
 
 function adicionarBotaoPularIntro() {
   var barraDeControle = document.querySelector('.vjs-control-bar');
-  if (barraDeControle) {
+  if (barraDeControle && !botaoAdicionado) {
     var botaoPularIntro = document.createElement('button');
     botaoPularIntro.className = 'vjs-control vjs-button'; 
     botaoPularIntro.innerText = 'Pular Intro';
@@ -1096,6 +1083,7 @@ function adicionarBotaoPularIntro() {
     });
 
     barraDeControle.appendChild(botaoPularIntro);
+    botaoAdicionado = true; // Mudando o valor da variável para true depois de adicionar o botão
   }
 
   var barraDeProgresso = document.querySelector('.ytp-progress-bar');
@@ -1108,10 +1096,11 @@ function adicionarBotaoPularIntro() {
 
 function verificarBotaoExistente() {
   var botaoExistente = document.querySelector('.vjs-control-bar .vjs-button');
-  if (!botaoExistente || botaoExistente.innerText !== 'Pular Intro') {
+  if (!botaoExistente) {
     adicionarBotaoPularIntro();
   } else {
     clearInterval(verificarInterval);
+    botaoAdicionado = true; // Se o botão já existe, definimos a variável como true
   }
 }
 
