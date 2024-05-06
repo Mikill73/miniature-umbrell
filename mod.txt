@@ -1296,7 +1296,7 @@ observer.observe(document.documentElement, {
 (function() {
   'use strict'
 
-const xingamentos = ["fodase", "pica", "caralho", "merda", "porra", "puta", "foda", "cu", "buceta", "viado", "arrombado", "filho da puta", "cacete", "cuzão", "babaca", "retardado", "chupa", "chup", "pinto", "chup", "penis", "pênis", "desgraçado", "desgracado", "imbecil", "hentai", "porn", "pornografia", "discord", "corno", "x0t4", "xota", "xereca", "pau", "ku", "vsfd", "tmnc", "bct", "corno"];
+const xingamentos = ["fodase", "pica", "caralho", "merda", "porra", "puta", "foda", "cu", "buceta", "viado", "arrombado", "filho da puta", "cacete", "cuzão", "babaca", "retardado", "chupa", "chup", "pinto", "chup", "penis", "pênis", "desgraçado", "desgracado", "imbecil", "hentai", "porn", "pornografia", "discord", "corno", "x0t4", "xota", "xereca", "pau", "ku", "vsfd", "tmnc", "bct", "corno", "vadia", "fuder];
 
 const alfabetoCustomizado = {
   'a': '𝖠',
@@ -1327,48 +1327,30 @@ const alfabetoCustomizado = {
   'z': '𝖹'
 };
 
-function substituirLetras(mensagem) {
-  const citarRegex = /\[citar\]([\s\S]*?)\[citar\]/g;
+const textArea = document.getElementById('textAreaPC');
 
-  const citarMatch = mensagem.match(citarRegex);
+textArea.addEventListener('input', function() {
+  const texto = this.value;
+  const palavras = texto.split(' ');
 
-  if (citarMatch) {
-    for (let i = 0; i < citarMatch.length; i++) {
-      const citarConteudo = citarMatch[i].replace(/\[citar\]/g, '');
-      mensagem = mensagem.replace(citarMatch[i], `[citar]${citarConteudo}[citar]`);
-    }
-  }
-
-  for (let i = 0; i < xingamentos.length; i++) {
-    const xingamento = xingamentos[i];
-    const regex = new RegExp(`(?<!\\[citar\\])${xingamento}(?!\\[citar\\])`, 'gi');
-
-    mensagem = mensagem.replace(regex, match => {
-      return match.split('').map(char => {
-        return alfabetoCustomizado[char.toLowerCase()] || char;
-      }).join('');
-    });
-  }
-
-  return mensagem;
-}
-
-function aplicarSubstituicao(id) {
-  const textarea = document.getElementById(id);
-  if (textarea) {
-    textarea.addEventListener("input", function () {
-      const mensagemOriginal = this.value;
-      const mensagemEditada = substituirLetras(mensagemOriginal);
-      if (mensagemOriginal !== mensagemEditada) {
-        this.value = mensagemEditada;
+  const textoModificado = palavras.map(palavra => {
+    if (palavra.startsWith('[citar]') && palavra.endsWith('[citar]')) {
+      return palavra;
+    } else {
+      const palavraLimpa = palavra.replace(/[^\w\s]/g, '');
+      if (xingamentos.includes(palavraLimpa.toLowerCase())) {
+        const palavraModificada = palavraLimpa.split('').map(letra => {
+          return alfabetoCustomizado[letra.toLowerCase()] || letra;
+        }).join('');
+        return palavra.replace(palavraLimpa, palavraModificada);
+      } else {
+        return palavra;
       }
-    });
-  }
-}
+    }
+  }).join(' ');
 
-aplicarSubstituicao("textAreaPC");
-aplicarSubstituicao("textarea_cmt");
-aplicarSubstituicao("textarea_reply");
+  this.value = textoModificado;
+});
 
 })();
 
