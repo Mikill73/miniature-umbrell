@@ -1092,7 +1092,7 @@ window.onload = function() {
             var botaoPularIntro = document.createElement('button');
             botaoPularIntro.className = 'vjs-control vjs-button'; 
             botaoPularIntro.innerText = 'Pular Intro';
-            botaoPularIntro.style.zIndex = '9';
+            botaoPularIntro.style.zIndex = '1';
             botaoPularIntro.style.fontSize = 'larger';
             botaoPularIntro.addEventListener('click', function() {
                 pularIntro();
