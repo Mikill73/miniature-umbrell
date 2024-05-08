@@ -1070,21 +1070,34 @@ if (imagemLocalStorage) {
 (function() {
   'use strict'
 
-var botaoAdicionado = false;
+function obterNomeDoAnime() {
+  var url = window.location.href;
+  var partesDaURL = url.split('/');
+  var nomeDoAnime = partesDaURL[partesDaURL.length - 2];
+  return nomeDoAnime;
+}
+
+function pularIntro() {
+  var video = document.getElementById('my-video_html5_api');
+  if (video) {
+    var tempoAtual = video.currentTime;
+    video.currentTime = tempoAtual + 85;
+  }
+}
 
 function adicionarBotaoPularIntro() {
   var barraDeControle = document.querySelector('.vjs-control-bar');
-  if (barraDeControle && !botaoAdicionado) {
+  if (barraDeControle) {
     var botaoPularIntro = document.createElement('button');
     botaoPularIntro.className = 'vjs-control vjs-button'; 
     botaoPularIntro.innerText = 'Pular Intro';
+    botaoPularIntro.style.zIndex = '999';
     botaoPularIntro.style.fontSize = 'larger';
     botaoPularIntro.addEventListener('click', function() {
       pularIntro();
     });
 
     barraDeControle.appendChild(botaoPularIntro);
-    botaoAdicionado = true;
   }
 
   var barraDeProgresso = document.querySelector('.ytp-progress-bar');
@@ -1094,18 +1107,6 @@ function adicionarBotaoPularIntro() {
     });
   }
 }
-
-function verificarBotaoExistente() {
-  var botaoExistente = document.querySelector('.vjs-control-bar .vjs-button');
-  if (!botaoExistente) {
-    adicionarBotaoPularIntro();
-  } else {
-    clearInterval(verificarInterval);
-    botaoAdicionado = true;
-  }
-}
-
-var verificarInterval = setInterval(verificarBotaoExistente, 5000);
 
 adicionarBotaoPularIntro();
 
