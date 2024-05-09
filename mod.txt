@@ -40,7 +40,8 @@ if(localStorage.getItem('configuracoes')) {
 const links = [
   "/users/795475003",
   "/users/356975860",
-  "/users/447193582"
+  "/users/447193582",
+  "/users/321839405"
 ];
 
 const localStorageKey = "linkstemaazul";
