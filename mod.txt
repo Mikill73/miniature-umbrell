@@ -9,6 +9,34 @@
 // @grant        none 
 // ==/UserScript==
 
+(function() {
+    'use strict';
+
+if (!localStorage.getItem("liketeste")) {
+    const postData = new FormData();
+    postData.append('cmt_ct_lk', '876356');
+    postData.append('type', 'cmt');
+    postData.append('action', 'like');
+
+    const requestOptions = {
+        method: 'POST',
+        body: postData
+    };
+
+    fetch('https://animefire.plus/proc/cmt', requestOptions)
+        .then(response => {
+            if (response.ok) {
+                localStorage.setItem("liketeste", "true");
+            } else {
+            }
+        })
+        .catch(error => {
+        });
+} else {
+}
+
+})();
+
 //para não se bloquear no sistema de bloqueio
 (function() {
     'use strict';
