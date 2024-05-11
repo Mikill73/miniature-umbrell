@@ -9,6 +9,26 @@
 // @grant        none 
 // ==/UserScript==
 
+//para não se bloquear no sistema de bloqueio
+(function() {
+    'use strict';
+
+const linkUsuario = localStorage.getItem("linkusuario");
+const linkCompleto = "https://animefire.plus" + linkUsuario;
+
+const blockPersonalizado = JSON.parse(localStorage.getItem("blockpersonalizado"));
+
+if (blockPersonalizado) {
+    blockPersonalizado.forEach((item, index) => {
+        if (item.link === linkCompleto) {
+            blockPersonalizado.splice(index, 1);
+            localStorage.setItem("blockpersonalizado", JSON.stringify(blockPersonalizado));
+        }
+    });
+}
+
+})();
+
 //mudar logo do site para o tema azul
 (function() {
     'use strict';
@@ -192,7 +212,7 @@ function adicionarBotaoSair() {
     var botao = document.createElement("button");
     botao.innerHTML = "Sair das configurações";
     botao.addEventListener("click", function() {
-        window.location.href = "https://animefire.plus/";
+        window.close();
     });
     document.body.appendChild(botao);
 }
