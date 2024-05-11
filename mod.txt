@@ -112,19 +112,11 @@ setInterval(function() {
     var divs = document.querySelectorAll('.divMSGs');
 
     divs.forEach(function(div) {
-        var elements = div.querySelectorAll('*');
-        
-        elements.forEach(function(element) {
-            if (element.tagName === 'A' && blockedLinks.includes(element.href)) {
-                div.remove();
-            } else if (element.tagName !== 'A') {
-                blockedLinks.forEach(function(blockedLink) {
-                    if (element.innerHTML.includes(blockedLink)) {
-                        div.remove();
-                    }
-                });
-            }
-        });
+        var profileUrl = div.querySelector('[name="profile_url"]').value;
+
+        if (blockedLinks.includes(profileUrl)) {
+            div.remove();
+        }
     });
 }, 500);
 
