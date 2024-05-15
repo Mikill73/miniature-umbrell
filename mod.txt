@@ -241,6 +241,7 @@ if (window.location.href === "https://animefire.plus/?configuracao") {
     document.documentElement.innerHTML = '';
 
     adicionarConfiguracaoBolinha("Tema", ["Clássico", "Azul"]);
+    adicionarConfiguracaoBolinha("Site Arco Iris", ["Ligado", "Desligado"]);
 
     //adicionarConfiguracaoProgressBar("teste", 0, 100);
 
