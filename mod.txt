@@ -1130,8 +1130,8 @@ divMsgsPc.addEventListener('mouseleave', function (e) {
 const div_msgs_pc = document.getElementById('mainDivMSGs');
 const configuracoes = JSON.parse(localStorage.getItem("configuracoes"));
 
-if (configuracoes && configuracoes["Background do chat"]) {
-    const backgroundUrl = configuracoes["Background do chat"];
+if (configuracoes && configuracoes["Imagem Fundo Site"]) {
+    const backgroundUrl = configuracoes["Imagem Fundo Site"];
     div_msgs_pc.style.backgroundImage = `url('${backgroundUrl}')`;
     div_msgs_pc.style.backgroundSize = 'cover';
 } else {
@@ -2193,15 +2193,15 @@ if (lanternStatus === 'on') {
 }
 })();
 
-//==UserScript==
-//sistema de acesso
+//imagemfundosite
 (function() {
   'use strict';
 
-var imagemFundo = localStorage.getItem('imagemfundosite');
+const configuracoes = JSON.parse(localStorage.getItem("configuracoes"));
 
-if (imagemFundo) {
-  document.body.style.backgroundImage = `url(${imagemFundo})`;
+if (configuracoes && configuracoes["Imagem Fundo Site"]) {
+  const imagemFundoSite = configuracoes["Imagem Fundo Site"];
+  document.body.style.backgroundImage = `url(${imagemFundoSite})`;
   document.body.style.backgroundSize = 'cover';
   document.body.style.backgroundRepeat = 'no-repeat';
 }
