@@ -170,6 +170,33 @@ fetch('https://raw.githubusercontent.com/Mikill73/AnimeFireMod/main/Mod/Lista%20
 (function() {
     'use strict';
 
+//configuração upload de imagem
+function adicionarConfiguracaoUploadImagem(nomeConfiguracao) {
+    var container = document.createElement("div");
+
+    var label = document.createElement("h1");
+    label.innerHTML = nomeConfiguracao + ":";
+    container.appendChild(label);
+
+    var input = document.createElement("input");
+    input.setAttribute("type", "file");
+    input.addEventListener("change", function() {
+        if (this.files && this.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                var configuracoes = JSON.parse(localStorage.getItem("configuracoes")) || {};
+                configuracoes[nomeConfiguracao] = e.target.result;
+                localStorage.setItem("configuracoes", JSON.stringify(configuracoes));
+            };
+            reader.readAsDataURL(this.files[0]);
+        }
+    });
+    container.appendChild(input);
+
+    document.body.appendChild(container);
+}
+
+//configuração de bolinhas
 function adicionarConfiguracaoBolinha(nomeConfiguracao, opcoes) {
     var container = document.createElement("div");
 
@@ -202,6 +229,7 @@ function adicionarConfiguracaoBolinha(nomeConfiguracao, opcoes) {
     document.body.appendChild(container);
 }
 
+//configuração barra de progresso
 function adicionarConfiguracaoProgressBar(nomeConfiguracao, valorInicial, valorMaximo) {
     var container = document.createElement("div");
 
@@ -233,6 +261,9 @@ function adicionarConfiguracaoProgressBar(nomeConfiguracao, valorInicial, valorM
 function adicionarBotaoSair() {
     var botao = document.createElement("button");
     botao.innerHTML = "Sair das configurações";
+    botao.style.fontWeight = "bold";
+    botao.style.padding = "10px 20px";
+    botao.style.cursor = "pointer";
     botao.addEventListener("click", function() {
         window.close();
     });
@@ -242,6 +273,10 @@ function adicionarBotaoSair() {
 if (window.location.href === "https://animefire.plus/?configuracao") {
     document.documentElement.innerHTML = '';
 
+    adicionarConfiguracaoUploadImagem("Imagem Fundo Site");
+    adicionarConfiguracaoUploadImagem("Imagem Fundo Chat");
+    adicionarConfiguracaoBolinha("Chat com fundo personalizado", ["Ligado", "Desligado"]);
+    adicionarConfiguracaoBolinha("Site com fundo personalizado", ["Ligado", "Desligado"]);
     adicionarConfiguracaoBolinha("Tema", ["Clássico", "Azul"]);
     adicionarConfiguracaoBolinha("Site Arco Iris", ["Ligado", "Desligado"]);
 
@@ -1092,20 +1127,14 @@ divMsgsPc.addEventListener('mouseleave', function (e) {
 (function() {
   'use strict';
 
-const imagemLocalStorage = localStorage.getItem('imagemchat');
+const div_msgs_pc = document.getElementById('mainDivMSGs');
+const configuracoes = JSON.parse(localStorage.getItem("configuracoes"));
 
-if (imagemLocalStorage) {
-    const mainDivMSGs = document.getElementById('mainDivMSGs');
-
-    const setBackgroundImage = () => {
-        mainDivMSGs.style.backgroundImage = `url(${imagemLocalStorage})`;
-        mainDivMSGs.style.backgroundSize = 'cover';
-        mainDivMSGs.style.backgroundPosition = 'center';
-    };
-
-    setBackgroundImage();
-
-    window.addEventListener('resize', setBackgroundImage);
+if (configuracoes && configuracoes["Background do chat"]) {
+    const backgroundUrl = configuracoes["Background do chat"];
+    div_msgs_pc.style.backgroundImage = `url('${backgroundUrl}')`;
+    div_msgs_pc.style.backgroundSize = 'cover';
+} else {
 }
 
 })();
@@ -2390,27 +2419,17 @@ function applyButtonStyleWithSound(button, clickFunction) {
 }
 
 let configButton = createButton('Configuração', handleClickConfigurar);
-//let historicoButon = createButton('Histórico de Comentários', handleClickHistorico);
 let bloquearButton = createButton('Bloquear Usuário', handleClickBloquear);
-let changeColorButton = createButton('Mudar Cor do Fundo', switchColorInput);
-let changeBackgroundButton = createButton('Mudar Fundo', switchBackgroundInput);
-let botaoMudarFundo = createButton('Mudar Fundo do Chat Global', handleClickMudarFundoChat);
 let convertPlayerButton = createButton('Converter Player', transformPlayer);
 let animeAleatorioButton = createButton('Anime Aleatorio', handleClickanimeAleatorio);
 let siteleveButton = createButton('Site Leve', handleClicksiteleve);
 let contaautomaticaButton = createButton('Registrar Conta Automática', handleClickcontaautomatica);
-let comandosButton = createButton('Comandos', handleClickComandos);
 
 applyButtonStyleWithSound(configButton, handleClickConfigurar);
-//applyButtonStyleWithSound(historicoButton, handleClickHistorico);
 applyButtonStyleWithSound(bloquearButton, handleClickBloquear);
-applyButtonStyleWithSound(changeColorButton, switchColorInput);
-applyButtonStyleWithSound(changeBackgroundButton, switchBackgroundInput);
-applyButtonStyleWithSound(botaoMudarFundo, handleClickMudarFundoChat);
 applyButtonStyleWithSound(convertPlayerButton, transformPlayer);
 applyButtonStyleWithSound(animeAleatorioButton, handleClickanimeAleatorio);
 applyButtonStyleWithSound(siteleveButton, handleClicksiteleve);
-applyButtonStyleWithSound(comandosButton, handleClickComandos);
 applyButtonStyleWithSound(contaautomaticaButton, handleClickcontaautomatica);
 
 document.body.appendChild(buttonContainer);
@@ -2915,29 +2934,6 @@ obterEmailEsenha();
 
 }
 
-function handleClickMudarFundoChat() {
-    const inputArquivo = document.createElement('input');
-    inputArquivo.type = 'file';
-
-    inputArquivo.addEventListener('change', function(event) {
-        const div_msgs_pc = document.getElementById('mainDivMSGs');
-        const arquivo = event.target.files[0];
-
-        if (arquivo) {
-            const leitor = new FileReader();
-            leitor.onload = function(e) {
-                div_msgs_pc.style.backgroundImage = `url('${e.target.result}')`;
-                div_msgs_pc.style.backgroundSize = 'cover';
-
-                localStorage.setItem("imagemchat", e.target.result);
-            };
-            leitor.readAsDataURL(arquivo);
-        }
-    });
-
-    inputArquivo.click();
-}
-
   function handleClicksiteAcesso() {
     window.open('https://mikill73.github.io/AnimeFireMod/', '_blank');
 
@@ -3036,81 +3032,6 @@ function saveImageToLocalStorage(imageUrl) {
     removeCookie('background');
     localStorage.removeItem('imagemfundosite');
     location.reload();
-  }
-
-  function handleClickComandos() {
-    const comandos = {
-    "arcoiris": `var elementos=document.querySelectorAll("*");function alterarCores(){elementos.forEach((function(e){if("SCRIPT"!==e.nodeName&&"STYLE"!==e.nodeName){var r=obterCorAleatoria();e.style.color=r}}))}function obterCorAleatoria(){for(var e="#",r=0;r<6;r++)e+="0123456789ABCDEF"[Math.floor(16*Math.random())];return e}setInterval(alterarCores,1e3);`,
-
-    "sorteio": `function realizarSorteio() {
-    var quantidade = parseInt(prompt('Quer sortear quantos valores?'));
-
-    if (isNaN(quantidade)) {
-        alert('Têm que ser número');
-        return;
-    }
-
-    var valores = [];
-
-    for (var i = 0; i < quantidade; i++) {
-        var nome = prompt('Digite o nome do valor ' + (i + 1));
-        valores.push(nome);
-
-    }
-
-    var valorSorteado = Math.floor(Math.random() * valores.length);
-    var nomeSorteado = valores[valorSorteado];
-
-    alert('Valor ganhador : ' + nomeSorteado);
-}
-
-realizarSorteio();`,
-
-    "fundooriginalsite": `localStorage.removeItem('imagemfundosite');
-location.reload();`,
-
- "site": `window.open('https://mikill73.github.io/AnimeFireMod/', '_blank');`,
-
-    "lanternaon": `localStorage.setItem('lanterna', 'on');
-                                       location.reload();`,
-
-      "limparchat": `var divMSGsList = document.querySelectorAll(".divMSGs");
-if (divMSGsList.length > 0) {
-    divMSGsList.forEach(function(element) {
-        element.parentNode.removeChild(element);
-    });
-} else {
-    console.log("Divs não encontradas.");
-}`,
-
-      "lanternaoff": `localStorage.setItem('lanterna', 'off');
-                                        location.reload();`
-
-  };
-
-  function executeCommand(command) {
-    if (comandos.hasOwnProperty(command)) {
-      try {
-        eval(comandos[command]);
-      } catch (error) {
-        alert(`Erro executando ${command}: ${error}`);
-      }
-    } else {
-      alert(`Comando "${command}" não encontrado.`);
-    }
-  }
-
-  setTimeout(() => {
-    const userInput = prompt('Digite um comando ou digite "cmds" para ver todos os comandos');
-    if (userInput) {
-      if (userInput === "cmds") {
-        const allCommands = Object.keys(comandos).join(", ");
-        alert(`Comandos disponíveis: ${allCommands}`);
-      } else {
-        executeCommand(userInput);
-      }
-    }
-  }, 1);
   }
 
   let menuButton = null;
