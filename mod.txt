@@ -1130,11 +1130,10 @@ divMsgsPc.addEventListener('mouseleave', function (e) {
 const div_msgs_pc = document.getElementById('mainDivMSGs');
 const configuracoes = JSON.parse(localStorage.getItem("configuracoes"));
 
-if (configuracoes && configuracoes["Imagem Fundo Site"]) {
+if (configuracoes && configuracoes["Chat com fundo personalizado"] === "Ligado" && configuracoes["Imagem Fundo Chat"]) {
     const backgroundUrl = configuracoes["Imagem Fundo Chat"];
     div_msgs_pc.style.backgroundImage = `url('${backgroundUrl}')`;
     div_msgs_pc.style.backgroundSize = 'cover';
-} else {
 }
 
 })();
@@ -2199,7 +2198,7 @@ if (lanternStatus === 'on') {
 
 const configuracoes = JSON.parse(localStorage.getItem("configuracoes"));
 
-if (configuracoes && configuracoes["Imagem Fundo Site"]) {
+if (configuracoes && configuracoes["Site com fundo personalizado"] === "Ligado" && configuracoes["Imagem Fundo Site"]) {
   const imagemFundoSite = configuracoes["Imagem Fundo Site"];
   document.body.style.backgroundImage = `url(${imagemFundoSite})`;
   document.body.style.backgroundSize = 'cover';
