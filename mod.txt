@@ -1131,6 +1131,7 @@ window.onload = function() {
         var barraDeControle = document.querySelector('.vjs-control-bar');
         if (barraDeControle) {
             var botaoPularIntro = document.createElement('button');
+            botaoPularIntro.id = 'botaoPularIntro';
             botaoPularIntro.className = 'vjs-control vjs-button'; 
             botaoPularIntro.innerText = 'Pular Intro';
             botaoPularIntro.style.zIndex = '1';
