@@ -1161,8 +1161,6 @@ if (window.location.href.includes('/animes/')) {
     }, 5000);
 }
 
-};
-
 })();
 
 //cor neon em usuários de firedeluxe no chat
