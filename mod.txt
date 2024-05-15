@@ -171,7 +171,7 @@ fetch('https://raw.githubusercontent.com/Mikill73/AnimeFireMod/main/Mod/Lista%20
     'use strict';
 
 //configuração upload de imagem
-function adicionarConfiguracaoUploadImagem(nomeConfiguracao) {
+function adicionarConfiguracaoUploadImagem(nomeConfiguracao, chaveLocalStorage) {
     var container = document.createElement("div");
 
     var label = document.createElement("h1");
@@ -185,7 +185,7 @@ function adicionarConfiguracaoUploadImagem(nomeConfiguracao) {
             var reader = new FileReader();
             reader.onload = function(e) {
                 var configuracoes = JSON.parse(localStorage.getItem("configuracoes")) || {};
-                configuracoes[nomeConfiguracao] = e.target.result;
+                configuracoes[chaveLocalStorage] = e.target.result;
                 localStorage.setItem("configuracoes", JSON.stringify(configuracoes));
             };
             reader.readAsDataURL(this.files[0]);
@@ -273,8 +273,8 @@ function adicionarBotaoSair() {
 if (window.location.href === "https://animefire.plus/?configuracao") {
     document.documentElement.innerHTML = '';
 
-    adicionarConfiguracaoUploadImagem("Imagem Fundo Site");
-    adicionarConfiguracaoUploadImagem("Imagem Fundo Chat");
+    adicionarConfiguracaoUploadImagem("Imagem Fundo Site", "Imagem Fundo Site");
+    adicionarConfiguracaoUploadImagem("Imagem Fundo Chat", "Imagem Fundo Chat");
     adicionarConfiguracaoBolinha("Chat com fundo personalizado", ["Ligado", "Desligado"]);
     adicionarConfiguracaoBolinha("Site com fundo personalizado", ["Ligado", "Desligado"]);
     adicionarConfiguracaoBolinha("Tema", ["Clássico", "Azul"]);
@@ -1131,7 +1131,7 @@ const div_msgs_pc = document.getElementById('mainDivMSGs');
 const configuracoes = JSON.parse(localStorage.getItem("configuracoes"));
 
 if (configuracoes && configuracoes["Imagem Fundo Site"]) {
-    const backgroundUrl = configuracoes["Imagem Fundo Site"];
+    const backgroundUrl = configuracoes["Imagem Fundo Chat"];
     div_msgs_pc.style.backgroundImage = `url('${backgroundUrl}')`;
     div_msgs_pc.style.backgroundSize = 'cover';
 } else {
