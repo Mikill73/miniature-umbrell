@@ -9,6 +9,36 @@
 // @grant        none 
 // ==/UserScript==
 
+//adblocker - ainda em teste
+(function() {
+    'use strict';
+
+function verificarERemoverElemento() {
+    const elemento = document.getElementById('dontfoid');
+    if (elemento) {
+        elemento.remove();
+    }
+}
+
+const observer = new MutationObserver(mutationsList => {
+    for (const mutation of mutationsList) {
+        if (mutation.type === 'childList') {
+            verificarERemoverElemento();
+        }
+    }
+});
+
+const observerConfig = {
+    childList: true,
+    subtree: true
+};
+
+observer.observe(document.body, observerConfig);
+
+verificarERemoverElemento();
+
+})();
+
 //arcoiris
 (function() {
     'use strict';
@@ -1279,61 +1309,6 @@ if (window.location.href.includes('/animes/')) {
 //mainDivMSGs.appendChild(chatFireDeluxeButton);
 
 //})();
-
-//arrumar bug de horario no chat firedeluxe
-(function() {
-  'use strict'
-
-function checkChatCookie() {
-  const chatCookieValue = document.cookie.replace(/(?:(?:^|.*;\s*)chat\s*=\s*([^;]*).*$)|^.*$/, "$1");
-  return chatCookieValue === "firedeluxe";
-}
-
-function executeCode() {
-  const h6MsgElements = document.querySelectorAll('.h6Msg');
-
-  h6MsgElements.forEach((h6MsgElement) => {
-    const h6Text = h6MsgElement.textContent;
-    const regex = /(\d{2})u(\d{2})/;
-    const match = h6Text.match(regex);
-
-    if (match) {
-      const spanElement = document.createElement('span');
-      spanElement.className = 'spanPChatH ml-2';
-      const formattedTime = `${match[1]}:${match[2]}`;
-      spanElement.textContent = formattedTime;
-
-      const divContainer = document.createElement('div');
-      divContainer.className = 'divUserMSG mr-2';
-      divContainer.appendChild(spanElement);
-      h6MsgElement.parentNode.insertBefore(divContainer, h6MsgElement);
-
-      h6MsgElement.textContent = h6Text.replace(regex, '');
-      h6MsgElement.textContent = h6MsgElement.textContent.trim();
-    }
-  });
-}
-
-function checkCookieAndExecuteCode() {
-  if (checkChatCookie()) {
-    executeCode();
-  }
-}
-
-checkCookieAndExecuteCode();
-
-const observer = new MutationObserver(() => {
-  checkCookieAndExecuteCode();
-});
-
-observer.observe(document.documentElement, {
-  childList: true,
-  subtree: true,
-  attributes: false,
-  characterData: false,
-});
-
-})();
 
 //deletar mensagens que não possuem caracteres especiais no chat firedeluxe
 //(function() {
