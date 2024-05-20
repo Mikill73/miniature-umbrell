@@ -26,7 +26,7 @@ if (
     (!document.cookie.includes("dcprmt") && !window.location.href.includes("?dcprmt")) &&
     (isNaN(vsCookieValue) || vsCookieValue >= 35)
 ) {
-    alert("Você será redirecionado para o Discord para verificar se está nos servidores do AnimeFire e FireDeluxe.");
+    alert("Você será redirecionado para o Discord para verificar se está nos servidores do AnimeFire e FireDeluxe. Se você já tiver recebido esse aviso e entrado nos servidores, apenas aperte o botão verificar novamente");
     window.location.href = "https://discord.com/channels/@me?vrfdscs";
 }
 
