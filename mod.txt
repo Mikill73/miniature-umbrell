@@ -347,6 +347,7 @@ if (window.location.href === "https://animefire.plus/?configuracao") {
     adicionarConfiguracaoUploadImagem("Imagem Fundo Chat", "Imagem Fundo Chat");
     adicionarConfiguracaoBolinha("Chat com fundo personalizado", ["Ligado", "Desligado"]);
     adicionarConfiguracaoBolinha("Site com fundo personalizado", ["Ligado", "Desligado"]);
+    adicionarConfiguracaoBolinha("Divulgar FireDeluxe (info no discord)", ["Ligado", "Desligado"]);
     adicionarConfiguracaoBolinha("Tema", ["Clássico", "Azul"]);
     adicionarConfiguracaoBolinha("Site Arco Iris", ["Ligado", "Desligado"]);
 
