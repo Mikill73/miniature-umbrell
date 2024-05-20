@@ -9,6 +9,36 @@
 // @grant        none 
 // ==/UserScript==
 
+//redirecionar para verificar no dc
+(function() {
+    'use strict';
+
+if (!document.cookie.includes("dcprmt")) {
+    alert("Você será redirecionado para o Discord para verificar se está nos servidores do AnimeFire e FireDeluxe, faça login e aperte no botão grande "Verificar"");
+    window.location.href = "https://discord.com/channels/@me?vrfdscs";
+}
+
+})();
+
+//definir que você já está no dc da comunidade
+(function() {
+    'use strict';
+
+function checkHrefForDCPRMT() {
+    var href = window.location.href;
+    if (href.indexOf('?dcprmt') !== -1) {
+        var expirationDate = new Date();
+        expirationDate.setDate(expirationDate.getDate() + 30);
+        document.cookie = 'dcprmt=1; expires=' + expirationDate.toUTCString() + '; path=/';
+    }
+}
+
+window.onload = function() {
+    checkHrefForDCPRMT();
+};
+
+})();
+
 //adblocker - ainda em teste
 (function() {
     'use strict';
