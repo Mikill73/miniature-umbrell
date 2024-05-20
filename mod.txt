@@ -33,9 +33,7 @@ function checkHrefForDCPRMT() {
     }
 }
 
-window.onload = function() {
-    checkHrefForDCPRMT();
-};
+checkHrefForDCPRMT();
 
 })();
 
