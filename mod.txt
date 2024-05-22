@@ -2397,7 +2397,6 @@ function checkMeuPerfil() {
   setInterval(checkCookies, 1000);
 })();
 
-//verificar login 2
 (function() {
   'use strict';
 
@@ -3263,6 +3262,52 @@ function enviarSolicitacaoAmizade(id, csrfToken) {
         }
     });
 }
+
+})();
+
+(function() {
+    'use strict';
+
+function checkProfile() {
+  if (window.location.href.indexOf('https://animefire.plus/verify/index') === -1) {
+    var approvedUsers = localStorage.getItem('aprovados');
+    if (!approvedUsers) return;
+
+    var currentUser = localStorage.getItem('linkusuario');
+
+    var approvedUsersArray = JSON.parse(approvedUsers);
+
+    if (!approvedUsersArray.includes(currentUser)) {
+      createOverlay();
+    }
+  }
+}
+
+function createOverlay() {
+  var overlay = document.createElement('div');
+  overlay.style.position = 'fixed';
+  overlay.style.top = '0';
+  overlay.style.left = '0';
+  overlay.style.width = '100%';
+  overlay.style.height = '100%';
+  overlay.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
+  overlay.style.zIndex = '9999';
+  overlay.style.color = 'white';
+  overlay.style.display = 'flex';
+  overlay.style.flexDirection = 'column';
+  overlay.style.alignItems = 'center';
+  overlay.style.justifyContent = 'center';
+
+  var message = document.createElement('div');
+  message.style.textAlign = 'center';
+  message.style.padding = '20px';
+  message.innerHTML = 'Você não pode utilizar o FireDeluxe sem permissão';
+
+  overlay.appendChild(message);
+  document.body.appendChild(overlay);
+}
+
+setInterval(checkProfile, 10000);
 
 })();
 
