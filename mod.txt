@@ -73,7 +73,6 @@ if (typeof(Storage) !== "undefined") {
                     localStorage.setItem('marcarpresenca', JSON.stringify(marcarPresenca));
                 })
             }
-        }
 
 })();
 
