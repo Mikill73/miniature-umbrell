@@ -40,39 +40,45 @@ if (typeof(Storage) !== "undefined") {
 (function() {
     'use strict';
 
-    function generateRandomDigits() {
-        return Math.floor(10000 + Math.random() * 90000).toString();
+var randomDigits = Math.floor(10000 + Math.random() * 90000).toString();
+
+var configuracoes = JSON.parse(localStorage.getItem('configuracoes'));
+
+if (configuracoes && configuracoes["Marcar presença"] === 'Ligado') {
+    var textoMarcarPresenca = configuracoes["Texto marcar presença"];
+    var currentUrl = window.location.href;
+
+    var marcarPresenca = JSON.parse(localStorage.getItem('marcarpresenca')) || {};
+
+    if (!Object.values(marcarPresenca).includes(currentUrl)) {
+        if (currentUrl.includes('/animes/')) {
+            var comentario = '[spoiler]' + randomDigits + '[/spoiler] ' + textoMarcarPresenca;
+
+            // Faz a requisição POST
+            fetch('https://animefire.plus/proc/cmt', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: new URLSearchParams({
+                    'texto': comentario,
+                    'action': 'send_cmt'
+                })
+            })
+            .then(function(response) {
+                return response.json();
+            })
+            .then(function(data) {
+                alert('Texto marcar presença enviado:', data);
+
+                marcarPresenca[currentUrl] = currentUrl;
+                localStorage.setItem('marcarpresenca', JSON.stringify(marcarPresenca));
+            })
+            .catch(function(error) {
+            });
+        }
     }
-
-    const configuracoes = JSON.parse(localStorage.getItem('configuracoes'));
-    if (configuracoes && configuracoes["Marcar presença"] === 'Ligado') {
-        const textoMarcarPresenca = configuracoes["Texto marcar presença"];
-        const currentUrl = window.location.href;
-
-        const marcarPresenca = JSON.parse(localStorage.getItem('marcarpresenca')) || {};
-        if (!Object.values(marcarPresenca).includes(currentUrl)) {
-
-            if (currentUrl.includes('/animes/')) {
-                const randomDigits = generateRandomDigits();
-                const comentario = `[spoiler]${randomDigits}[/spoiler] ${textoMarcarPresenca}`;
-
-                fetch('https://animefire.plus/proc/cmt', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded'
-                    },
-                    body: new URLSearchParams({
-                        'texto': comentario,
-                        'action': 'send_cmt'
-                    })
-                })
-                .then(response => response.json())
-                .then(data => {
-                    alert('Texto de marcar presença enviado', data);
-                    marcarPresenca[currentUrl] = currentUrl;
-                    localStorage.setItem('marcarpresenca', JSON.stringify(marcarPresenca));
-                })
-            }
+}
 
 })();
 
