@@ -250,15 +250,17 @@ localStorage.setItem(localStorageKey, JSON.stringify(links));
 function changeTextShadowColor() {
     var elements = document.querySelectorAll('*');
     var tema = localStorage.getItem('configuracoes');
+    var configuracoes = tema ? JSON.parse(tema) : {};
 
-    if (tema && JSON.parse(tema).Tema === 'Azul') {
+    if (configuracoes.Tema === 'Azul') {
         var linksAzul = JSON.parse(localStorage.getItem('linkstemaazul')) || [];
         var linksValidos = linksAzul.some(function(link) {
             return localStorage.getItem('linkusuario') === link;
         });
 
         if (!linksValidos) {
-            localStorage.setItem('configuracoes', JSON.stringify({ "Tema": "Clássico" }));
+            configuracoes.Tema = 'Clássico';
+            localStorage.setItem('configuracoes', JSON.stringify(configuracoes));
             alert("Você precisa pagar 25000 sonhos para usar esse tema, contate Mikill no discord para comprar, você pode conseguir sonhos de graça pegando o daily! Os sonhos não são uma moeda real");
         }
     }
@@ -266,7 +268,7 @@ function changeTextShadowColor() {
     elements.forEach(function(element) {
         var style = window.getComputedStyle(element);
         var textShadow = style.getPropertyValue('text-shadow');
-        if (textShadow && (textShadow.includes('#ff4500') || textShadow.includes('rgb(255, 69, 0)')) && localStorage.getItem('configuracoes').includes('Azul')) {
+        if (textShadow && (textShadow.includes('#ff4500') || textShadow.includes('rgb(255, 69, 0)')) && configuracoes.Tema === 'Azul') {
             var newTextShadow = textShadow.replace(/#ff4500|rgb\(255,\s*69,\s*0\)/gi, '#21d3ff');
             element.style.textShadow = newTextShadow;
         }
