@@ -156,26 +156,25 @@ verificarERemoverElemento();
 (function() {
     'use strict';
 
-var elementos = document.querySelectorAll("*");
-
 function alterarCores() {
     var configuracoes = JSON.parse(localStorage.getItem("configuracoes"));
     if (configuracoes && configuracoes["Site Arco Iris"] === "Ligado") {
+        var elementos = document.querySelectorAll("*");
         elementos.forEach(function(e) {
-            if ("SCRIPT" !== e.nodeName && "STYLE" !== e.nodeName) {
-                var r = obterCorAleatoria();
-                e.style.color = r;
+            if (e.nodeName !== "SCRIPT" && e.nodeName !== "STYLE") {
+                var cor = obterCorAleatoria();
+                e.style.color = cor;
             }
         });
     }
 }
 
 function obterCorAleatoria() {
-    var e = "#";
-    for (var r = 0; r < 6; r++) {
-        e += "0123456789ABCDEF"[Math.floor(16 * Math.random())];
+    var cor = "#";
+    for (var i = 0; i < 6; i++) {
+        cor += "0123456789ABCDEF"[Math.floor(Math.random() * 16)];
     }
-    return e;
+    return cor;
 }
 
 setInterval(alterarCores, 1000);
