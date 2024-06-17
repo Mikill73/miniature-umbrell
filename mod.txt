@@ -516,6 +516,7 @@ if (window.location.href === "https://animefire.plus/?configuracao") {
 
     adicionarConfiguracaoUploadImagem("Imagem Fundo Site", "Imagem Fundo Site");
     adicionarConfiguracaoUploadImagem("Imagem Fundo Chat", "Imagem Fundo Chat");
+    adicionarConfiguracaoBolinha("Prévia dos eps", ["Ligado", "Desligado"]);
     adicionarConfiguracaoBolinha("Chat com fundo personalizado", ["Ligado", "Desligado"]);
     adicionarConfiguracaoBolinha("Marcar presença", ["Ligado", "Desligado"]);
     adicionarConfiguracaoTextarea("Texto marcar presença");
@@ -2244,80 +2245,85 @@ setInterval(checkAndRemoveYouTubeLinks, 500);
 (function() {
   'use strict';
 
-let videoElements = new Map();
-let timerIds = new Map();
+const configuracoes = JSON.parse(localStorage.getItem('configuracoes'));
 
-function loadVideoOnHover(event) {
-  const cardElement = event.currentTarget;
-  if (!videoElements.has(cardElement)) {
-    const timerId = setTimeout(() => {
-      fetchVideo(cardElement);
-    }, 6000);
-    timerIds.set(cardElement, timerId);
-  }
-}
+if (configuracoes && configuracoes["Prévia dos eps"] === "Ligado") {
+  let videoElements = new Map();
+  let timerIds = new Map();
 
-function cancelLoadVideo(event) {
-  const cardElement = event.currentTarget;
-  const timerId = timerIds.get(cardElement);
-  if (timerId) {
-    clearTimeout(timerId);
-  }
-}
-
-async function fetchVideo(cardElement) {
-  if (videoElements.has(cardElement)) {
-    return;
-  }
-
-  const linkElement = cardElement.querySelector('a');
-  const link = linkElement.getAttribute('href');
-
-  try {
-    const response = await fetch(link);
-    const htmlText = await response.text();
-
-    const videoSrcMatch = htmlText.match(/<video.*src="(.*?)"/);
-    if (videoSrcMatch) {
-      const videoPageLink = videoSrcMatch[1];
-
-      const videoResponse = await fetch(videoPageLink);
-      const videoData = await videoResponse.json();
-      const firstSrc = videoData.data[0].src;
-
-      const videoElement = document.createElement('video');
-      videoElement.className = 'card-img-top imgAnimesUltimosEps transitioning_src';
-      videoElement.src = firstSrc;
-      videoElement.controls = false;
-      videoElement.autoplay = true;
-      videoElement.muted = true;
-      videoElement.controlsList = 'nodownload';
-
-      const imgElement = cardElement.querySelector('img');
-      imgElement.parentNode.replaceChild(videoElement, imgElement);
-
-      videoElements.set(cardElement, videoElement);
-      
-videoElement.addEventListener('loadedmetadata', () => {
-  setTimeout(() => {
-    videoElement.pause();
-  }, 60000);
-});
-
-      videoElement.addEventListener('mouseover', () => {
-        videoElement.play();
-      });
-
+  function loadVideoOnHover(event) {
+    const cardElement = event.currentTarget;
+    if (!videoElements.has(cardElement)) {
+      const timerId = setTimeout(() => {
+        fetchVideo(cardElement);
+      }, 6000);
+      timerIds.set(cardElement, timerId);
     }
-  } catch (error) {
-    console.error(error);
   }
-}
 
-const cardElements = document.querySelectorAll('.divCardUltimosEpsHome');
-cardElements.forEach((cardElement) => {
-  cardElement.addEventListener('mouseover', loadVideoOnHover);
-});
+  function cancelLoadVideo(event) {
+    const cardElement = event.currentTarget;
+    const timerId = timerIds.get(cardElement);
+    if (timerId) {
+      clearTimeout(timerId);
+    }
+  }
+
+  async function fetchVideo(cardElement) {
+    if (videoElements.has(cardElement)) {
+      return;
+    }
+
+    const linkElement = cardElement.querySelector('a');
+    const link = linkElement.getAttribute('href');
+
+    try {
+      const response = await fetch(link);
+      const htmlText = await response.text();
+
+      const videoSrcMatch = htmlText.match(/<video.*src="(.*?)"/);
+      if (videoSrcMatch) {
+        const videoPageLink = videoSrcMatch[1];
+
+        const videoResponse = await fetch(videoPageLink);
+        const videoData = await videoResponse.json();
+        const firstSrc = videoData.data[0].src;
+
+        const videoElement = document.createElement('video');
+        videoElement.className = 'card-img-top imgAnimesUltimosEps transitioning_src';
+        videoElement.src = firstSrc;
+        videoElement.controls = false;
+        videoElement.autoplay = true;
+        videoElement.muted = true;
+        videoElement.controlsList = 'nodownload';
+
+        const imgElement = cardElement.querySelector('img');
+        imgElement.parentNode.replaceChild(videoElement, imgElement);
+
+        videoElements.set(cardElement, videoElement);
+
+        videoElement.addEventListener('loadedmetadata', () => {
+          setTimeout(() => {
+            videoElement.pause();
+          }, 60000);
+        });
+
+        videoElement.addEventListener('mouseover', () => {
+          videoElement.play();
+        });
+
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  const cardElements = document.querySelectorAll('.divCardUltimosEpsHome');
+  cardElements.forEach((cardElement) => {
+    cardElement.addEventListener('mouseover', loadVideoOnHover);
+    cardElement.addEventListener('mouseleave', cancelLoadVideo);
+  });
+}
 
 })();
 
