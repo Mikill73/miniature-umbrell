@@ -9,6 +9,72 @@
 // @grant        none 
 // ==/UserScript==
 
+//botão de baixar todos os eps
+(function() {
+    'use strict';
+
+let h2Element = document.querySelector('.tEp.py-3.mb-0');
+let button = document.createElement('button');
+button.textContent = 'Baixar todos os episódios';
+button.style.marginLeft = '10px';
+button.classList.add('mr-1', 'spanAnimeInfo', 'spanGeneros', 'spanGenerosLink');
+button.style.backgroundColor = 'transparent';
+button.style.color = 'white';
+button.style.border = 'none';
+button.style.textShadow = '0 0 2px #FF4500, 0 0 5px #FF4500, 0 0 10px #FF4500, 0 0 15px #FF4500, 0 0 20px #FF4500, 0 0 25px #FF4500';
+h2Element.appendChild(button);
+
+button.addEventListener('click', async function() {
+  let qualityMap = { 1: 'sd', 2: 'hd', 3: 'fhd' };
+  let quality = await getQuality(qualityMap);
+
+  if (quality === null) return;
+  let qualityStr = qualityMap[quality];
+
+  let episodeLinks = document.querySelectorAll('.lEp.epT.divNumEp');
+
+  for (let i = 0; i < episodeLinks.length; i++) {
+    let link = episodeLinks[i];
+    let downloadUrl = link.href.replace('/animes/', '/download/');
+    try {
+      let response = await fetch(downloadUrl);
+      let text = await response.text();
+      let parser = new DOMParser();
+      let doc = parser.parseFromString(text, 'text/html');
+      let downloadLink = doc.querySelector(`a[href*="${qualityStr}"]`);
+      
+      if (!downloadLink) {
+        let availableQualities = Array.from(doc.querySelectorAll('a[href*="sd"], a[href*="hd"], a[href*="fhd"]'))
+          .map(a => a.href.includes('sd') ? '1 - SD' : a.href.includes('hd') ? '2 - HD' : '3 - FULLHD');
+        
+        alert(`A opção de qualidade "${qualityMap[quality]}" não está disponível. Escolha entre:\n${availableQualities.join('\n')}`);
+        quality = await getQuality(qualityMap, availableQualities.map(q => parseInt(q.charAt(0))));
+        if (quality === null) return;
+        qualityStr = qualityMap[quality];
+        i--;
+        continue;
+      }
+
+      window.location.href = downloadLink.href;
+    } catch (error) {
+      console.error(error);
+    }
+    await new Promise(resolve => setTimeout(resolve, 4000));
+  }
+});
+
+async function getQuality(qualityMap, availableQualities = [1, 2, 3]) {
+  let quality;
+  do {
+    quality = prompt(`Escolha uma qualidade:\n${availableQualities.map(q => `${q} - ${qualityMap[q]}`).join('\n')}`);
+    if (quality === null) return null;
+    quality = parseInt(quality);
+  } while (!availableQualities.includes(quality));
+  return quality;
+}
+
+})();
+
 (function() {
     'use strict';
 
