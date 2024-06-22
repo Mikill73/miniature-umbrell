@@ -3438,103 +3438,51 @@ setInterval(checkProfile, 10000);
 (function() {
     'use strict';
 
-let blockedCommentsCount = 0;
+    function blockComments() {
+        let blockedCommentsCount = 0;
 
-setInterval(() => {
-    const blockedProfiles = JSON.parse(localStorage.getItem("block")) || [];
-    const replyDivs = document.querySelectorAll(".cmt_reply_div");
-    const commentDivs = document.querySelectorAll(".cmt.d-flex.mb-3");
+        setInterval(() => {
+            const settings = JSON.parse(localStorage.getItem("configuracoes")) || {};
+            if (settings["Block global comentários"] !== "Ligado") return;
 
-    replyDivs.forEach(div => {
-        const link = div.querySelector("a").href;
-        if (blockedProfiles.includes(link)) {
-            div.remove();
-            blockedCommentsCount++;
-        }
-    });
+            const blockedProfiles = JSON.parse(localStorage.getItem("block")) || [];
+            const replyDivs = document.querySelectorAll(".cmt_reply_div");
+            const commentDivs = document.querySelectorAll(".cmt.d-flex.mb-3");
 
-    commentDivs.forEach(div => {
-        const link = div.querySelector("a").href;
-        if (blockedProfiles.includes(link)) {
-            div.remove();
-            blockedCommentsCount++;
-        }
-    });
-
-    const cmtCountElement = document.querySelector("#cmt_count");
-    if (cmtCountElement) {
-        const blockedCommentsText = document.querySelector("#blocked_comments_text");
-        if (blockedCommentsText) {
-            blockedCommentsText.textContent = `${blockedCommentsCount} Comentários bloqueados pelo FireDeluxe`;
-        } else {
-            const blockedCommentsText = document.createElement("h6");
-            blockedCommentsText.id = "blocked_comments_text";
-            blockedCommentsText.className = "quicksand400 text-white";
-            blockedCommentsText.style.color = "red";
-            blockedCommentsText.textContent = `${blockedCommentsCount} comentários bloqueados pelo FireDeluxe`;
-            cmtCountElement.parentNode.appendChild(blockedCommentsText);
-        }
-    }
-}, 500);
-
-})();
-
-//bloqueador de perfis chat
-
-(function() {
-    'use strict';
-
-let verificarchat = document.query
-    function getBlockedLinksFromCookie() {
-        const cookieValue = document.cookie
-            .split('; ')
-            .find(row => row.startsWith('block='))
-            .split('=')[1];
-
-        if (cookieValue) {
-            return cookieValue.split(' ');
-        } else {
-            return [];
-        }
-    }
-
-    function blockMessages() {
-        const prmtCookie = document.cookie
-            .split('; ')
-            .find(row => row.startsWith('prmt='));
-
-        if (!prmtCookie) {
-            return;
-        }
-
-        const blockedLinks = getBlockedLinksFromCookie();
-
-        const chatMessages = document.querySelectorAll('.divMSGs');
-
-        chatMessages.forEach(message => {
-            const profileUrlInput = message.querySelector('input[name="profile_url"]');
-            const userLink = profileUrlInput.value;
-            const userName = message.querySelector('.linkPerfilPC');
-            const userImage = message.querySelector('.imgChat');
-            const messageText = message.querySelector('.h6Msg');
-
-            if (blockedLinks.includes(userLink)) {
-                if (userImage) {
-                    userImage.parentNode.removeChild(userImage);
+            replyDivs.forEach(div => {
+                const link = div.querySelector("a").href;
+                if (blockedProfiles.includes(link)) {
+                    div.remove();
+                    blockedCommentsCount++;
                 }
+            });
 
-                userName.textContent = 'Perfil Bloqueado';
-                userName.style.color = 'red';
+            commentDivs.forEach(div => {
+                const link = div.querySelector("a").href;
+                if (blockedProfiles.includes(link)) {
+                    div.remove();
+                    blockedCommentsCount++;
+                }
+            });
 
-                messageText.innerHTML = '<span class="spanPChatH ml-2" style="color: red;">Mensagem Bloqueada, esse perfil está bloqueado no fire deluxe por ter feito algo errado no site!</span>';
+            const cmtCountElement = document.querySelector("#cmt_count");
+            if (cmtCountElement) {
+                const blockedCommentsText = document.querySelector("#blocked_comments_text");
+                if (blockedCommentsText) {
+                    blockedCommentsText.textContent = `${blockedCommentsCount} Comentários bloqueados pelo FireDeluxe`;
+                } else {
+                    const blockedCommentsText = document.createElement("h6");
+                    blockedCommentsText.id = "blocked_comments_text";
+                    blockedCommentsText.className = "quicksand400 text-white";
+                    blockedCommentsText.style.color = "red";
+                    blockedCommentsText.textContent = `${blockedCommentsCount} Comentários bloqueados pelo FireDeluxe`;
+                    cmtCountElement.parentNode.appendChild(blockedCommentsText);
+                }
             }
-        });
+        }, 500);
     }
 
-    blockMessages();
-
-    setInterval(blockMessages, 500);
-
+    blockComments();
 })();
 
 //shorcut icon
