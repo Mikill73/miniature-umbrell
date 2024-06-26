@@ -1447,7 +1447,7 @@ function adicionarBotaoPularIntro() {
         var botaoPularIntro = document.createElement('button');
         botaoPularIntro.id = 'botaoPularIntro';
         botaoPularIntro.className = 'vjs-control vjs-button'; 
-        botaoPularIntro.innerText = 'Pular Intro';
+        botaoPularIntro.innerText = 'Pular Abertura (Deluxe)';
         botaoPularIntro.style.zIndex = '1';
         botaoPularIntro.style.fontSize = 'larger';
         botaoPularIntro.addEventListener('click', function() {
