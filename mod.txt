@@ -447,7 +447,7 @@ setInterval(changeTextShadowColor, 250);
 (function() {
     'use strict';
 
-fetch('https://raw.githubusercontent.com/Mikill73/AnimeFireMod/main/Mod/Lista%20Bloqueados.txt')
+fetch('https://raw.githubusercontent.com/Mikill73/FireDeluxe/main/Mod/Lista%20Bloqueados.txt')
   .then(response => response.text())
   .then(data => {
     const blockedProfiles = data.split(' ').filter(profile => profile.trim() !== '');
@@ -2445,7 +2445,7 @@ if (configuracoes && configuracoes["Site com fundo personalizado"] === "Ligado" 
 (function() {
   'use strict';
 
-fetch('https://raw.githubusercontent.com/Mikill73/AnimeFireMod/main/Mod/Aprovados.txt')
+fetch('https://raw.githubusercontent.com/Mikill73/FireDeluxe/main/Mod/Aprovados.txt')
   .then(response => response.text())
   .then(data => {
     const approvedProfiles = data.split(' ').filter(profile => profile.trim() !== '');
@@ -3167,12 +3167,12 @@ obterEmailEsenha();
 }
 
   function handleClicksiteAcesso() {
-    window.open('https://mikill73.github.io/AnimeFireMod/', '_blank');
+    window.open('https://mikill73.github.io/FireDeluxe/', '_blank');
 
   }
 
   function handleClickanimeAleatorio() {
-   fetch('https://raw.githubusercontent.com/Mikill73/AnimeFireMod/main/Mod/AnimeAleatorio.txt')
+   fetch('https://raw.githubusercontent.com/Mikill73/FireDeluxe/main/Mod/AnimeAleatorio.txt')
   .then(response => response.text())
   .then(data => {
     const links = data.trim().split(' ');
