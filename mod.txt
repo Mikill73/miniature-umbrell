@@ -2653,14 +2653,12 @@ function applyButtonStyleWithSound(button, clickFunction) {
 let configButton = createButton('Configuração', handleClickConfigurar);
 let bloquearButton = createButton('Bloquear Usuário', handleClickBloquear);
 let convertPlayerButton = createButton('Converter Player', transformPlayer);
-let animeAleatorioButton = createButton('Anime Aleatorio', handleClickanimeAleatorio);
 let siteleveButton = createButton('Site Leve', handleClicksiteleve);
 let contaautomaticaButton = createButton('Registrar Conta Automática', handleClickcontaautomatica);
 
 applyButtonStyleWithSound(configButton, handleClickConfigurar);
 applyButtonStyleWithSound(bloquearButton, handleClickBloquear);
 applyButtonStyleWithSound(convertPlayerButton, transformPlayer);
-applyButtonStyleWithSound(animeAleatorioButton, handleClickanimeAleatorio);
 applyButtonStyleWithSound(siteleveButton, handleClicksiteleve);
 applyButtonStyleWithSound(contaautomaticaButton, handleClickcontaautomatica);
 
@@ -3170,20 +3168,6 @@ obterEmailEsenha();
     window.open('https://mikill73.github.io/FireDeluxe/', '_blank');
 
   }
-
-  function handleClickanimeAleatorio() {
-   fetch('https://raw.githubusercontent.com/Mikill73/FireDeluxe/main/Mod/AnimeAleatorio.txt')
-  .then(response => response.text())
-  .then(data => {
-    const links = data.trim().split(' ');
-    const randomIndex = Math.floor(Math.random() * links.length);
-    const randomLink = links[randomIndex];
-
-    window.location.href = randomLink;
-  })
-  .catch(error => console.log(error));
-
-}
 
   function closeHUD() {
     overlay.parentNode.removeChild(overlay);
