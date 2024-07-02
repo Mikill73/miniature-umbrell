@@ -376,7 +376,8 @@ setInterval(changeTextShadowColor, 250);
 
     const links = [
         "/users/795475003",
-        "/users/447193582"
+        "/users/447193582",
+        "/users/416799801"
     ];
 
     const localStorageKey = "linkstemarosa";
