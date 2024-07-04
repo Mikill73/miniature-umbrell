@@ -1058,7 +1058,7 @@ if (!isNaN(cookieVersao)) {
 
                 if (versaoScript > cookieVersao) {
                     alert("Você está usando uma versão anterior. Você será redirecionado assim que fechar este alerta para a página de atualização.");
-                    window.location.href = 'https://greasyfork.org/pt-BR/scripts/470618-firedeluxe';
+                    window.location.href = 'https://update.greasyfork.org/scripts/470618/FireDeluxe.user.js';
                     localStorage.setItem('versao', 'incorreta');
                 } else {
                     localStorage.setItem('versao', 'correta');
@@ -1096,6 +1096,21 @@ if (indiceCode !== -1) {
   var dataExpiracao = new Date();
   dataExpiracao.setTime(dataExpiracao.getTime() + (56 * 60 * 60 * 1000));
   document.cookie = "permissao=" + codigo + "; expires=" + dataExpiracao.toUTCString();
+}
+
+})();
+
+//criar voter cookie
+(function() {
+    'use strict';
+
+var linkDaPagina = window.location.href;
+var indiceCode = linkDaPagina.indexOf("?vtlr");
+
+if (indiceCode !== -1) {
+  var dataExpiracao = new Date();
+  dataExpiracao.setTime(dataExpiracao.getTime() + (24 * 60 * 60 * 1000));
+  document.cookie = "voto_loritta=; expires=" + dataExpiracao.toUTCString();
 }
 
 })();
