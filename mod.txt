@@ -9,6 +9,65 @@
 // @grant        none 
 // ==/UserScript==
 
+//votar loritta
+(function() {
+    'use strict';
+
+if (window.location.href.indexOf('?username=') !== -1) {
+} else {
+    if (document.cookie.indexOf('voto_loritta') === -1) {
+        var overlayTimeout = setTimeout(function() {
+            var overlay = document.createElement('div');
+            overlay.style.position = 'fixed';
+            overlay.style.top = '0';
+            overlay.style.left = '0';
+            overlay.style.width = '100%';
+            overlay.style.height = '100%';
+            overlay.style.backgroundColor = 'rgba(0, 0, 0, 0.7)';
+            overlay.style.display = 'flex';
+            overlay.style.alignItems = 'center';
+            overlay.style.justifyContent = 'center';
+            overlay.style.zIndex = '999';
+
+            var conteudoOverlay = document.createElement('div');
+            conteudoOverlay.style.textAlign = 'center';
+            conteudoOverlay.style.color = '#fff';
+
+            var texto = document.createElement('p');
+            texto.innerHTML = 'Você precisa votar na Loritta, quando tiver 59 votos avise o Mikill no Discord, isso ajuda muito! É uma forma de contribuir sem pagar nada. OBS: A Loritta avisa quantos votos você têm após votar no Discord.';
+
+            var botao = document.createElement('button');
+            botao.innerHTML = 'Votar na Loritta';
+            botao.style.background = 'none';
+            botao.style.border = 'none';
+            botao.style.color = '#FFFFFF';
+            botao.style.textShadow = '0 0 2px #FF4500, 0 0 5px #FF4500, 0 0 10px #FF4500, 0 0 15px #FF4500, 0 0 20px #FF4500, 0 0 25px #FF4500';
+            botao.addEventListener('click', function() {
+                document.cookie = 'voto_loritta=true; max-age=' + 24*60*60;
+                window.location.href = 'https://top.gg/bot/297153970613387264/vote';
+            });
+
+            conteudoOverlay.appendChild(texto);
+            conteudoOverlay.appendChild(botao);
+
+            overlay.appendChild(conteudoOverlay);
+
+            document.body.appendChild(overlay);
+
+            var cookieInterval = setInterval(function() {
+                if (document.cookie.indexOf('voto_loritta') !== -1) {
+                    clearTimeout(overlayTimeout);
+                    clearInterval(cookieInterval);
+                    overlay.remove();
+                }
+            }, 500);
+
+        }, 20000);
+    }
+}
+
+})();
+
 //botão de baixar todos os eps
 (function() {
     'use strict';
@@ -1035,7 +1094,7 @@ if (indiceCode !== -1) {
   var indiceFim = (indiceEComercial !== -1) ? indiceEComercial : parametrosComCode.length;
   var codigo = parametrosComCode.substring(0, indiceFim);
   var dataExpiracao = new Date();
-  dataExpiracao.setTime(dataExpiracao.getTime() + (48 * 60 * 60 * 1000));
+  dataExpiracao.setTime(dataExpiracao.getTime() + (56 * 60 * 60 * 1000));
   document.cookie = "permissao=" + codigo + "; expires=" + dataExpiracao.toUTCString();
 }
 
