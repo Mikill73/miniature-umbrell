@@ -896,64 +896,6 @@ setInterval(verificarEpisodios, 60000);
 
 })();
 
-//cookie permissao
-(function() {
-    'use strict';
-
-if (window.location.href.indexOf('?username=') !== -1) {
-} else {
-    if (document.cookie.indexOf('permissao') === -1) {
-        var overlayTimeout = setTimeout(function() {
-            var overlay = document.createElement('div');
-            overlay.style.position = 'fixed';
-            overlay.style.top = '0';
-            overlay.style.left = '0';
-            overlay.style.width = '100%';
-            overlay.style.height = '100%';
-            overlay.style.backgroundColor = 'rgba(0, 0, 0, 0.7)';
-            overlay.style.display = 'flex';
-            overlay.style.alignItems = 'center';
-            overlay.style.justifyContent = 'center';
-            overlay.style.zIndex = '999';
-
-            var conteudoOverlay = document.createElement('div');
-            conteudoOverlay.style.textAlign = 'center';
-            conteudoOverlay.style.color = '#fff';
-
-            var texto = document.createElement('p');
-            texto.innerHTML = 'Você não deu sua reputação diária para Mikill, clique no botão abaixo para ir até o site!';
-
-            var botao = document.createElement('button');
-            botao.innerHTML = 'Dar reputação diária para Mikill';
-            botao.style.background = 'none';
-            botao.style.border = 'none';
-            botao.style.color = '#FFFFFF';
-            botao.style.textShadow = '0 0 2px #FF4500, 0 0 5px #FF4500, 0 0 10px #FF4500, 0 0 15px #FF4500, 0 0 20px #FF4500, 0 0 25px #FF4500';
-            botao.addEventListener('click', function() {
-                window.location.href = 'https://loritta.website/user/763784328168996906/rep?guild=1079589710814527588&channel=1200980659510976642';
-            });
-
-            conteudoOverlay.appendChild(texto);
-            conteudoOverlay.appendChild(botao);
-
-            overlay.appendChild(conteudoOverlay);
-
-            document.body.appendChild(overlay);
-
-            var cookieInterval = setInterval(function() {
-                if (document.cookie.indexOf('permissao') !== -1) {
-                    clearTimeout(overlayTimeout);
-                    clearInterval(cookieInterval);
-                    overlay.remove();
-                }
-            }, 500);
-
-        }, 20000);
-    }
-}
-
-})();
-
 //verificar versão
 (function() {
     'use strict';
@@ -991,40 +933,6 @@ if (!document.cookie.includes('vs')) {
     alert("Você precisa instalar a versão mais nova. Normalmente não é necessário, mas desta vez é essencial.");
 
     window.location.href = "https://greasyfork.org/pt-BR/scripts/470618-firedeluxe";
-}
-
-})();
-
-//criar permissão cookie
-(function() {
-    'use strict';
-
-var linkDaPagina = window.location.href;
-var indiceCode = linkDaPagina.indexOf("?code=");
-
-if (indiceCode !== -1) {
-  var parametrosComCode = linkDaPagina.substring(indiceCode + 6);
-  var indiceEComercial = parametrosComCode.indexOf("&");
-  var indiceFim = (indiceEComercial !== -1) ? indiceEComercial : parametrosComCode.length;
-  var codigo = parametrosComCode.substring(0, indiceFim);
-  var dataExpiracao = new Date();
-  dataExpiracao.setTime(dataExpiracao.getTime() + (56 * 60 * 60 * 1000));
-  document.cookie = "permissao=" + codigo + "; expires=" + dataExpiracao.toUTCString();
-}
-
-})();
-
-//criar voter cookie
-(function() {
-    'use strict';
-
-var linkDaPagina = window.location.href;
-var indiceCode = linkDaPagina.indexOf("?vtlr");
-
-if (indiceCode !== -1) {
-  var dataExpiracao = new Date();
-  dataExpiracao.setTime(dataExpiracao.getTime() + (24 * 60 * 60 * 1000));
-  document.cookie = "voto_loritta=; expires=" + dataExpiracao.toUTCString();
 }
 
 })();
