@@ -9,6 +9,61 @@
 // @grant        none 
 // ==/UserScript==
 
+//colocar em tela cheia se estiver habilitado a opção automática
+(function() {
+    'use strict';
+
+function getCookie(name) {
+    var value = "; " + document.cookie;
+    var parts = value.split("; " + name + "=");
+    if (parts.length == 2) return parts.pop().split(";").shift();
+}
+
+var cookieValue = getCookie("autotelacheia");
+if (cookieValue) {
+    var fullscreenButton = document.querySelector(".vjs-fullscreen-control");
+    if (fullscreenButton) {
+        fullscreenButton.click();
+    }
+}
+
+})();
+
+//elemento botão tela cheia automática
+(function() {
+    'use strict';
+
+var existingButton = document.querySelector("#video-menu-1 .p-3.d-flex");
+if (existingButton) {
+    var newButton = existingButton.cloneNode(true);
+    newButton.querySelector("div").textContent = "Tela cheia automática";
+    var newToggle = newButton.querySelector("input");
+    newToggle.checked = false;
+
+    var newButtonWrapper = document.createElement("div");
+    newButtonWrapper.style.display = "flex";
+    newButtonWrapper.style.flexDirection = "column";
+    newButtonWrapper.appendChild(newButton);
+
+    var videoMenu = document.getElementById("video-menu-1");
+    if (videoMenu) {
+        videoMenu.insertAdjacentElement('afterbegin', newButtonWrapper);
+    }
+
+    newButton.querySelector("div").addEventListener("click", function() {
+        newToggle.checked = !newToggle.checked;
+        var date = new Date();
+        if (newToggle.checked) {
+            date.setTime(date.getTime() + (30 * 24 * 60 * 60 * 1000));
+            document.cookie = "autotelacheia=1; expires=" + date.toUTCString() + "; path=/";
+        } else {
+            document.cookie = "autotelacheia=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
+        }
+    });
+}
+
+})();
+
 //botão de baixar todos os eps
 (function() {
     'use strict';
