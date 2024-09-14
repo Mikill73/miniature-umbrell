@@ -77,10 +77,12 @@ if (existingButton) {
 
 function checkAutoplayToggle() {
     var checkbox = document.getElementById('autoplay-toggle');
-    var cookieExists = document.cookie.split(';').some(function(cookie) {
-        return cookie.trim().startsWith('autotelacheia=');
-    });
-    checkbox.checked = cookieExists;
+    if (checkbox) {
+        var cookieExists = document.cookie.split(';').some(function(cookie) {
+            return cookie.trim().startsWith('autotelacheia=');
+        });
+        checkbox.checked = cookieExists;
+    }
 }
 
 checkAutoplayToggle();
