@@ -21,7 +21,8 @@ function getCookie(name) {
 
 function checkFullScreenCookie() {
     var cookieValue = getCookie("autotelacheia");
-    if (cookieValue) {
+
+    if (cookieValue && !document.getElementById("fullscreen-marker")) {
         var videoPlayer = document.getElementById("my-video");
         if (videoPlayer) {
             if (videoPlayer.requestFullscreen) {
@@ -33,6 +34,11 @@ function checkFullScreenCookie() {
             } else if (videoPlayer.msRequestFullscreen) {
                 videoPlayer.msRequestFullscreen();
             }
+
+            var marker = document.createElement("div");
+            marker.id = "fullscreen-marker";
+            marker.style.display = "none"; // 
+            document.body.appendChild(marker); 
         }
     }
 }
