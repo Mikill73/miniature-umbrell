@@ -19,21 +19,27 @@ function getCookie(name) {
     if (parts.length == 2) return parts.pop().split(";").shift();
 }
 
-var cookieValue = getCookie("autotelacheia");
-if (cookieValue) {
-    var videoPlayer = document.getElementById("my-video");
-    if (videoPlayer) {
-        if (videoPlayer.requestFullscreen) {
-            videoPlayer.requestFullscreen();
-        } else if (videoPlayer.mozRequestFullScreen) {
-            videoPlayer.mozRequestFullScreen();
-        } else if (videoPlayer.webkitRequestFullscreen) {
-            videoPlayer.webkitRequestFullscreen();
-        } else if (videoPlayer.msRequestFullscreen) {
-            videoPlayer.msRequestFullscreen();
+var isFullScreen = 0;
+
+setInterval(function() {
+    var cookieValue = getCookie("autotelacheia");
+    if (cookieValue && isFullScreen === 0) {
+        var videoPlayer = document.getElementById("my-video");
+        if (videoPlayer) {
+            if (videoPlayer.requestFullscreen) {
+                videoPlayer.requestFullscreen();
+            } else if (videoPlayer.mozRequestFullScreen) {
+                videoPlayer.mozRequestFullScreen();
+            } else if (videoPlayer.webkitRequestFullscreen) {
+                videoPlayer.webkitRequestFullscreen();
+            } else if (videoPlayer.msRequestFullscreen) {
+                videoPlayer.msRequestFullscreen();
+            }
+
+            isFullScreen = 1;
         }
     }
-}
+}, 2000);
 
 })();
 
