@@ -19,35 +19,25 @@ function getCookie(name) {
     if (parts.length == 2) return parts.pop().split(";").shift();
 }
 
-function isFullScreen() {
-    return document.fullscreenElement || document.mozFullScreenElement || document.webkitFullscreenElement || document.msFullscreenElement;
-}
-
-var hasEnteredFullScreen = false;
-var cookieValue = getCookie("autotelacheia");
-
-if (cookieValue && !hasEnteredFullScreen) {
-    var intervalId = setInterval(function() {
-        if (!isFullScreen()) {
-            var videoPlayer = document.getElementById("my-video");
-            if (videoPlayer) {
-                if (videoPlayer.requestFullscreen) {
-                    videoPlayer.requestFullscreen();
-                } else if (videoPlayer.mozRequestFullScreen) {
-                    videoPlayer.mozRequestFullScreen();
-                } else if (videoPlayer.webkitRequestFullscreen) {
-                    videoPlayer.webkitRequestFullscreen();
-                } else if (videoPlayer.msRequestFullscreen) {
-                    videoPlayer.msRequestFullscreen();
-                }
-                hasEnteredFullScreen = true;
-                clearInterval(intervalId); 
+function checkFullScreenCookie() {
+    var cookieValue = getCookie("autotelacheia");
+    if (cookieValue) {
+        var videoPlayer = document.getElementById("my-video");
+        if (videoPlayer) {
+            if (videoPlayer.requestFullscreen) {
+                videoPlayer.requestFullscreen();
+            } else if (videoPlayer.mozRequestFullScreen) {
+                videoPlayer.mozRequestFullScreen();
+            } else if (videoPlayer.webkitRequestFullscreen) {
+                videoPlayer.webkitRequestFullscreen();
+            } else if (videoPlayer.msRequestFullscreen) {
+                videoPlayer.msRequestFullscreen();
             }
-        } else {
-            clearInterval(intervalId);
         }
-    }, 2000);
+    }
 }
+
+setInterval(checkFullScreenCookie, 2000);
 
 })();
 
