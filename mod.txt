@@ -25,11 +25,11 @@ if (cookieValue) {
     if (videoPlayer) {
         if (videoPlayer.requestFullscreen) {
             videoPlayer.requestFullscreen();
-        } else if (videoPlayer.mozRequestFullScreen) { // Firefox
+        } else if (videoPlayer.mozRequestFullScreen) {
             videoPlayer.mozRequestFullScreen();
-        } else if (videoPlayer.webkitRequestFullscreen) { // Chrome, Safari and Opera
+        } else if (videoPlayer.webkitRequestFullscreen) {
             videoPlayer.webkitRequestFullscreen();
-        } else if (videoPlayer.msRequestFullscreen) { // IE/Edge
+        } else if (videoPlayer.msRequestFullscreen) {
             videoPlayer.msRequestFullscreen();
         }
     }
