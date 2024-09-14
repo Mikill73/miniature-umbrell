@@ -19,7 +19,7 @@ function getCookie(name) {
     if (parts.length == 2) return parts.pop().split(";").shift();
 }
 
-function checkFullScreenCookie() {
+function activateFullScreen() {
     var cookieValue = getCookie("autotelacheia");
 
     if (cookieValue && !document.getElementById("fullscreen-marker")) {
@@ -37,13 +37,15 @@ function checkFullScreenCookie() {
 
             var marker = document.createElement("div");
             marker.id = "fullscreen-marker";
-            marker.style.display = "none"; // 
-            document.body.appendChild(marker); 
+            marker.style.display = "none";
+            document.body.appendChild(marker);
         }
     }
 }
 
-setInterval(checkFullScreenCookie, 2000);
+window.addEventListener('load', function() {
+    setTimeout(activateFullScreen, 6000);
+});
 
 })();
 
