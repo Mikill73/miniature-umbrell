@@ -58,13 +58,14 @@ if (cookieValue && !hasEnteredFullScreen) {
 var existingButton = document.querySelector("#video-menu-1 .p-3.d-flex");
 if (existingButton) {
     var newButton = existingButton.cloneNode(true);
-    newButton.querySelector("div").textContent = "Tela cheia Automática";
+    newButton.querySelector("div").textContent = "Tela Cheia Automático";
     var newToggle = newButton.querySelector("input");
     newToggle.checked = false;
 
     var newButtonWrapper = document.createElement("div");
     newButtonWrapper.style.display = "flex";
     newButtonWrapper.style.flexDirection = "column";
+    newButtonWrapper.style.cursor = "pointer";
     newButtonWrapper.appendChild(newButton);
 
     var videoMenu = document.getElementById("video-menu-1");
@@ -72,7 +73,7 @@ if (existingButton) {
         videoMenu.insertAdjacentElement('afterbegin', newButtonWrapper);
     }
 
-    newButton.querySelector("div").addEventListener("click", function() {
+    newButton.addEventListener("click", function() {
         var date = new Date();
         newToggle.checked = !newToggle.checked;
         if (newToggle.checked) {
