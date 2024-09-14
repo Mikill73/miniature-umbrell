@@ -3328,7 +3328,7 @@ setInterval(checkProfile, 10000);
   'use strict';
 
 const nomesCores = {
-  "https://animefire.plus/users/795475003": "magenta",
+  "https://animefire.plus/users/988233449": "magenta",
   "https://animefire.plus/users/318073853": "vermelho",
   "https://animefire.plus/users/343684740": "rosa",
   "https://animefire.plus/users/321839405": "roxo",
