@@ -44,7 +44,7 @@ function activateFullScreen() {
 }
 
 window.addEventListener('load', function() {
-    setTimeout(activateFullScreen, 6000);
+    setTimeout(activateFullScreen, 3000);
 });
 
 })();
