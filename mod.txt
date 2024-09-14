@@ -9,6 +9,15 @@
 // @grant        none 
 // ==/UserScript==
 
+(function() {
+    'use strict';
+
+setTimeout(function() {
+    document.body.click();
+}, 3000);
+
+})();
+
 //colocar em tela cheia se estiver habilitado a opção automática
 (function() {
     'use strict';
@@ -38,13 +47,13 @@ function activateFullScreen() {
             var marker = document.createElement("div");
             marker.id = "fullscreen-marker";
             marker.style.display = "none";
-            document.body.appendChild(marker);
+            document.body.appendChild(marker); 
         }
     }
 }
 
-window.addEventListener('load', function() {
-    setTimeout(activateFullScreen, 3000);
+document.addEventListener('click', function() {
+    activateFullScreen();
 });
 
 })();
