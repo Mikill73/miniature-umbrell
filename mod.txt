@@ -591,13 +591,13 @@ if (window.location.href === "https://animefire.plus/?configuracao") {
 
     adicionarConfiguracaoUploadImagem("Imagem Fundo Site", "Imagem Fundo Site");
     adicionarConfiguracaoUploadImagem("Imagem Fundo Chat", "Imagem Fundo Chat");
+    adicionarConfiguracaoBolinha("Chat com fundo personalizado", ["Ligado", "Desligado"]);
+    adicionarConfiguracaoBolinha("Site com fundo personalizado", ["Ligado", "Desligado"]);
     adicionarConfiguracaoBolinha("Block global comentários", ["Ligado", "Desligado"]);
     adicionarConfiguracaoBolinha("Block global chat", ["Ligado", "Desligado"]);
     adicionarConfiguracaoBolinha("Prévia dos eps", ["Ligado", "Desligado"]);
-    adicionarConfiguracaoBolinha("Chat com fundo personalizado", ["Ligado", "Desligado"]);
     adicionarConfiguracaoBolinha("Marcar presença", ["Ligado", "Desligado"]);
     adicionarConfiguracaoTextarea("Texto marcar presença");
-    adicionarConfiguracaoBolinha("Site com fundo personalizado", ["Ligado", "Desligado"]);
     adicionarConfiguracaoBolinha("Tema", ["Clássico", "Azul", "Rosa"]);
     adicionarConfiguracaoBolinha("Site Arco Iris", ["Ligado", "Desligado"]);
 
