@@ -1976,21 +1976,6 @@ function checkMessages() {
 setInterval(checkMessages, 100);
 })();
 
-//sa porra inteira pra baixo tem a ver com o botão de emoji, site n ajudou mt
-(function() {
-  'use strict';
-function checkAndRemoveYouTubeLinks() {
-  const textArea = document.getElementById('textAreaPC');
-  if (textArea) {
-    const content = textArea.value;
-    const updatedContent = content.replace(/\[yt\].*?\[yt\]/g, '');
-    textArea.value = updatedContent;
-  }
-}
-
-setInterval(checkAndRemoveYouTubeLinks, 500);
-})();
-
 //(function() {
 //  'use strict';
 
