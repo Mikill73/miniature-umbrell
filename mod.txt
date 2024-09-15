@@ -3258,7 +3258,7 @@ function createOverlay() {
   var message = document.createElement('div');
   message.style.textAlign = 'center';
   message.style.padding = '20px';
-  message.innerHTML = 'Você não pode utilizar o FireDeluxe sem permissão';
+  message.innerHTML = 'Você não pode utilizar o FireDeluxe sem permissão, se seu pedido de acesso já foi aprovado verifique se você está logado na sua conta';
 
   overlay.appendChild(message);
   document.body.appendChild(overlay);
