@@ -1456,7 +1456,7 @@ if (window.location.href.includes('/animes/')) {
 (function() {
   'use strict'
 
-const xingamentos = ["fodase", "pica", "caralho", "merda", "porra", "puta", "foda", "cu", "buceta", "viado", "arrombado", "filho da puta", "cacete", "cuzão", "babaca", "retardado", "chupa", "chup", "pinto", "chup", "penis", "pênis", "desgraçado", "desgracado", "imbecil", "hentai", "porn", "pornografia", "discord", "corno", "x0t4", "xota", "xereca", "pau", "ku", "vsfd", "tmnc", "bct", "corno", "vadia", "fuder"];
+const xingamentos = ["fodase", "pica", "caralho", "merda", "porra", "puta", "foda", "buceta", "viado", "arrombado", "filho da puta", "cacete", "cuzão", "babaca", "retardado", "chupa", "chup", "pinto", "chup", "penis", "pênis", "desgraçado", "desgracado", "imbecil", "hentai", "porn", "pornografia", "discord", "corno", "x0t4", "xota", "xereca", "pau", "vsfd", "tmnc", "bct", "corno", "vadia", "fuder"];
 
 const alfabetoCustomizado = {
   'a': '𝖠',
