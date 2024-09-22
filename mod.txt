@@ -9,15 +9,6 @@
 // @grant        none 
 // ==/UserScript==
 
-(function() {
-    'use strict';
-
-setTimeout(function() {
-    document.body.click();
-}, 3000);
-
-})();
-
 //colocar em tela cheia se estiver habilitado a opção automática
 (function() {
     'use strict';
