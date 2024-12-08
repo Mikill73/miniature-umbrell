@@ -2412,8 +2412,6 @@ function checkMeuPerfil() {
 
   closeButton.addEventListener('click', function() {
   closeHUD()
-  const audio = new Audio("https://soundbible.com/mp3/Tiny%20Button%20Push-SoundBible.com-513260752.mp3");
-  audio.play();
   });
 
 let buttonContainer = document.createElement('div');
@@ -2452,8 +2450,6 @@ document.body.appendChild(buttonContainer);
 
 function audiobotao(button) {
   button.addEventListener('click', function() {
-    const audio = new Audio("https://soundbible.com/mp3/Tiny%20Button%20Push-SoundBible.com-513260752.mp3");
-    audio.play();
   });
 }
 
@@ -3064,8 +3060,6 @@ if (!menuButton) {
 
 menuButton.addEventListener('click', function() {
   switchOverlay();
-  const audio = new Audio("https://soundbible.com/mp3/Tiny%20Button%20Push-SoundBible.com-513260752.mp3");
-  audio.play();
   });
 
   document.body.appendChild(menuButton);
