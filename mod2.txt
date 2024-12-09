@@ -22,14 +22,6 @@ class Botao {
         this.elemento.id = id;
         this.elemento.innerText = texto;
         this.elemento.addEventListener('click', funcao);
-        this.estiloPadrao();
-
-        if (destino) {
-            destino.appendChild(this.elemento);
-        }
-    }
-
-    estiloPadrao() {
         this.elemento.style.color = 'orange';
         this.elemento.style.backgroundColor = 'transparent';
         this.elemento.style.borderColor = 'orange';
@@ -37,10 +29,10 @@ class Botao {
         this.elemento.style.padding = '10px 5px';
         this.elemento.style.width = '200px';
         this.elemento.style.marginTop = '10px';
-    }
 
-    obterElemento() {
-        return this.elemento;
+        if (destino) {
+            destino.appendChild(this.elemento);
+        }
     }
 }
 
