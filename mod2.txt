@@ -9,7 +9,50 @@
 // @grant        none 
 // ==/UserScript==
 
-// BOTÃO>>MENU ----------------------------------
+(function() {
+    'use strict';
+
+// BIBLIOTECA --------------------------------------------------------------------
+
+const biblioteca = `
+
+class Botao {
+    constructor(id, texto, funcao, destino) {
+        this.elemento = document.createElement('button');
+        this.elemento.id = id;
+        this.elemento.innerText = texto;
+        this.elemento.addEventListener('click', funcao);
+        this.estiloPadrao();
+
+        if (destino) {
+            destino.appendChild(this.elemento);
+        }
+    }
+
+    estiloPadrao() {
+        this.elemento.style.color = 'orange';
+        this.elemento.style.backgroundColor = 'transparent';
+        this.elemento.style.borderColor = 'orange';
+        this.elemento.style.fontSize = '25px';
+        this.elemento.style.padding = '10px 5px';
+        this.elemento.style.width = '200px';
+        this.elemento.style.marginTop = '10px';
+    }
+
+    obterElemento() {
+        return this.elemento;
+    }
+}
+
+`;
+
+const script = document.createElement('script');
+script.textContent = biblioteca;
+document.head.appendChild(script);
+
+})();
+
+// BOTÃO>>MENU --------------------------------------------------------------------
 
 const menuBotao = document.createElement('button')
     menuBotao.id = 'firedeluxe_neon_menuButton'
@@ -27,7 +70,7 @@ const menuBotao = document.createElement('button')
     menuBotao.onclick
     menuBotao.addEventListener('click', criarOverlay);
 
-// FECHAR>>OVERLAY>>MENU ----------------------------------
+// FECHAR>>OVERLAY>>MENU --------------------------------------------------------------------
 
 var menu_fecharBotao = document.createElement('button');
     menu_fecharBotao.innerHTML = 'X';
@@ -61,7 +104,7 @@ function fechar_menu_overlay() {
     
 }
 
-// OVERLAY>>MENU ----------------------------------
+// OVERLAY>>MENU --------------------------------------------------------------------
 
 function criarOverlay () {
 
@@ -79,7 +122,7 @@ function criarOverlay () {
     overlay.style.alignItems = 'center';
     overlay.style.zIndex = '9999';
 
-// BOTÕES>>OVERLAY>>MENU ----------------------------------
+// BOTÕES>>OVERLAY>>MENU --------------------------------------------------------------------
 
 function menuBotao(id, texto, funcao) {
     
@@ -99,21 +142,20 @@ const botao = document.createElement('button');
     overlay.appendChild(botao);   
 }
 
-menuBotao('menu_Configuracao', 'Configurações', menu_Configuracoes);
-menuBotao('menu_Bloquear', 'Bloquear Usuários', menu_Bloquear_Usuarios);
+const botaoConfiguracoes = new Botao('menu_Configuracao', 'Configurações', menu_Configuracoes, overlay);
+const botaoBloquear = new Botao('menu_Bloquear', 'Bloquear Usuários', menu_Bloquear_Usuarios, overlay);
 
     document.body.appendChild(overlay);
 }
 
 document.body.appendChild(menuBotao);
 
-// FUNÇÕES>>BOTÕES>>OVERLAY>>MENU ----------------------------------
+// FUNÇÕES>>BOTÕES>>OVERLAY>>MENU --------------------------------------------------------------------
 
 function menu_Configuracoes() {
 
     const menu_overlay = document.getElementById('overlay_menu');
     const configuracoes_overlay = document.createElement('div');
-    
     
     configuracoes_overlay.id = 'configuracoes_overlay_menu';
     configuracoes_overlay.style.position = 'fixed';
@@ -132,9 +174,28 @@ function menu_Configuracoes() {
     document.body.appendChild(configuracoes_overlay);
 
     menu_overlay.remove();
+
+    function configuracoes_Botao(id, texto, funcao) {
+
+    const opcoes_configuracoes = botao;
+        
+    }
+
+const config_ImagemSite = new Botao('imagemSite_Config', 'Plano de fundo da página', func_ImagemSite, configuracoes_overlay);
+const config_ImagemChat = new Botao('imagemchat_Config', 'Plano de fundo do chat', func_ImagemChat, configuracoes_overlay);
     
 }
 
 function menu_Bloquear_Usuarios() {
+    
+}
+
+// FUNÇÕES>>BOTÕES>>OVERLAY>>CONFIGURAÇÕES --------------------------------------------------------------------
+
+function func_ImagemSite() {
+    
+}
+
+function func_ImagemChat() {
     
 }
