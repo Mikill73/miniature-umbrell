@@ -44,11 +44,11 @@ class Btn_Fechar {
         this.menu_fecharBotao = document.createElement('button');
         this.menu_fecharBotao.innerHTML = 'X';
         this.menu_fecharBotao.style.position = 'absolute';
-        this.menu_fecharBotao.style.top = '10px';
-        this.menu_fecharBotao.style.right = '10px';
+        this.menu_fecharBotao.style.top = '0px';
+        this.menu_fecharBotao.style.right = '0px';
         this.menu_fecharBotao.style.width = '30px';
         this.menu_fecharBotao.style.height = '30px';
-        this.menu_fecharBotao.style.fontSize = '16px';
+        this.menu_fecharBotao.style.fontSize = '20px';
         this.menu_fecharBotao.style.fontWeight = 'bold';
         this.menu_fecharBotao.style.color = 'white';
         this.menu_fecharBotao.style.backgroundColor = 'red';
@@ -149,7 +149,7 @@ const config_ImagemSite = new Botao('imagemSite_Config', 'Plano de fundo da pág
 const config_ImagemChat = new Botao('imagemchat_Config', 'Plano de fundo do chat', func_ImagemChat, configuracoes_overlay);
 const config_BlockGlobalComms = new Botao('block_global_comms', 'Block global nos comentários', func_blockglobalcomms, configuracoes_overlay);
 const config_BlockGlobalChat = new Botao('block_global_chat', 'Block global no chat', func_blockglobalchat, configuracoes_overlay);
-const config_MarcarPresença = new Botao('marcar_presenca', 'MArcar presença nos comentários', func_marcarpresenca, configuracoes_overlay);
+const config_MarcarPresença = new Botao('marcar_presenca', 'Marcar presença nos comentários', func_marcarpresenca, configuracoes_overlay);
 
     
 }
