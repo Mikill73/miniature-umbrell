@@ -25,13 +25,41 @@ class Botao {
         this.elemento.style.color = 'orange';
         this.elemento.style.backgroundColor = 'transparent';
         this.elemento.style.borderColor = 'orange';
-        this.elemento.style.fontSize = '25px';
+        this.elemento.style.fontSize = '20px';
         this.elemento.style.padding = '10px 5px';
         this.elemento.style.width = '200px';
         this.elemento.style.marginTop = '10px';
 
         if (destino) {
             destino.appendChild(this.elemento);
+        }
+    }
+}
+
+class Btn_Fechar {
+    constructor(destino, local) {
+        this.destino = destino;
+        this.local = local;
+
+        this.menu_fecharBotao = document.createElement('button');
+        this.menu_fecharBotao.innerHTML = 'X';
+        this.menu_fecharBotao.style.position = 'absolute';
+        this.menu_fecharBotao.style.top = '10px';
+        this.menu_fecharBotao.style.right = '10px';
+        this.menu_fecharBotao.style.width = '30px';
+        this.menu_fecharBotao.style.height = '30px';
+        this.menu_fecharBotao.style.fontSize = '16px';
+        this.menu_fecharBotao.style.fontWeight = 'bold';
+        this.menu_fecharBotao.style.color = 'white';
+        this.menu_fecharBotao.style.backgroundColor = 'red';
+        this.menu_fecharBotao.addEventListener('click', () => this.fechar_menu_overlay());
+        this.destino.appendChild(this.menu_fecharBotao);
+    }
+
+    fechar_menu_overlay() {
+        const elementToClose = document.getElementById(this.local);
+        if (elementToClose) {
+            elementToClose.remove();
         }
     }
 }
@@ -62,40 +90,6 @@ const menuBotao = document.createElement('button')
     menuBotao.onclick
     menuBotao.addEventListener('click', criarOverlay);
 
-// FECHAR>>OVERLAY>>MENU --------------------------------------------------------------------
-
-var menu_fecharBotao = document.createElement('button');
-    menu_fecharBotao.innerHTML = 'X';
-    menu_fecharBotao.style.position = 'absolute';
-    menu_fecharBotao.style.top = '10px';
-    menu_fecharBotao.style.right = '10px';
-    menu_fecharBotao.style.width = '30px';
-    menu_fecharBotao.style.height = '30px';
-    menu_fecharBotao.style.fontSize = '16px';
-    menu_fecharBotao.style.fontWeight = 'bold';
-    menu_fecharBotao.style.color = 'white';
-    menu_fecharBotao.style.backgroundColor = 'red';
-    menu_fecharBotao.addEventListener('click', fechar_menu_overlay);
-
-function fechar_menu_overlay() {
-
-    const menu_overlay = document.getElementById('overlay_menu');
-    const overlay_configuracoes = document.getElementById('configuracoes_overlay_menu');
-
-    if (menu_overlay) {
-        
-    menu_overlay.remove();
-        
-    }
-
-    if (overlay_configuracoes) {
-        
-    overlay_configuracoes.remove();
-
-    }
-    
-}
-
 // OVERLAY>>MENU --------------------------------------------------------------------
 
 function criarOverlay () {
@@ -115,24 +109,7 @@ function criarOverlay () {
     overlay.style.zIndex = '9999';
 
 // BOTÕES>>OVERLAY>>MENU --------------------------------------------------------------------
-
-function menuBotao(id, texto, funcao) {
-    
-const botao = document.createElement('button');
-    botao.id = id;
-    botao.innerText = texto;
-    botao.addEventListener('click', funcao);
-    botao.style.color = 'orange';
-    botao.style.backgroundColor = 'transparent';
-    botao.style.borderColor = 'orange';
-    botao.style.fontSize = '25px';
-    botao.style.padding = '10px 5px';
-    botao.style.width = '200px';
-    botao.style.marginTop = '10px';
-    
-    overlay.appendChild(menu_fecharBotao);
-    overlay.appendChild(botao);   
-}
+const overlay_btnfechar = new Btn_Fechar(overlay, 'overlay_menu');   
 
 const botaoConfiguracoes = new Botao('menu_Configuracao', 'Configurações', menu_Configuracoes, overlay);
 const botaoBloquear = new Botao('menu_Bloquear', 'Bloquear Usuários', menu_Bloquear_Usuarios, overlay);
@@ -162,20 +139,17 @@ function menu_Configuracoes() {
     configuracoes_overlay.style.alignItems = 'center';
     configuracoes_overlay.style.zIndex = '9999';
 
-    configuracoes_overlay.appendChild(menu_fecharBotao);
+    const overlay_btnfechar = new Btn_Fechar(configuracoes_overlay, 'configuracoes_overlay_menu');
+
     document.body.appendChild(configuracoes_overlay);
 
     menu_overlay.remove();
 
-    function configuracoes_Botao(id, texto, funcao) {
-
-    const opcoes_configuracoes = botao;
-        
-    }
-
 const config_ImagemSite = new Botao('imagemSite_Config', 'Plano de fundo da página', func_ImagemSite, configuracoes_overlay);
 const config_ImagemChat = new Botao('imagemchat_Config', 'Plano de fundo do chat', func_ImagemChat, configuracoes_overlay);
 const config_BlockGlobalComms = new Botao('block_global_comms', 'Block global nos comentários', func_blockglobalcomms, configuracoes_overlay);
+const config_BlockGlobalChat = new Botao('block_global_chat', 'Block global no chat', func_blockglobalchat, configuracoes_overlay);
+const config_MarcarPresença = new Botao('marcar_presenca', 'MArcar presença nos comentários', func_marcarpresenca, configuracoes_overlay);
 
     
 }
