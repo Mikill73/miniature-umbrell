@@ -30,77 +30,31 @@ const menuBotao = document.createElement('button')
     menuBotao.style.padding = '10px 15px';
     menuBotao.style.top = '0px';
     menuBotao.style.textShadow = '';
+    menuBotao.onclick
+    menuBotao.addEventListener('click', criarOverlay);
 
-document.body.appendChild(menuBotao);
 
-// menuBotao_funcao
+function criarOverlay () {
 
-  menuBotao.addEventListener('click', menuBotao_funcao);
-  
-  function menuBotao_funcao()
-{
-  const menuBotao_overlay = document.getElementById('firedeluxe_menuBotao_overlay');
-  menuBotao_overlay.style.display = 'block';   
-}
+    var overlay = document.createElement('div');
+    overlay.style.position = 'fixed';
+    overlay.style.top = '0';
+    overlay.style.left = '0';
+    overlay.style.width = '100%';
+    overlay.style.height = '100%';
+    overlay.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+    overlay.style.display = 'flex';
+    overlay.style.justifyContent = 'center';
+    overlay.style.alignItems = 'center';
+    overlay.style.zIndex = '9999';
 
-})();
-
-// ------------------------------------------------------------------------------------------------------------------
-
-(function() {
-    'use strict';
-
-// menuBotao_overlay
-
-const menuBotao_overlay = document.createElement('div');
-
-menuBotao_overlay.id = 'firedeluxe_menuBotao_overlay'
-menuBotao_overlay.style.backgroundColor = '#000000';
-menuBotao_overlay.style.opacity = '0.5';
-menuBotao_overlay.style.position = 'fixed';
-menuBotao_overlay.style.width = '100%';
-menuBotao_overlay.style.height = '100%';
-menuBotao_overlay.style.zIndex = '9999';
-menuBotao_overlay.style.left = '0';
-menuBotao_overlay.style.top = '0';
-menuBotao_overlay.style.borderRadius = '0';
-menuBotao_overlay.style.display = 'none';
-
-document.body.appendChild(menuBotao_overlay);
-
-})();
-
-// ------------------------------------------------------------------------------------------------------------------
-
-(function() {
-    'use strict';
-
-// menuBotao_overlay_botoes
-
-class menuBotao_overlay_botoes_class {
-    constructor(id, texto) {
-        this.overlay_botao = document.createElement('button');
-        this.overlay_botao.id = id;
-        this.overlay_botao.textContent = texto;
-        this.overlay_botao.style.backgroundColor = 'transparent';
-        this.overlay_botao.style.color = 'orange';
-        this.overlay_botao.style.borderColor = 'orange';
-        this.overlay_botao.style.fontSize = '5vw';
-        this.overlay_botao.style.fontWeight = 'bold';
-        this.overlay_botao.style.padding = '10px 15px';
-        this.overlay_botao.style.textShadow = '';
-        this.overlay_botao.style.zIndex = '9999'
-    }
-
-    adicionarAoBody() 
-    {
-    document.body.appendChild(this.overlay_botao);
-    }
+    document.body.appendChild(overlay);
     
 }
 
-const menuBotao_overlay_botoes_Configuracoes = new menuBotao_overlay_botoes_class('firedeluxe_neon_overlay_botoes_Configuracoes', 'Configurações');
-
-menuBotao_overlay_botoes_Configuracoes.adicionarAoBody();
+document.body.appendChild(menuBotao);
 
 })();
+
+// ------------------------------------------------------------------------------------------------------------------
+
