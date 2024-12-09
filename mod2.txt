@@ -78,9 +78,10 @@ const botao = document.createElement('button');
     botao.style.color = 'orange';
     botao.style.backgroundColor = 'transparent';
     botao.style.borderColor = 'orange';
-    botao.style.fontSize = '20px';
+    botao.style.fontSize = '25px';
     botao.style.padding = '10px 5px';
     botao.style.width = '200px';
+    botao.style.marginTop = '10px';
     
     overlay.appendChild(menu_fecharBotao);
     overlay.appendChild(botao);   
