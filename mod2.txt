@@ -1,5 +1,65 @@
+// BOTÃO>>MENU ----------------------------------
+
+const menuBotao = document.createElement('button')
+    menuBotao.id = 'firedeluxe_neon_menuButton'
+    menuBotao.textContent = '[ MENU ]';
+    menuBotao.style.color = 'orange';
+    menuBotao.style.backgroundColor = 'transparent';
+    menuBotao.style.zIndex = '9998';
+    menuBotao.style.position = 'fixed';
+    menuBotao.style.fontSize = '4vw';
+    menuBotao.style.border = 'none';
+    menuBotao.style.fontWeight = 'bold';
+    menuBotao.style.padding = '10px 15px';
+    menuBotao.style.top = '0px';
+    menuBotao.style.textShadow = '';
+    menuBotao.onclick
+    menuBotao.addEventListener('click', criarOverlay);
+
+// FECHAR>>OVERLAY>>MENU ----------------------------------
+
+var menu_fecharBotao = document.createElement('button');
+    menu_fecharBotao.innerHTML = 'X';
+    menu_fecharBotao.style.position = 'absolute';
+    menu_fecharBotao.style.top = '10px';
+    menu_fecharBotao.style.right = '10px';
+    menu_fecharBotao.style.width = '30px';
+    menu_fecharBotao.style.height = '30px';
+    menu_fecharBotao.style.fontSize = '16px';
+    menu_fecharBotao.style.fontWeight = 'bold';
+    menu_fecharBotao.style.color = 'white';
+    menu_fecharBotao.style.backgroundColor = 'red';
+    menu_fecharBotao.addEventListener('click', fechar_menu_overlay);
+
+function fechar_menu_overlay() {
+
+    const menu_overlay = document.getElementById('overlay_menu');
+    menu_overlay.remove();
+    
+}
+
+// OVERLAY>>MENU ----------------------------------
+
+function criarOverlay () {
+
+    var overlay = document.createElement('div');
+    overlay.id = 'overlay_menu';
+    overlay.style.position = 'fixed';
+    overlay.style.top = '0';
+    overlay.style.left = '0';
+    overlay.style.width = '100%';
+    overlay.style.height = '100%';
+    overlay.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+    overlay.style.display = 'flex';
+    overlay.style.justifyContent = 'center';
+    overlay.style.alignItems = 'center';
+    overlay.style.zIndex = '9999';
+
+// BOTÕES>>OVERLAY>>MENU ----------------------------------
+
 function menuBotao(id, texto, funcao) {
-    const botao = document.createElement('button');
+    
+const botao = document.createElement('button');
     botao.id = id;
     botao.innerText = texto;
     botao.addEventListener('click', funcao);
@@ -7,18 +67,24 @@ function menuBotao(id, texto, funcao) {
     botao.style.backgroundColor = 'transparent';
     botao.style.borderColor = 'orange';
     botao.style.fontSize = '20px';
+    overlay.appendChild(menu_fecharBotao);
     overlay.appendChild(botao);   
 }
 
-// Funções de exemplo para os botões
+menuBotao('menu_Configuracao', 'Configurações', menu_Configuracoes);
+menuBotao('menu_Bloquear', 'Bloquear Usuários', menu_Bloquear_Usuarios);
+
+    document.body.appendChild(overlay);
+}
+
+document.body.appendChild(menuBotao);
+
+// FUNÇÕES>>BOTÕES>>OVERLAY>>MENU ----------------------------------
+
 function menu_Configuracoes() {
-    console.log('Abrindo Configurações...');
+    
 }
 
 function menu_Bloquear_Usuarios() {
-    console.log('Bloqueando Usuários...');
+    
 }
-
-// Criando os botões
-menuBotao('menu_Configuracao', 'Configurações', menu_Configuracoes);
-menuBotao('menu_Bloquear', 'Bloquear Usuários', menu_Bloquear_Usuarios);
