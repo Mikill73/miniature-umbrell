@@ -162,6 +162,36 @@ function menu_Bloquear_Usuarios() {
 
 function func_ImagemSite() {
     
+    var overlay_func_imagemsite = document.createElement('div');
+    overlay_func_imagemsite.id = 'overlay_imagemsite';
+    overlay_func_imagemsite.style.position = 'fixed';
+    overlay_func_imagemsite.style.top = '0';
+    overlay_func_imagemsite.style.left = '0';
+    overlay_func_imagemsite.style.width = '100%';
+    overlay_func_imagemsite.style.height = '100%';
+    overlay_func_imagemsite.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+    overlay_func_imagemsite.style.display = 'flex';
+    overlay_func_imagemsite.style.flexDirection = 'column';
+    overlay_func_imagemsite.style.justifyContent = 'center';
+    overlay_func_imagemsite.style.alignItems = 'center';
+    overlay_func_imagemsite.style.zIndex = '9999';
+
+
+const btn_upload_imagems_site = new Botao('botao_imagem_site_upload', 'Enviar imagem', func_upload_imagems_site, overlay_func_imagemsite);
+const btn_upload_imagems_reset = new Botao('botao_upload_imagems_reset', 'Imagem original do site', func_upload_imagems_reset, overlay_func_imagemsite);
+
+    const btnFechar_overlay = new Btn_Fechar(overlay_func_imagemsite, 'overlay_imagemsite');   
+
+    document.body.appendChild(overlay_func_imagemsite);
+
+function func_upload_imagems_site() {
+    
+}
+
+function func_upload_imagems_reset() {
+    
+}
+
 }
 
 function func_ImagemChat() {
