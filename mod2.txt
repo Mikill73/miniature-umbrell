@@ -45,7 +45,19 @@ var menu_fecharBotao = document.createElement('button');
 function fechar_menu_overlay() {
 
     const menu_overlay = document.getElementById('overlay_menu');
+    const overlay_configuracoes = document.getElementById('configuracoes_overlay_menu');
+
+    if (menu_overlay) {
+        
     menu_overlay.remove();
+        
+    }
+
+    if (overlay_configuracoes) {
+        
+    overlay_configuracoes.remove();
+
+    }
     
 }
 
@@ -98,6 +110,28 @@ document.body.appendChild(menuBotao);
 // FUNÇÕES>>BOTÕES>>OVERLAY>>MENU ----------------------------------
 
 function menu_Configuracoes() {
+
+    const menu_overlay = document.getElementById('overlay_menu');
+    const configuracoes_overlay = document.createElement('div');
+    
+    
+    configuracoes_overlay.id = 'configuracoes_overlay_menu';
+    configuracoes_overlay.style.position = 'fixed';
+    configuracoes_overlay.style.top = '0';
+    configuracoes_overlay.style.left = '0';
+    configuracoes_overlay.style.width = '100%';
+    configuracoes_overlay.style.height = '100%';
+    configuracoes_overlay.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+    configuracoes_overlay.style.display = 'flex';
+    configuracoes_overlay.style.flexDirection = 'column';
+    configuracoes_overlay.style.justifyContent = 'center';
+    configuracoes_overlay.style.alignItems = 'center';
+    configuracoes_overlay.style.zIndex = '9999';
+
+    configuracoes_overlay.appendChild(menu_fecharBotao);
+    document.body.appendChild(configuracoes_overlay);
+
+    menu_overlay.remove();
     
 }
 
