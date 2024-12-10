@@ -224,6 +224,8 @@ const btn_upload_imagems_reset = new Botao('botao_upload_imagems_reset', 'Imagem
     document.body.appendChild(overlay_func_imagemsite);
 
 function func_upload_imagems_site() {
+
+
     
 }
 
@@ -236,7 +238,8 @@ if (configuracoes_imagem_site) {
 configuracoes_imagem_site.imagem_site = '';
 localStorage.setItem('configuracoes', JSON.stringify(configuracoes_imagem_site));
 
-new Texto_aviso("Imagem resetada", "red", "5vw", 150, overlay_func_imagemsite);
+new Texto_aviso("Imagem resetada! Reinicie a página para atualizar", "red", "5vw", 200, overlay_func_imagemsite);
+    
     
 }
 
