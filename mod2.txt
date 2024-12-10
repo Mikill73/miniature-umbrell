@@ -101,7 +101,7 @@ function criarOverlay () {
     overlay.style.left = '0';
     overlay.style.width = '100%';
     overlay.style.height = '100%';
-    overlay.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+    overlay.style.backgroundColor = 'rgba(0, 0, 0, 0.75)';
     overlay.style.display = 'flex';
     overlay.style.flexDirection = 'column';
     overlay.style.justifyContent = 'center';
@@ -132,7 +132,7 @@ function menu_Configuracoes() {
     configuracoes_overlay.style.left = '0';
     configuracoes_overlay.style.width = '100%';
     configuracoes_overlay.style.height = '100%';
-    configuracoes_overlay.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+    configuracoes_overlay.style.backgroundColor = 'rgba(0, 0, 0, 0.75)';
     configuracoes_overlay.style.display = 'flex';
     configuracoes_overlay.style.flexDirection = 'column';
     configuracoes_overlay.style.justifyContent = 'center';
@@ -169,7 +169,7 @@ function func_ImagemSite() {
     overlay_func_imagemsite.style.left = '0';
     overlay_func_imagemsite.style.width = '100%';
     overlay_func_imagemsite.style.height = '100%';
-    overlay_func_imagemsite.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+    overlay_func_imagemsite.style.backgroundColor = 'rgba(0, 0, 0, 0.75)';
     overlay_func_imagemsite.style.display = 'flex';
     overlay_func_imagemsite.style.flexDirection = 'column';
     overlay_func_imagemsite.style.justifyContent = 'center';
