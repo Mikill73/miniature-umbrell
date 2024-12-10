@@ -64,6 +64,43 @@ class Btn_Fechar {
     }
 }
 
+class Texto_aviso {
+    constructor(texto, cor, tamanho, intervalo) {
+        this.texto = texto;
+        this.cor = cor;
+        this.tamanho = tamanho;
+
+        this.element = document.createElement('h2');
+        this.element.textContent = texto;
+        this.element.style.color = cor;
+        this.element.style.fontSize = tamanho;
+        this.element.style.position = 'absolute';
+        this.element.style.top = '50%';
+        this.element.style.left = '50%';
+        this.element.style.transform = 'translate(-50%, -50%)';
+        this.element.style.textAlign = 'center';
+
+        document.body.appendChild(this.element);
+
+        this.Sumir(intervalo);
+    }
+
+    Sumir(intervalo) {
+        let opacidade = 1;
+        const intervalo_sumir = setInterval(() => {
+            opacidade -= 0.05;
+
+            if (opacidade <= 0) {
+                clearInterval(intervalo_sumir);
+                this.element.remove();
+            }
+
+            this.element.style.opacity = opacidade.toString();
+        }, intervalo);
+    }
+}
+
+
 `;
 
 const script = document.createElement('script');
