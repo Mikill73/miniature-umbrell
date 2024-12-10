@@ -227,6 +227,12 @@ function func_upload_imagems_site() {
 
 
     
+let configuracoes_imagem_site = JSON.parse(localStorage.getItem('configuracoes'));
+
+    configuracoes_imagem_site.imagem_site = '';
+    
+new Texto_aviso("Imagem enviada, reinicie a página para atualizar", "red", "5vw", 200, overlay_func_imagemsite);
+    
 }
 
 function func_upload_imagems_reset() {
