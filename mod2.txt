@@ -1,3 +1,4 @@
+
 // ==UserScript==
 // @name         Fire Deluxe 2
 // @namespace    http://tampermonkey.net/ 
@@ -65,7 +66,7 @@ class Btn_Fechar {
 }
 
 class Texto_aviso {
-    constructor(texto, cor, tamanho, intervalo) {
+    constructor(texto, cor, tamanho, intervalo, local) {
         this.texto = texto;
         this.cor = cor;
         this.tamanho = tamanho;
@@ -77,10 +78,11 @@ class Texto_aviso {
         this.element.style.position = 'absolute';
         this.element.style.top = '50%';
         this.element.style.left = '50%';
+        this.element.style.zIndex = '9999';
         this.element.style.transform = 'translate(-50%, -50%)';
         this.element.style.textAlign = 'center';
 
-        document.body.appendChild(this.element);
+        local.appendChild(this.element);
 
         this.Sumir(intervalo);
     }
@@ -234,6 +236,8 @@ if (configuracoes_imagem_site) {
 configuracoes_imagem_site.imagem_site = '';
 localStorage.setItem('configuracoes', JSON.stringify(configuracoes_imagem_site));
 
+new Texto_aviso("Imagem resetada", "red", "5vw", 150, overlay_func_imagemsite);
+    
 }
 
 }
