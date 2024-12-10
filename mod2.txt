@@ -13,8 +13,6 @@
 (function() {
     'use strict';
 
-// BIBLIOTECA --------------------------------------------------------------------
-
 const biblioteca = `
 
 class Botao {
@@ -111,8 +109,6 @@ document.head.appendChild(script);
 
 })();
 
-// BOTÃO>>MENU --------------------------------------------------------------------
-
 const menuBotao = document.createElement('button')
     menuBotao.id = 'firedeluxe_neon_menuButton'
     menuBotao.textContent = '[ MENU ]';
@@ -128,8 +124,6 @@ const menuBotao = document.createElement('button')
     menuBotao.style.textShadow = '';
     menuBotao.onclick
     menuBotao.addEventListener('click', criarOverlay);
-
-// OVERLAY>>MENU --------------------------------------------------------------------
 
 function criarOverlay () {
 
@@ -147,7 +141,6 @@ function criarOverlay () {
     overlay.style.alignItems = 'center';
     overlay.style.zIndex = '9999';
 
-// BOTÕES>>OVERLAY>>MENU --------------------------------------------------------------------
 const overlay_btnfechar = new Btn_Fechar(overlay, 'overlay_menu');   
 
 const botaoConfiguracoes = new Botao('menu_Configuracao', 'Configurações', menu_Configuracoes, overlay);
@@ -157,8 +150,6 @@ const botaoBloquear = new Botao('menu_Bloquear', 'Bloquear Usuários', menu_Bloq
 }
 
 document.body.appendChild(menuBotao);
-
-// FUNÇÕES>>BOTÕES>>OVERLAY>>MENU --------------------------------------------------------------------
 
 function menu_Configuracoes() {
 
@@ -197,10 +188,15 @@ function menu_Bloquear_Usuarios() {
     
 }
 
-// FUNÇÕES>>BOTÕES>>OVERLAY>>CONFIGURAÇÕES --------------------------------------------------------------------
+const input_upload_imagem_site = document.createElement('input');
+
+input_upload_imagem_site.id = 'upload_imagem_site';
+input_upload_imagem_site.type = 'file';
+input_upload_imagem_site.style.display = 'none';
+
+document.body.appendChild(input_upload_imagem_site);
 
 function func_ImagemSite() {
-    
     var overlay_func_imagemsite = document.createElement('div');
     overlay_func_imagemsite.id = 'overlay_imagemsite';
     overlay_func_imagemsite.style.position = 'fixed';
@@ -215,43 +211,50 @@ function func_ImagemSite() {
     overlay_func_imagemsite.style.alignItems = 'center';
     overlay_func_imagemsite.style.zIndex = '9999';
 
+    const btn_upload_imagems_site = new Botao('botao_imagem_site_upload', 'Enviar imagem', func_upload_imagems_site, overlay_func_imagemsite);
 
-const btn_upload_imagems_site = new Botao('botao_imagem_site_upload', 'Enviar imagem', func_upload_imagems_site, overlay_func_imagemsite);
-const btn_upload_imagems_reset = new Botao('botao_upload_imagems_reset', 'Imagem original do site', func_upload_imagems_reset, overlay_func_imagemsite);
+    const btn_upload_imagems_reset = new Botao('botao_upload_imagems_reset', 'Imagem original do site', func_upload_imagems_reset, overlay_func_imagemsite);
 
     const btnFechar_overlay = new Btn_Fechar(overlay_func_imagemsite, 'overlay_imagemsite');   
 
+    const input_upload_imagem_site = document.createElement('input');
+    input_upload_imagem_site.id = 'upload_imagem_site';
+    input_upload_imagem_site.type = 'file';
+    input_upload_imagem_site.style.display = 'none';
+
+    input_upload_imagem_site.addEventListener('change', func_upload_imagems_site);
+
+    document.body.appendChild(input_upload_imagem_site);
+
     document.body.appendChild(overlay_func_imagemsite);
+    document.getElementById('botao_imagem_site_upload').addEventListener('click', () => {
+        document.getElementById('upload_imagem_site').click();
+    });
+}
 
 function func_upload_imagems_site() {
 
-
-    
-let configuracoes_imagem_site = JSON.parse(localStorage.getItem('configuracoes'));
+    let configuracoes_imagem_site = JSON.parse(localStorage.getItem('configuracoes'));
 
     configuracoes_imagem_site.imagem_site = '';
-    
-new Texto_aviso("Imagem enviada, reinicie a página para atualizar", "red", "5vw", 200, overlay_func_imagemsite);
-    
+
+        const overlay_func_imagemsite = document.getElementById('overlay_imagemsite');
+    new Texto_aviso("Imagem enviada, reinicie a página para atualizar", "red", "5vw", 200, overlay_func_imagemsite);
 }
 
 function func_upload_imagems_reset() {
-    
-let configuracoes_imagem_site = JSON.parse(localStorage.getItem('configuracoes'));
+    let configuracoes_imagem_site = JSON.parse(localStorage.getItem('configuracoes'));
 
-if (configuracoes_imagem_site) {
+    configuracoes_imagem_site.imagem_site = '';  
 
-configuracoes_imagem_site.imagem_site = '';
-localStorage.setItem('configuracoes', JSON.stringify(configuracoes_imagem_site));
+    localStorage.setItem('configuracoes', JSON.stringify(configuracoes_imagem_site));
 
-new Texto_aviso("Imagem resetada! Reinicie a página para atualizar", "red", "5vw", 200, overlay_func_imagemsite);
+    const overlay_func_imagemsite = document.getElementById('overlay_imagemsite');
     
-    
+    new Texto_aviso("Imagem resetada para o estado original", "green", "5vw", 200, overlay_func_imagemsite);
 }
 
-}
 
-}
 
 function func_ImagemChat() {
     
