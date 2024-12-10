@@ -190,6 +190,15 @@ function func_upload_imagems_site() {
 
 function func_upload_imagems_reset() {
     
+let configuracoes_imagem_site = JSON.parse(localStorage.getItem('configuracoes'));
+
+if (configuracoes_imagem_site) {
+
+configuracoes_imagem_site.imagem_site = '';
+localStorage.setItem('configuracoes', JSON.stringify(configuracoes_imagem_site));
+
+}
+
 }
 
 }
